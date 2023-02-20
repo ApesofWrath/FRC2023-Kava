@@ -1,0 +1,96 @@
+plugins {
+    id "cpp"
+    id "google-test-test-suite"
+    id "edu.wpi.first.GradleRIO" version "2023.3.2"
+}
+
+// Simulation configuration (e.g. environment variables).
+wpi.sim.addGui().defaultEnabled = true
+wpi.sim.addDriverstation()
+
+//Sets the websocket client remote host.
+wpi.sim.envVar("HALSIMWS_HOST", "10.0.0.2")
+wpi.sim.addWebsocketsServer().defaultEnabled = true
+wpi.sim.addWebsocketsClient().defaultEnabled = true
+
+deploy {
+    targets {
+        roborio(getTargetTypeClass('RoboRIO')) {
+            // Team number is loaded either from the .wpilib/wpilib_preferences.json
+            // or from command line. If not found an exception will be thrown.
+            // You can use getTeamOrDefault(team) instead of getTeamNumber if you
+            // want to store a team number in this file.
+            team = project.frc.getTeamNumber()
+            debug = project.frc.getDebugOrDefault(false)
+
+            artifacts {
+                // First part is artifact name, 2nd is artifact type
+                // getTargetTypeClass is a shortcut to get the class type using a string
+
+                frcCpp(getArtifactTypeClass('FRCNativeArtifact')) {
+                }
+
+                // Static files artifact
+                frcStaticFileDeploy(getArtifactTypeClass('FileTreeArtifact')) {
+                    files = project.fileTree('src/main/deploy')
+                    directory = '/home/lvuser/deploy'
+                }
+            }
+        }
+    }
+}
+
+def deployArtifact = deploy.targets.roborio.artifacts.frcCpp
+
+def includeDesktopSupport = true
+
+model {
+    components {
+        frcUserProgram(NativeExecutableSpec) {
+            targetPlatform wpi.platforms.roborio
+            if (includeDesktopSupport) {
+                targetPlatform wpi.platforms.desktop
+            }
+
+            sources.cpp {
+                source {
+                    srcDir 'src/main/cpp'
+                    include '**/*.cpp', '**/*.cc'
+                }
+                exportedHeaders {
+                    srcDir 'src/main/include'
+                }
+            }
+
+            // Set deploy task to deploy this component
+            deployArtifact.component = it
+
+            // Enable run tasks for this component
+            wpi.cpp.enableExternalTasks(it)
+
+            // Enable simulation for this component
+            wpi.sim.enable(it)
+            // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
+            wpi.cpp.vendor.cpp(it)
+            wpi.cpp.deps.wpilib(it)
+        }
+    }
+    testSuites {
+        frcUserProgramTest(GoogleTestTestSuiteSpec) {
+            testing $.components.frcUserProgram
+
+            sources.cpp {
+                source {
+                    srcDir 'src/test/cpp'
+                    include '**/*.cpp'
+                }
+            }
+
+            wpi.cpp.enableExternalTasks(it)
+
+            wpi.cpp.vendor.cpp(it)
+            wpi.cpp.deps.wpilib(it)
+            wpi.cpp.deps.googleTest(it)
+        }
+    }
+}

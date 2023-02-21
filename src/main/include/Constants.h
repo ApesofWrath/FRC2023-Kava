@@ -30,8 +30,8 @@ namespace armConstants {
         constexpr double kRobotArm[6]{kMotorArmAngleLeftID,
                                         kMotorArmAngleRightID, 
                                         kMotorArmTelescopingID,
-                                        kEncoderTelescopingID,
                                         kMotorArmClampID,
+                                        kEncoderTelescopingID,
                                         offsets::kTelescoping};
     }
 

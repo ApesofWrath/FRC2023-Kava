@@ -18,11 +18,20 @@ class robotArm {
     public:
     robotArm(const double arm[]);
 
+    void armDown();
+    void armUp();
+
     private:
     rev::CANSparkMax m_motorAngleRight;
     rev::CANSparkMax m_motorAngleLeft;
+    rev::CANSparkMax m_motorTelescoping;
+    rev::CANSparkMax m_motorClamp;
+
+    ctre::phoenix::sensors::WPI_CANCoder m_encoderTelescoping;
+    
     rev::SparkMaxRelativeEncoder m_encoderMotorAngleRight = m_motorAngleRight.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
     rev::SparkMaxRelativeEncoder m_encoderMotorAngleLeft = m_motorAngleLeft.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
+
     rev::SparkMaxPIDController m_motorAngleRightController = m_motorAngleRight.GetPIDController();
     rev::SparkMaxPIDController m_motorAngleLeftController = m_motorAngleLeft.GetPIDController();
 

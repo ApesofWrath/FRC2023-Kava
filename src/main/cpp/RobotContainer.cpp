@@ -6,6 +6,7 @@
 
 RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Initialize all of your commands and subsystems here
+  ConfigureButtonBindings();
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -19,6 +20,12 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+  m_controllerMain.Y().OnTrue(frc2::cmd::RunOnce(
+      [this] {
+        m_arm.SetGoal(2_rad);
+        m_arm.Enable();
+      },
+      {&m_arm}));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

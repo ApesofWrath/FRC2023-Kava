@@ -12,6 +12,8 @@
 #include "commands/Drive.h"
 #include "subsystems/drivetrain.h"
 
+#include <frc2/command/button/JoystickButton.h>
+
 #include <frc/Joystick.h>
 
 /**

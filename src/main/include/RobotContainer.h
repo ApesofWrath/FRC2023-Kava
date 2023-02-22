@@ -5,7 +5,8 @@
 #pragma once
 
 #include <frc2/command/Command.h>
-
+#include <pathplanner/lib/auto/SwerveAutoBuilder.h>
+#include <pathplanner/lib/PathPlanner.h>
 #include "Constants.h"
 
 #include "commands/Auto.h"

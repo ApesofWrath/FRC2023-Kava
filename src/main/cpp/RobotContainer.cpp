@@ -20,12 +20,7 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  m_controllerMain.Y().OnTrue(frc2::cmd::RunOnce(
-      [this] {
-        m_arm.SetGoal(2_rad);
-        m_arm.Enable();
-      },
-      {&m_arm}));
+  // docs: https://docs.wpilib.org/en/stable/docs/software/basic-programming/joystick.html#button-usage
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

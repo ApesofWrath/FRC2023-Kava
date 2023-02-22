@@ -58,7 +58,15 @@ void Robot::TeleopInit() {
 /**
  * This function is called periodically during operator control.
  */
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  if (m_controller.GetRawButton(4)) {
+    m_robotArm.armUp();
+  } else if (m_controller.GetRawButton(2)) {
+    m_robotArm.armDown();
+  } else {
+    
+  }
+}
 
 /**
  * This function is called periodically during test mode.

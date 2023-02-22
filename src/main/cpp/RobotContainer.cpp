@@ -4,30 +4,31 @@
 
 #include "RobotContainer.h"
 
+#include "commands/ArmDown.h"
+
 RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Initialize all of your commands and subsystems here
-  ConfigureButtonBindings();
 
   // Configure the button bindings
   ConfigureButtonBindings();
 
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return m_controllerMain.GetX(); },
-    [this] { return m_controllerMain.GetY(); },
-    [this] { return m_controllerMain.GetRawAxis(4); })); 
+    [this] { return m_controller.GetRawAxis(1); }, // m_controllerMain.GetX()
+    [this] { return m_controller.GetRawAxis(2); }, // m_controllerMain.GetY()
+    [this] { return m_controller.GetRawAxis(4); })); // m_controllerMain.GetRawAxis(4)
 }
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  /* if(m_controllerMain.GetRawButton(4)){ // is Y pressed? arm up!
-    robotArm::armUp();
-  }
-  if(m_controllerMain.GetRawButton(2)){ // is B pressed? arm down!
-    robotArm::armDown();
-  }
-  if(m_controllerMain.GetRawButton(1)){ // is A pressed? secret 3rd thing!
-  } */
+
+  /* m_controller.B().OnTrue(frc2::cmd::RunOnce(
+    [this] {
+      m_robotArm.armDown();
+    },
+    {&m_robotArm})); */
+
+  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ArmDown(&m_robotArm).ToPtr());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

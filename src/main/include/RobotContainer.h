@@ -11,8 +11,12 @@
 #include "commands/Auto.h"
 #include "commands/Drive.h"
 #include "subsystems/drivetrain.h"
+#include "robotArm.h"
 
 #include <frc2/command/button/JoystickButton.h>
+#include <frc2/command/button/CommandXboxController.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/Commands.h>
 
 #include <frc/Joystick.h>
 
@@ -32,10 +36,12 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;
+  robotArm m_robotArm;
 
   Auto m_Auto;
 
   void ConfigureButtonBindings();
 
-  frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};
+  // frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};
+  frc2::CommandXboxController m_controller{controllerConstants::kControllerMainID};
 };

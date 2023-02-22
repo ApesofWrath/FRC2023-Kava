@@ -29,8 +29,5 @@ class Robot : public frc::TimedRobot {
 
   RobotContainer m_container;
 
-  robotArm m_robotArm{armConstants::arm::kRobotArm};
-
-  frc::Joystick m_controller{controllerConstants::kControllerMainID};
-
+  // frc::Joystick m_controller{controllerConstants::kControllerMainID};
 };

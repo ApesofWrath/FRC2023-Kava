@@ -4,15 +4,17 @@
 #include <iostream>
 #include <numbers>
 #include <frc/geometry/Rotation2d.h>
+using namespace armConstants;
 
-robotArm::robotArm(const double arm[])
-: m_motorAngleLeft(arm[0], rev::CANSparkMax::MotorType::kBrushless),
-m_motorAngleRight(arm[1], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
-m_motorTelescoping(arm[2], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
-m_motorClamp(arm[3], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
-m_encoderTelescoping(arm[4]),
-m_encoderOffset(arm[5]) {
+robotArm::robotArm()
+: m_motorAngleLeft(armConstants::arm::kRobotArm[0], rev::CANSparkMax::MotorType::kBrushless),
+m_motorAngleRight(armConstants::arm::kRobotArm[1], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
+m_motorTelescoping(armConstants::arm::kRobotArm[2], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
+m_motorClamp(armConstants::arm::kRobotArm[3], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
+m_encoderTelescoping(armConstants::arm::kRobotArm[4]),
+m_encoderOffset(armConstants::arm::kRobotArm[5]) {
 
+    printf("beg const");
     m_encoderTelescoping.ConfigMagnetOffset(m_encoderOffset);
     m_encoderTelescoping.ConfigSensorDirection(true);
 
@@ -41,6 +43,8 @@ m_encoderOffset(arm[5]) {
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0);
 
     m_motorAngleRight.Follow(m_motorAngleLeft, true);
+
+    printf("end const");
 }
 
 void robotArm::armDown() {
@@ -50,3 +54,15 @@ void robotArm::armDown() {
 void robotArm::armUp() {
     m_motorAngleLeftController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
 }
+
+void robotArm::teleOut() {
+
+}
+
+void robotArm::teleIn() {
+
+}
+
+/* void robotArm::Periodic() {
+    
+} */

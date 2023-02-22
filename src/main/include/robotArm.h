@@ -1,25 +1,29 @@
 #pragma once
 
-#include <ctre/phoenix/motorcontrol/can/WPI_TalonFX.h>
 #include <ctre/phoenix/sensors/WPI_CANCoder.h>
-#include <frc/kinematics/SwerveModuleState.h>
 #include <units/angular_velocity.h>
 #include <units/time.h>
 #include <units/velocity.h>
 #include <numbers>
 #include <rev/SparkMaxRelativeEncoder.h>
 #include <rev/CANSparkMax.h>
-#include <frc/kinematics/SwerveModulePosition.h>
+
+#include <frc2/command/CommandPtr.h>
+#include <frc2/command/SubsystemBase.h>
 
 #include "Constants.h"
 #include "hardwareSettings.h"
 
-class robotArm {
+class robotArm : public frc2::SubsystemBase {
     public:
-    robotArm(const double arm[]);
+    robotArm();
 
     void armDown();
     void armUp();
+    void teleOut();
+    void teleIn();
+
+    // void Periodic() override;
 
     private:
     rev::CANSparkMax m_motorAngleRight;

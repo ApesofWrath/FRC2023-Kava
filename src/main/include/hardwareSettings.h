@@ -42,10 +42,10 @@ class hardwareSettings {
         //-motorDrive.remoteSensorClosedLoopDisableNeutralOnLOS = false;
         //  ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration supplyLimit(true, 23.1, 25, 1.4);
 
-        ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration supplyLimit(true, 80.0, 81.9, 1.4);
+        //-ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration supplyLimit(true, 80.0, 81.9, 1.4);
         //-motorDrive.supplyCurrLimit = supplyLimit;
 
-        ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration statorLimit(true, 12.1, 87.4, 0.4);
+        //-ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration statorLimit(true, 12.1, 87.4, 0.4);
         //motorDrive.statorCurrLimit = statorLimit;
         //-motorDrive.motorCommutation = ctre::phoenix::motorcontrol::MotorCommutation::Trapezoidal;
         //-motorDrive.initializationStrategy = ctre::phoenix::sensors::SensorInitializationStrategy::BootToAbsolutePosition;

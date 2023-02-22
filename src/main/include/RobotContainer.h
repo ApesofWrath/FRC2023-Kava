@@ -11,7 +11,7 @@
 #include "commands/Auto.h"
 #include "commands/Drive.h"
 #include "subsystems/drivetrain.h"
-#include "robotArm.h"
+#include "subsystems/robotArm.h"
 
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/button/CommandXboxController.h>

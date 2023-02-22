@@ -20,7 +20,14 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  // docs: https://docs.wpilib.org/en/stable/docs/software/basic-programming/joystick.html#button-usage
+  if(m_controllerMain.GetRawButton(4)){ // is Y pressed? arm up!
+    robotArm::armUp();
+  }
+  if(m_controllerMain.GetRawButton(2)){ // is B pressed? arm down!
+    robotArm::armDown();
+  }
+  if(m_controllerMain.GetRawButton(1)){ // is A pressed? secret 3rd thing!
+  }
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

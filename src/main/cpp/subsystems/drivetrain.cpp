@@ -5,6 +5,7 @@
 #include <iostream>
 
 drivetrain::drivetrain() {
+    printf("drive const");
     m_navX.ZeroYaw();
 }
 

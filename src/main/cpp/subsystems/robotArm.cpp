@@ -1,3 +1,4 @@
+#pragma once
 #include "subsystems/robotArm.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -5,25 +6,23 @@
 #include <iostream>
 #include <numbers>
 #include <frc/geometry/Rotation2d.h>
-using namespace armConstants;
 
 robotArm::robotArm()
 : m_motorAngleLeft(armConstants::arm::kRobotArm[0], rev::CANSparkMax::MotorType::kBrushless),
 m_motorAngleRight(armConstants::arm::kRobotArm[1], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
-m_motorTelescoping(armConstants::arm::kRobotArm[2], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
+/* m_motorTelescoping(armConstants::arm::kRobotArm[2], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
 m_motorClamp(armConstants::arm::kRobotArm[3], rev::CANSparkMax::CANSparkMax::MotorType::kBrushless),
-m_encoderTelescoping(armConstants::arm::kRobotArm[4]),
+ */m_encoderTelescoping(armConstants::arm::kRobotArm[4]),
 m_encoderOffset(armConstants::arm::kRobotArm[5]) {
 
-    printf("beg const");
     m_encoderTelescoping.ConfigMagnetOffset(m_encoderOffset);
     m_encoderTelescoping.ConfigSensorDirection(true);
 
     m_motorAngleLeft.RestoreFactoryDefaults();
     m_motorAngleRight.RestoreFactoryDefaults();
-    m_motorTelescoping.RestoreFactoryDefaults();
+    /* m_motorTelescoping.RestoreFactoryDefaults();
     m_motorClamp.RestoreFactoryDefaults();
-
+ */
     m_motorAngleLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     m_motorAngleRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
@@ -44,26 +43,21 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0);
 
     m_motorAngleRight.Follow(m_motorAngleLeft, true);
-
-    printf("end const");
 }
 
 void robotArm::armDown() {
-    m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
+    printf("armDown Exec \n");
+    if(m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion) != rev::REVLibError::kOk) {
+        printf("error");
+    }
 }
 
 void robotArm::armUp() {
     m_motorAngleLeftController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
-void robotArm::teleOut() {
+void robotArm::teleOut() { }
 
-}
+void robotArm::teleIn() { }
 
-void robotArm::teleIn() {
-
-}
-
-/* void robotArm::Periodic() {
-    
-} */
+void robotArm::Periodic() { }

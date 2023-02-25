@@ -7,12 +7,14 @@
 
 class ArmDown : public frc2::CommandHelper<frc2::CommandBase, ArmDown> {
     public:
-    explicit ArmDown(robotArm* subsystem);
+    explicit ArmDown(robotArm* robotArm);
 
     void Initialize() override;
+
+    void Execute() override;
 
     bool IsFinished() override;
 
     private:
-    robotArm* m_arm;
+    robotArm* m_robotArm;
 };

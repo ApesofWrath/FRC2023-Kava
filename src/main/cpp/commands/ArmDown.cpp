@@ -1,13 +1,14 @@
 #include "commands/ArmDown.h"
 
-ArmDown::ArmDown(robotArm* subsystem) : m_arm(subsystem) {
-    AddRequirements(subsystem);
+ArmDown::ArmDown(robotArm* robotArm) : m_robotArm{robotArm} {
+    SetName("ArmDown");
+    AddRequirements({m_robotArm});
 }
 
-void ArmDown::Initialize() {
-    m_arm->armDown();
+void ArmDown::Initialize() { printf("ArmDown Initialized \n"); }
+
+void ArmDown::Execute() {
+    m_robotArm->armDown();
 }
 
-bool ArmDown::IsFinished() {
-    return true;
-}
+bool ArmDown::IsFinished() { return true; }

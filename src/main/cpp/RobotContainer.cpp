@@ -12,11 +12,11 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Configure the button bindings
   ConfigureButtonBindings();
 
-  m_drivetrain.SetDefaultCommand(Drive(
+  /* m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return m_controller.GetRawAxis(1); }, // m_controllerMain.GetX()
-    [this] { return m_controller.GetRawAxis(2); }, // m_controllerMain.GetY()
-    [this] { return m_controller.GetRawAxis(4); })); // m_controllerMain.GetRawAxis(4)
+    [this] { return m_controller.GetRawAxis(0); }, // m_controllerMain.GetX()
+    [this] { return m_controller.GetRawAxis(1); }, // m_controllerMain.GetY()
+    [this] { return m_controller.GetRawAxis(4); })); */ // m_controllerMain.GetRawAxis(4)
 }
 
 void RobotContainer::ConfigureButtonBindings() {

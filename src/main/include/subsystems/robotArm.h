@@ -8,8 +8,11 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/SubsystemBase.h>
 
+#include <rev/REVLibError.h>
+
 #include "Constants.h"
 #include "hardwareSettings.h"
+#include <string>
 
 class robotArm : public frc2::SubsystemBase {
     public:
@@ -20,14 +23,16 @@ class robotArm : public frc2::SubsystemBase {
     void teleOut();
     void teleIn();
 
+    void Periodic() override;
+
     // void Periodic() override;
 
     private:
     rev::CANSparkMax m_motorAngleRight;
     rev::CANSparkMax m_motorAngleLeft;
-    rev::CANSparkMax m_motorTelescoping;
+    /* rev::CANSparkMax m_motorTelescoping;
     rev::CANSparkMax m_motorClamp;
-
+ */
     ctre::phoenix::sensors::WPI_CANCoder m_encoderTelescoping;
     
     rev::SparkMaxRelativeEncoder m_encoderMotorAngleRight = m_motorAngleRight.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);

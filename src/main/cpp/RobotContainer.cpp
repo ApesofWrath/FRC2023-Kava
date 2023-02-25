@@ -5,6 +5,7 @@
 #include "RobotContainer.h"
 
 #include "commands/ArmDown.h"
+#include "commands/ArmUp.h"
 
 RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Initialize all of your commands and subsystems here
@@ -21,14 +22,8 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-
-  /* m_controller.B().OnTrue(frc2::cmd::RunOnce(
-    [this] {
-      m_robotArm.armDown();
-    },
-    {&m_robotArm})); */
-
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ArmDown(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kY).OnTrue(ArmUp(&m_robotArm).ToPtr());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

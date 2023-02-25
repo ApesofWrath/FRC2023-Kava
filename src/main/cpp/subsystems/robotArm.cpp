@@ -46,12 +46,10 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
 }
 
 void robotArm::armDown() {
-    printf("armDown Exec \n");
     m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
 void robotArm::armUp() {
-    printf("armUp Exec \n");
     m_motorAngleLeftController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 

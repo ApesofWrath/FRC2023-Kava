@@ -11,8 +11,9 @@ Kava Features:
   - 2 REV Spark Maxes with Neos for angling the arm up and down
   - 1 REV Spark Max with a Neo for telescoping the arm
 
-Kava Controlls:
+Operator controlls:
   - [TBD]: Extend and angle down arm
   - [TBD]: Retract and angle up arm
+Driver controlls:
   - Left analogue stick: Swerve movement
   - Right analogue stick: Rotate in place

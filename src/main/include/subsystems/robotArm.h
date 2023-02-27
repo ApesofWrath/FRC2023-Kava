@@ -24,6 +24,11 @@ class robotArm : public frc2::SubsystemBase {
     void teleIn();
     void clampClose();
     void clampOpen();
+    void teleOutLong();
+    void armDownLow();
+    
+    void scoreLow();
+    void scoreHigh();
 
     void Periodic() override;
 

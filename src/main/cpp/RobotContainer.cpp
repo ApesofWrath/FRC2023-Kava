@@ -10,6 +10,10 @@
 #include "commands/TeleOut.h"
 #include "commands/ClampClose.h"
 #include "commands/ClampOpen.h"
+#include "commands/TeleOutLow.h"
+#include "commands/ArmDownLow.h"
+#include "commands/ScoreHigh.h"
+#include "commands/ScoreLow.h"
 
 RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Initialize all of your commands and subsystems here
@@ -17,21 +21,27 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Configure the button bindings
   ConfigureButtonBindings();
 
-  /* m_drivetrain.SetDefaultCommand(Drive(
+  m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return m_controller.GetRawAxis(0); }, // m_controllerMain.GetX()
-    [this] { return m_controller.GetRawAxis(1); }, // m_controllerMain.GetY()
-    [this] { return m_controller.GetRawAxis(4); })); */ // m_controllerMain.GetRawAxis(4)
+    [this] { return m_controllerMain.GetX(); }, // m_controllerMain.GetX()
+    [this] { return m_controllerMain.GetY(); }, // m_controllerMain.GetY()
+    [this] { return m_controllerMain.GetRawAxis(4); })); // m_controllerMain.GetRawAxis(4)
 }
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ArmDown(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ScoreHigh(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(ScoreLow(&m_robotArm).ToPtr());
+
+  // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ArmDown(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kY).OnTrue(ArmUp(&m_robotArm).ToPtr());
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(TeleOut(&m_robotArm).ToPtr());
+  // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(TeleOut(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kA).OnTrue(TeleIn(&m_robotArm).ToPtr());
+
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kRightBumper).OnTrue(ClampClose(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kLeftBumper).OnTrue(ClampOpen(&m_robotArm).ToPtr());
+  // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kStart).OnTrue(TeleOutLow(&m_robotArm).ToPtr());
+  // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kRightStick).OnTrue(ArmDownLow(&m_robotArm).ToPtr());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

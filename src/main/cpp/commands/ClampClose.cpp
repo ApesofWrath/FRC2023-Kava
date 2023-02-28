@@ -1,14 +1,14 @@
-#include "commands/ClampClose.h"
+#include "commands/ClampClose.h" // relevent header file
 
-ClampClose::ClampClose(robotArm* robotArm) : m_robotArm{robotArm} {
-    SetName("ClampClose");
-    AddRequirements({m_robotArm});
+ClampClose::ClampClose(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
+    SetName("ClampClose"); // set the ?? name
+    AddRequirements({m_robotArm}); // require the m_robotArm pointer
 }
 
-void ClampClose::Initialize() { printf("ClampClose Initialized \n"); }
+void ClampClose::Initialize() { printf("ClampClose Initialized \n"); } // print debug message on initialization
 
-void ClampClose::Execute() {
-    m_robotArm->clampClose();
+void ClampClose::Execute() { // ??[when does it do this]
+    m_robotArm->clampClose(); // make m_robotArm point to the clampClose() command
 }
 
-bool ClampClose::IsFinished() { return true; }
+bool ClampClose::IsFinished() { return true; } // return when ??

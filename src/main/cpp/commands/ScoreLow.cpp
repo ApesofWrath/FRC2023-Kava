@@ -1,14 +1,14 @@
-#include "commands/ScoreLow.h"
+#include "commands/ScoreLow.h" // relevent header file
 
-ScoreLow::ScoreLow(robotArm* robotArm) : m_robotArm{robotArm} {
-    SetName("ScoreLow");
-    AddRequirements({m_robotArm});
+ScoreLow::ScoreLow(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
+    SetName("ScoreLow"); // set the ?? name
+    AddRequirements({m_robotArm}); // require the m_robotArm pointer
 }
 
-void ScoreLow::Initialize() { printf("ScoreLow Initialized \n"); }
+void ScoreLow::Initialize() { printf("ScoreLow Initialized \n"); } // print debug message on initialization
 
-void ScoreLow::Execute() {
-    m_robotArm->scoreLow();
+void ScoreLow::Execute() { // ??[when does it do this]
+    m_robotArm->scoreLow(); // make m_robotArm point to the armDown() command
 }
 
-bool ScoreLow::IsFinished() { return true; }
+bool ScoreLow::IsFinished() { return true; } // return when ??

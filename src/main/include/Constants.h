@@ -25,6 +25,10 @@ namespace armConstants {
     constexpr int kMotorArmTelescopingID = 14;
     constexpr int kMotorArmClampID = 15;
     constexpr int kEncoderTelescopingID = 16;
+    
+    namespace offsets {
+        constexpr double kTelescoping{-149.502};
+    }
 
     namespace arm {
         constexpr double kRobotArm[6]{kMotorArmAngleLeftID,
@@ -33,10 +37,6 @@ namespace armConstants {
                                         kEncoderTelescopingID,
                                         kMotorArmClampID,
                                         offsets::kTelescoping};
-    }
-
-    namespace offsets {
-        constexpr double kTelescoping{-149.502};
     }
 }
 

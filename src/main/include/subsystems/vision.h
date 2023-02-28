@@ -13,6 +13,7 @@ class Vision : public frc2::SubsystemBase {
   Vision();
 
   double GetTargetX();
+  void SelectPipeline(int id);
 
  private:
   std::shared_ptr<nt::NetworkTable> m_networkTable;

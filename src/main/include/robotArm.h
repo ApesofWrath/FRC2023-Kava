@@ -1,9 +1,9 @@
-#include "Constants.h"
-#include "hardwareSettings.h"
+// #include "Constants.h"
+// #include "hardwareSettings.h"
 
-class robotArm {
-    public:
-    robotArm(const double arm[]);
+// class robotArm {
+//     public:
+//     robotArm(const double arm[]);
 
-    private:
-};
+//     private:
+// };

@@ -6,6 +6,13 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include "subsystems/vision.h"
+#include "subsystems/drivetrain.h"
+#include <units/velocity.h>
+#include <units/angular_velocity.h>
+#include <frc/XboxController.h>
+#include <commands/Drive.h>
+
 
 void Robot::RobotInit() {}
 
@@ -63,7 +70,15 @@ void Robot::TeleopPeriodic() {}
 /**
  * This function is called periodically during test mode.
  */
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic() {
+  Vision visionSubsystem;
+  frc::SmartDashboard::PutNumber("Target X", visionSubsystem.GetTargetX());
+// Convert linear and angular velocities to units of meters and radians per 
+  //drive by calling drivetrain function directly
+  drivetrain m_drivetrain;
+  m_drivetrain.SwerveDrive(0.1_mps, 0.0_mps, 0.0_rad_per_s, true);
+}
+
 
 #ifndef RUNNING_FRC_TESTS
 int main() {

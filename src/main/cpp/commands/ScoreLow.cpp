@@ -7,8 +7,8 @@ ScoreLow::ScoreLow(robotArm* robotArm) : m_robotArm{robotArm} { // constructor f
 
 void ScoreLow::Initialize() { printf("ScoreLow Initialized \n"); } // print debug message on initialization
 
-void ScoreLow::Execute() { // ??[when does it do this]
-    m_robotArm->scoreLow(); // make m_robotArm point to the armDown() command
+void ScoreLow::Execute() { // on command call (button press)
+    m_robotArm->scoreLow(); // make m_robotArm point to the scoreLow() command
 }
 
 bool ScoreLow::IsFinished() { return true; } // return when ??

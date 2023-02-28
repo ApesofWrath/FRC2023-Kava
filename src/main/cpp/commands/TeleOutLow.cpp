@@ -7,8 +7,8 @@ TeleOutLow::TeleOutLow(robotArm* robotArm) : m_robotArm{robotArm} { // construct
 
 void TeleOutLow::Initialize() { printf("TeleOutLow Initialized \n"); } // print debug message on initialization
 
-void TeleOutLow::Execute() { // ??[when does it do this]
-    m_robotArm->teleOutLong(); // make m_robotArm point to the armDown() command
+void TeleOutLow::Execute() { // on command call (button press)
+    m_robotArm->teleOutLong(); // make m_robotArm point to the teleOutLong() command
 }
 
 bool TeleOutLow::IsFinished() { return true; } // return when ??

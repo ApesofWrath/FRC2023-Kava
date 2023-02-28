@@ -7,7 +7,7 @@ ArmDown::ArmDown(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for
 
 void ArmDown::Initialize() { printf("ArmDown Initialized \n"); } // print debug message on initialization
 
-void ArmDown::Execute() { // ??[when does it do this]
+void ArmDown::Execute() { // on command call (button press)
     m_robotArm->armDown(); // make m_robotArm point to the armDown() command
 }
 

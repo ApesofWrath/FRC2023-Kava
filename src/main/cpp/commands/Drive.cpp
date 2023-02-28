@@ -18,7 +18,7 @@ Drive::Drive( // constructor for command class
 
 void Drive::Initialize() { printf("Drive initialized.\n"); } // print debug message on initialization
 
-void Drive::Execute() { // ??[when does it do this]
+void Drive::Execute() { // on command call (button press)
   m_drivetrain->SwerveDrive( // make m_drivetrain point to SwerveDrive function while passing the below values
                             -m_ySpeedLimiter.Calculate(frc::ApplyDeadband(m_ySpeed(), 0.08))*drivetrainConstants::calculations::kChassisMaxSpeed, // ??
                             -m_xSpeedLimiter.Calculate(frc::ApplyDeadband(m_xSpeed(), 0.08))*drivetrainConstants::calculations::kChassisMaxSpeed, // ??

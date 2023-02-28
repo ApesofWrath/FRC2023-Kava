@@ -7,7 +7,7 @@ ClampOpen::ClampOpen(robotArm* robotArm) : m_robotArm{robotArm} {  // constructo
 
 void ClampOpen::Initialize() { printf("ClampOpen Initialized \n"); } // print debug message on initialization
 
-void ClampOpen::Execute() { // ??[when does it do this]
+void ClampOpen::Execute() { // on command call (button press)
     m_robotArm->clampOpen(); // make m_robotArm point to the clampOpen() command
 }
 

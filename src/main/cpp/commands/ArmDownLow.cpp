@@ -7,8 +7,8 @@ ArmDownLow::ArmDownLow(robotArm* robotArm) : m_robotArm{robotArm} { // construct
 
 void ArmDownLow::Initialize() { printf("ArmDownLow Initialized \n"); } // print debug message on initialization
 
-void ArmDownLow::Execute() { // ??[when does it do this]
-    m_robotArm->armDownLow(); // make m_robotArm point to the armDown() command
+void ArmDownLow::Execute() { // on command call (button press)
+    m_robotArm->armDownLow(); // make m_robotArm point to the armDownLow() command
 }
 
 bool ArmDownLow::IsFinished() { return true; } // return when ??

@@ -7,7 +7,7 @@ ClampClose::ClampClose(robotArm* robotArm) : m_robotArm{robotArm} { // construct
 
 void ClampClose::Initialize() { printf("ClampClose Initialized \n"); } // print debug message on initialization
 
-void ClampClose::Execute() { // ??[when does it do this]
+void ClampClose::Execute() { // on command call (button press)
     m_robotArm->clampClose(); // make m_robotArm point to the clampClose() command
 }
 

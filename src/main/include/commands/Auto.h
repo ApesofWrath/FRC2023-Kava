@@ -3,6 +3,8 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include <units/length.h>
+#include <pathplanner/lib/auto/SwerveAutoBuilder.h>
+#include <pathplanner/lib/PathPlanner.h>
 #include <frc/geometry/Pose2d.h>
 #include "subsystems/drivetrain.h"
 #include <AHRS.h>

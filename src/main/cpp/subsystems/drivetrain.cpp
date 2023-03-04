@@ -38,6 +38,14 @@ void drivetrain::UpdateOdometry() {
                       m_rearLeft.GetPosition()});
 }
 
+/*frc::Pose2d drivetrain::GetOdometry() {
+    m_odometry.GetPose();
+}
+
+void drivetrain::ResetOdometry(auto initPose) {
+    m_odometry.set(initPose, frc::Rotation2d(units::degree_t(0)));
+}*/
+
 
 void drivetrain::Periodic() {
     UpdateOdometry();

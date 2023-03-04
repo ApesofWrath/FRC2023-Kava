@@ -107,7 +107,14 @@
     "xstddef": "cpp",
     "xtr1common": "cpp",
     "xtree": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "*.tcc": "cpp",
+    "bitset": "cpp",
+    "cwctype": "cpp",
+    "memory_resource": "cpp",
+    "string_view": "cpp",
+    "semaphore": "cpp",
+    "cinttypes": "cpp"
   },
   "wpilib.deployOffline": false
 }

@@ -6,3 +6,4 @@ Auto::Auto(drivetrain* drivetrain) : m_drivetrain{drivetrain} {
     
 }
 
+

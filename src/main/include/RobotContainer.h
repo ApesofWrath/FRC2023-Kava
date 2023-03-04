@@ -5,10 +5,15 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc2/command/CommandPtr.h>
+#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/InstantCommand.h>
+#include "Constants.h"
 #include <pathplanner/lib/auto/SwerveAutoBuilder.h>
 #include <pathplanner/lib/PathPlanner.h>
-#include "Constants.h"
-
+#include <pathplanner/lib/auto/PIDConstants.h>
 #include "commands/Auto.h"
 #include "commands/Drive.h"
 #include "subsystems/drivetrain.h"
@@ -25,15 +30,15 @@
 class RobotContainer {
  public:
   RobotContainer();
-
+  
+  
   frc2::Command* GetAutonomousCommand();
-
  private:
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;
-
   Auto m_Auto;
-
+  //std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+  frc::SendableChooser<std::string> m_chooser;
   void ConfigureButtonBindings();
 
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};

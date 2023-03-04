@@ -45,5 +45,4 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   frc2::Command* fullAuto =  m_autoBuilder.fullAuto(pathGroup);
   return fullAuto; */
   return &m_Auto;
-
 }

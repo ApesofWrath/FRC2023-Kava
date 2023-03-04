@@ -12,9 +12,12 @@
 #include <units/angular_velocity.h>
 #include <frc/XboxController.h>
 #include <commands/Drive.h>
+#include <frc/Joystick.h>
 
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use
@@ -72,12 +75,17 @@ void Robot::TeleopPeriodic() {}
  */
 void Robot::TestPeriodic() {
   Vision visionSubsystem;
-  frc::SmartDashboard::PutNumber("Target X", visionSubsystem.GetTargetX());
-// Convert linear and angular velocities to units of meters and radians per 
-  //drive by calling drivetrain function directly
-  drivetrain m_drivetrain;
-  m_drivetrain.SwerveDrive(0.1_mps, 0.0_mps, 0.0_rad_per_s, true);
-}
+  // visionSubsystem.SelectPipeline(1);
+  // if (m_controllerMain.GetRawButton(1)){
+  visionSubsystem.SelectPipeline(0);
+  // }
+  //   if (m_controllerMain.GetRawButton(2)){
+  //   visionSubsystem.SelectPipeline(1);
+  // }
+    
+  // frc::SmartDashboard::PutNumber("Target X", visionSubsystem.GetTargetX());
+  
+  }
 
 
 #ifndef RUNNING_FRC_TESTS

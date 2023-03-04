@@ -31,14 +31,14 @@ class RobotContainer {
  public:
   RobotContainer();
   
-  
   frc2::Command* GetAutonomousCommand();
  private:
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;
   Auto m_Auto;
-  //std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
-  frc::SendableChooser<std::string> m_chooser;
+  /* pathplanner::SwerveAutoBuilder m_autoBuilder;
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+  frc::SendableChooser<std::string> m_chooser; */
   void ConfigureButtonBindings();
 
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};

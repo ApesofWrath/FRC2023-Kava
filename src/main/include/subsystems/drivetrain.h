@@ -22,13 +22,8 @@ class drivetrain : public frc2::SubsystemBase {
                    bool fieldRelative);
 
   void UpdateOdometry();
-<<<<<<< HEAD
-  //frc::Pose2d GetOdometry();
-  //void ResetOdometry(auto initPose);
-=======
   frc::Pose2d GetOdometry();
   void ResetOdometry(frc::Pose2d initPose);
->>>>>>> 3b9d68b (make auton build)
 
 
   /**

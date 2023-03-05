@@ -38,17 +38,6 @@ void drivetrain::UpdateOdometry() {
                       m_rearLeft.GetPosition()});
 }
 
-<<<<<<< HEAD
-/* frc::Pose2d drivetrain::GetOdometry() {
-    return m_odometry.GetPose();
-} */
-
-/* void drivetrain::ResetOdometry(auto initPose) {
-    m_odometry.ResetPosition(m_navX.GetYaw, {m_frontRight.GetPosition(),
-                      m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
-                      m_rearLeft.GetPosition()}, initPose);
-} */
-=======
 frc::Pose2d drivetrain::GetOdometry() {
     return m_odometry.GetPose();
 }
@@ -58,7 +47,6 @@ void drivetrain::ResetOdometry(frc::Pose2d initPose) {
                       m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
                       m_rearLeft.GetPosition()}, initPose);
 }
->>>>>>> 3b9d68b (make auton build)
 
 
 void drivetrain::Periodic() {

@@ -34,15 +34,9 @@ class RobotContainer {
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;
   Auto m_Auto;
-<<<<<<< HEAD
-  //pathplanner::SwerveAutoBuilder m_autoBuilder;
-  /* std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
-  frc::SendableChooser<std::string> m_chooser; */
-=======
   pathplanner::SwerveAutoBuilder m_autoBuilder;
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
   frc::SendableChooser<std::string> m_chooser;
->>>>>>> 3b9d68b (make auton build)
   void ConfigureButtonBindings();
 
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};

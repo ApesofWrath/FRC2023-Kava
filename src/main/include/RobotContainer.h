@@ -11,6 +11,7 @@
 #include "commands/Auto.h"
 #include "commands/Drive.h"
 #include "subsystems/drivetrain.h"
+#include "subsystems/vision.h"
 
 #include <frc/Joystick.h>
 #include <frc2/Command/Button/CommandXboxController.h>
@@ -33,7 +34,7 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;
-
+  Vision m_vision;
   Auto m_Auto;
 
   void ConfigureButtonBindings();

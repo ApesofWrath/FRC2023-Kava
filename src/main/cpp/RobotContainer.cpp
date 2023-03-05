@@ -4,9 +4,15 @@
 
 #include "RobotContainer.h"
 
+<<<<<<< HEAD
 RobotContainer::RobotContainer() : 
 m_Auto(&m_drivetrain)//,
 /* m_autoBuilder(
+=======
+RobotContainer::RobotContainer() :
+m_Auto(&m_drivetrain),
+m_autoBuilder(
+>>>>>>> 3b9d68b (make auton build)
   [this]() { return m_drivetrain.GetOdometry(); }, // Function to supply current robot pose
   [this](auto initPose) { m_drivetrain.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
   pathplanner::PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
@@ -15,9 +21,16 @@ m_Auto(&m_drivetrain)//,
   eventMap,
   { &m_drivetrain }, // Drive requirements, usually just a single drive subsystem
   true // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+<<<<<<< HEAD
 ) */
 {
   // Initialize all of your commands and subsystems here
+=======
+  )
+ {
+  // Initialize all of your commands and subsystems here
+
+>>>>>>> 3b9d68b (make auton build)
   // Configure the button bindings
   ConfigureButtonBindings();
 
@@ -39,6 +52,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
+<<<<<<< HEAD
   /* std::string path = m_chooser.GetSelected();
   using namespace pathplanner;
   std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup(path, {PathConstraints(4_mps, 3_mps_sq)});
@@ -46,4 +60,13 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   frc2::Command* fullPathCommand = fullPath.get();
   return fullPathCommand; */
   return &m_Auto;
+=======
+  std::string path = m_chooser.GetSelected();
+  using namespace pathplanner;
+  std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup(path, {PathConstraints(4_mps, 3_mps_sq)});
+  frc2::CommandPtr fullAuto =  m_autoBuilder.fullAuto(pathGroup);
+  return fullAuto.get();
+  //return &m_Auto;
+
+>>>>>>> 3b9d68b (make auton build)
 }

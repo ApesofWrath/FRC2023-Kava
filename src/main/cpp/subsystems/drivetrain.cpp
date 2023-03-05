@@ -38,15 +38,15 @@ void drivetrain::UpdateOdometry() {
                       m_rearLeft.GetPosition()});
 }
 
- frc::Pose2d drivetrain::GetOdometry() {
+/* frc::Pose2d drivetrain::GetOdometry() {
     return m_odometry.GetPose();
-}
+} */
 
-void drivetrain::ResetOdometry(auto initPose) {
+/* void drivetrain::ResetOdometry(auto initPose) {
     m_odometry.ResetPosition(m_navX.GetYaw, {m_frontRight.GetPosition(),
                       m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
                       m_rearLeft.GetPosition()}, initPose);
-}
+} */
 
 
 void drivetrain::Periodic() {

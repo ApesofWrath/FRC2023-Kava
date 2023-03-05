@@ -7,6 +7,7 @@
 #include <pathplanner/lib/PathPlanner.h>
 #include <frc/geometry/Pose2d.h>
 #include "subsystems/drivetrain.h"
+#include "RobotContainer.h"
 #include <AHRS.h>
 //#include <pathplanner/lib/PathPlanner.h>
 

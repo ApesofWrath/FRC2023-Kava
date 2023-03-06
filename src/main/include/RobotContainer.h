@@ -5,13 +5,17 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc2/command/InstantCommand.h>
 
 #include "Constants.h"
 
 #include "commands/Auto.h"
 #include "commands/Drive.h"
+#include "commands/Align.h"
 #include "subsystems/drivetrain.h"
 #include "subsystems/vision.h"
+#include "MathFunctions.h"
+
 
 #include <frc/Joystick.h>
 #include <frc2/Command/Button/CommandXboxController.h>

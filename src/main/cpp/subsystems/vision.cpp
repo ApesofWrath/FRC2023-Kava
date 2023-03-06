@@ -11,4 +11,9 @@ double Vision::GetTargetX() {
 //Set pipeline of limelight given id
 void Vision::SelectPipeline(int id){
   m_networkTable->PutNumber("pipeline", id);
-};
+}
+//Get Robot's Pose
+std::vector<double> Vision::GetBotPose() {
+  double defaultbotpose[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  return m_networkTable->GetNumberArray("botpose", std::span<double>(defaultbotpose, 6));
+}

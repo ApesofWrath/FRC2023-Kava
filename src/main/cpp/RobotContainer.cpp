@@ -3,15 +3,19 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "RobotContainer.h"
-#include "MathFunctions.h"
 
 RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
   ConfigureButtonBindings();
-  frc2::JoystickButton button{&m_controllerMain, 1}; // Replace "1" with the button number you want to bind the command to
-  button.WhenPressed(m_vision.SelectPipeline(1));
+  // Initialize buttonA, buttonB and buttonY Events
+  frc2::JoystickButton buttonA{&m_controllerMain, 1};
+  frc2::JoystickButton buttonB{&m_controllerMain, 2};
+  frc2::JoystickButton buttonY{&m_controllerMain, 3}; 
+  //Bind Limelight Pipeline 0 (Apriltags) and Pipeline 1 (Retroreflective) to ButtonA and ButtonB events respectively
+  buttonA.WhenPressed(frc2::InstantCommand([this] { m_vision.SelectPipeline(0); }));
+  buttonB.WhenPressed(frc2::InstantCommand([this] { m_vision.SelectPipeline(1); }));
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
     [this] { return MathFunctions::joystickCurve(m_controllerMain.GetX(), 5.0); },
@@ -21,7 +25,7 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  // Configure your button bindings here
+   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).OnTrue(Align().ToPtr());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

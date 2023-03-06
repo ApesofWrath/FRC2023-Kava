@@ -6,7 +6,6 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
-#include "subsystems/vision.h"
 #include "subsystems/drivetrain.h"
 #include <units/velocity.h>
 #include <units/angular_velocity.h>
@@ -74,10 +73,10 @@ void Robot::TeleopPeriodic() {}
  * This function is called periodically during test mode.
  */
 void Robot::TestPeriodic() {
-  Vision visionSubsystem;
-  // visionSubsystem.SelectPipeline(1);
-  // if (m_controllerMain.GetRawButton(1)){
-  visionSubsystem.SelectPipeline(0);
+  // Vision visionSubsystem;
+  // // visionSubsystem.SelectPipeline(1);
+  // // if (m_controllerMain.GetRawButton(1)){
+  // visionSubsystem.SelectPipeline(0);
   // }
   //   if (m_controllerMain.GetRawButton(2)){
   //   visionSubsystem.SelectPipeline(1);

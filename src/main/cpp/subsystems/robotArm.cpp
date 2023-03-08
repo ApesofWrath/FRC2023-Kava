@@ -16,6 +16,7 @@ m_encoderTelescoping(armConstants::arm::kRobotArm[4]),
 m_encoderOffset(armConstants::arm::kRobotArm[5]) {
 
     m_encoderTelescoping.ConfigMagnetOffset(m_encoderOffset);
+    m_encoderTelescoping.ConfigMagnetOffset(m_encoderOffset);
     m_encoderTelescoping.ConfigSensorDirection(true);
 
     m_motorAngleLeft.RestoreFactoryDefaults();
@@ -49,15 +50,15 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorTelescopingController.SetFF(1.0/5767.0);
     m_motorTelescopingController.SetOutputRange(-1.0F, 1.0F);
 
-    m_motorTelescopingController.SetSmartMotionMaxVelocity(1000); //2400
-    m_motorTelescopingController.SetSmartMotionMaxAccel(2800); //9600
+    m_motorTelescopingController.SetSmartMotionMaxVelocity(8400); //2400
+    m_motorTelescopingController.SetSmartMotionMaxAccel(17200); //9600
     m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
 
     m_motorClamp.SetSmartCurrentLimit(1.0);
     m_motorClamp.SetInverted(true);
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 5.0);
-    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 28.0);
+    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 38.0);
 
     m_motorClamp.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
     m_motorClamp.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
@@ -80,7 +81,7 @@ void robotArm::armUp() {
 }
 
 void robotArm::teleOut() { 
-    m_motorTelescopingController.SetReference(137.43, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorTelescopingController.SetReference(-134, rev::CANSparkMax::ControlType::kSmartMotion); // 137.43
 }
 
 void robotArm::teleIn() {
@@ -130,5 +131,9 @@ void robotArm::scoreHigh() {
 }
 
 void robotArm::Periodic() {
-    frc::SmartDashboard::SmartDashboard::PutNumber("Tel Rel Enc Pos: ", m_encoderMotorTelescoping.GetPosition());
+    frc::SmartDashboard::PutNumber("Tel Rel Enc Pos: ", m_encoderMotorTelescoping.GetPosition());
+    frc::SmartDashboard::PutNumber("Tel Abs Enc Pos: ", m_encoderTelescoping.GetAbsolutePosition());
+
+    // m_encoderMotorTelescoping.SetPosition(m_encoderTelescoping.GetAbsolutePosition());
+    // m_encoderMotorTelescoping.SetPosition(0);
 }

@@ -21,21 +21,21 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Configure the button bindings
   ConfigureButtonBindings();
 
-  m_drivetrain.SetDefaultCommand(Drive(
+  /* m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
     [this] { return m_controllerMain.GetX(); }, // m_controllerMain.GetX()
     [this] { return m_controllerMain.GetY(); }, // m_controllerMain.GetY()
-    [this] { return m_controllerMain.GetRawAxis(4); })); // m_controllerMain.GetRawAxis(4)
+    [this] { return m_controllerMain.GetRawAxis(4); })); // m_controllerMain.GetRawAxis(4) */
 }
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ScoreHigh(&m_robotArm).ToPtr());
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(ScoreLow(&m_robotArm).ToPtr());
+  // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ScoreHigh(&m_robotArm).ToPtr());
+  // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(ScoreLow(&m_robotArm).ToPtr());
 
-  // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ArmDown(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ArmDown(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kY).OnTrue(ArmUp(&m_robotArm).ToPtr());
-  // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(TeleOut(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(TeleOut(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kA).OnTrue(TeleIn(&m_robotArm).ToPtr());
 
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kRightBumper).OnTrue(ClampClose(&m_robotArm).ToPtr());

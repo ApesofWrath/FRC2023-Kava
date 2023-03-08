@@ -1,3 +1,5 @@
+#ifndef VISION_H
+#define VISION_H
 #include <frc2/command/SubsystemBase.h>
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
@@ -19,3 +21,4 @@ class Vision : public frc2::SubsystemBase {
  private:
   std::shared_ptr<nt::NetworkTable> m_networkTable;
 };
+#endif // VISION_H

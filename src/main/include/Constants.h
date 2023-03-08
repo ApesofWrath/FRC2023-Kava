@@ -12,7 +12,12 @@
  * Place constants into subsystem/command -specific NAMESPACES within this
  * header, which can then be included (where they are needed).
  */
-
+namespace visionConstants {
+    //How fast the robot attempts to correct its self
+    constexpr double errorMultiplier = -1.0;
+    //The minumum error for the robot to move
+    constexpr double errorMinimum = 0.0;
+}
 namespace controllerConstants {
     //USB port addresses on drivestation PC.
     constexpr int kControllerMainID = 0;

@@ -18,14 +18,13 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   buttonB.WhenPressed(frc2::InstantCommand([this] { m_vision.SelectPipeline(1); }));
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetX(), 5.0); },
-    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetY(), 5.0); },
+    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetX(), 8.0); },
+    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetY(), 8.0); },
     [this] { return m_controllerMain.GetRawAxis(4); })); 
-
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).OnTrue(Align().ToPtr());
+   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhileTrue(Align(&m_drivetrain, &m_vision).ToPtr());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

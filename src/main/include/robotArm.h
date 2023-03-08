@@ -1,5 +1,4 @@
 #include "Constants.h"
-#include "hardwareSettings.h"
 
 class robotArm {
     public:

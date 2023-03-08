@@ -37,7 +37,7 @@ class drivetrain : public frc2::SubsystemBase {
 
 private:
 
-  AHRS m_navX{frc::SerialPort::kUSB1};
+  AHRS m_navX{frc::SerialPort::kMXP};
   
   frc::Translation2d m_locationFrontRight{+14_in, -14_in};
   frc::Translation2d m_locationRearRight{-14_in, -14_in};

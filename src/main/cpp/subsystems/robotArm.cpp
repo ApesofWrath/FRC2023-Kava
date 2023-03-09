@@ -120,13 +120,13 @@ void robotArm::scoreLow() {
 void robotArm::scoreHigh() {
     // m_motorClamp.Set(0.5);
     m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
-    m_motorTelescopingController.SetReference(138, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorTelescopingController.SetReference(140, rev::CANSparkMax::ControlType::kSmartMotion);
 
-    while (m_encoderMotorTelescoping.GetPosition() < 136) {
+    while (m_encoderMotorTelescoping.GetPosition() < 138) {
 
     }
 
-    m_motorAngleLeftController.SetReference(-30, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorAngleLeftController.SetReference(-28, rev::CANSparkMax::ControlType::kSmartMotion);
     // m_motorClamp.Set(-0.5);
 }
 

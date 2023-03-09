@@ -7,9 +7,9 @@
 #include "subsystems/drivetrain.h"
 #include "subsystems/vision.h"
 #include "Constants.h"
-class Align : public frc2::CommandHelper<frc2::CommandBase, Align> {
+class PointAtTarget : public frc2::CommandHelper<frc2::CommandBase, PointAtTarget> {
 public:
-  explicit Align(drivetrain* drivetrain, Vision* Vision);
+  explicit PointAtTarget(drivetrain* drivetrain, Vision* Vision);
     // Use Requires() here to declare subsystem dependencies
     // eg. Requires(&Robot::m_subsystem);
 

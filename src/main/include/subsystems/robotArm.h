@@ -11,7 +11,6 @@
 #include <rev/REVLibError.h>
 
 #include "Constants.h"
-#include "hardwareSettings.h"
 #include <string>
 
 class robotArm : public frc2::SubsystemBase {

@@ -12,6 +12,7 @@
 #include "commands/Auto.h"
 #include "commands/Drive.h"
 #include "commands/PointAtTarget.h"
+#include "commands/Align.h"
 #include "subsystems/drivetrain.h"
 #include "subsystems/vision.h"
 #include "MathFunctions.h"

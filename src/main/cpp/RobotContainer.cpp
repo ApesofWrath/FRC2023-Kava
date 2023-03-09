@@ -25,6 +25,8 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
 
 void RobotContainer::ConfigureButtonBindings() {
    frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhileTrue(PointAtTarget(&m_drivetrain, &m_vision).ToPtr());
+   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kX).WhileTrue(Align(&m_drivetrain, &m_vision).ToPtr());
+
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

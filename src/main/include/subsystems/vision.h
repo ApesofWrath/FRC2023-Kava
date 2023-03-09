@@ -17,6 +17,7 @@ class Vision : public frc2::SubsystemBase {
   double GetTargetX();
   void SelectPipeline(int id);
   std::vector<double> GetBotPose();
+  std::vector<double> GetTargetPoseRobotSpace();
 
  private:
   std::shared_ptr<nt::NetworkTable> m_networkTable;

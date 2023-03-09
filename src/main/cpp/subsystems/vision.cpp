@@ -17,3 +17,8 @@ std::vector<double> Vision::GetBotPose() {
   double defaultbotpose[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
   return m_networkTable->GetNumberArray("botpose", std::span<double>(defaultbotpose, 6));
 }
+
+std::vector<double> Vision::GetTargetPoseRobotSpace() {
+  double defaultbotpose[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  return m_networkTable->GetNumberArray("botpose", std::span<double>(defaultbotpose, 6));
+}

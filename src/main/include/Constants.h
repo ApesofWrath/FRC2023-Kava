@@ -14,9 +14,15 @@
  */
 namespace visionConstants {
     //How fast the robot attempts to correct its self
-    constexpr double errorMultiplier = 0.1;
+    constexpr double errorMultiplier = 0.05;
     //The minumum error for the robot to move
     constexpr double errorMinimum = 0.0;
+
+    constexpr double xAlignMultiplier = 0.5;
+    constexpr double zAlignMultiplier = 0.5;
+    constexpr double yawAlignMultiplier = 0.05;
+    constexpr double AlignDistance = 0.0;
+    constexpr double rotationDistance = 1.0;
 }
 namespace controllerConstants {
     //USB port addresses on drivestation PC.

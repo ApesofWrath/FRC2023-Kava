@@ -39,8 +39,8 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorAngleLeft.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 4.0);
     m_motorAngleLeft.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, -38.0);
 
-    m_motorAngleLeftController.SetSmartMotionMaxVelocity(5600); //7200
-    m_motorAngleLeftController.SetSmartMotionMaxAccel(10800); //24800
+    m_motorAngleLeftController.SetSmartMotionMaxVelocity(7200); //7200
+    m_motorAngleLeftController.SetSmartMotionMaxAccel(26800); //24800
     m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
 
@@ -81,7 +81,7 @@ void robotArm::armUp() {
 }
 
 void robotArm::teleOut() { 
-    m_motorTelescopingController.SetReference(-134, rev::CANSparkMax::ControlType::kSmartMotion); // 137.43
+    m_motorTelescopingController.SetReference(100, rev::CANSparkMax::ControlType::kSmartMotion); // 137.43
 }
 
 void robotArm::teleIn() {
@@ -107,33 +107,120 @@ void robotArm::clampOpen() {
 void robotArm::scoreLow() {
     // m_motorClamp.Set(0.5);
     m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
-    m_motorTelescopingController.SetReference(78, rev::CANSparkMax::ControlType::kSmartMotion); //137.43
+    m_motorTelescopingController.SetReference(80, rev::CANSparkMax::ControlType::kSmartMotion); //137.43
 
-    while (m_encoderMotorTelescoping.GetPosition() < 76) { //135
+    while (m_encoderMotorTelescoping.GetPosition() < 78) { //135
 
     }
 
     m_motorAngleLeftController.SetReference(-30, rev::CANSparkMax::ControlType::kSmartMotion);
     // m_motorClamp.Set(-0.5);
+
 }
 
 void robotArm::scoreHigh() {
     // m_motorClamp.Set(0.5);
-    m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
-    m_motorTelescopingController.SetReference(140, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorTelescopingController.SetReference(142, rev::CANSparkMax::ControlType::kSmartMotion);
 
-    while (m_encoderMotorTelescoping.GetPosition() < 138) {
+    while (m_encoderMotorTelescoping.GetPosition() < 140) {
 
     }
 
     m_motorAngleLeftController.SetReference(-28, rev::CANSparkMax::ControlType::kSmartMotion);
     // m_motorClamp.Set(-0.5);
+
+}
+
+void robotArm::angleManualZero() {
+    currentStateAngle = AngleStates::MANUALZERO;
+}
+
+void robotArm::teleManualZero() {
+    currentStateTele = TeleStates::MANUALZERO;
 }
 
 void robotArm::Periodic() {
     frc::SmartDashboard::PutNumber("Tel Rel Enc Pos: ", m_encoderMotorTelescoping.GetPosition());
     frc::SmartDashboard::PutNumber("Tel Abs Enc Pos: ", m_encoderTelescoping.GetAbsolutePosition());
+    // std::cout << "blah \n";
+    frc::SmartDashboard::PutNumber("L Angle Output Curr: ", m_motorAngleLeft.GetOutputCurrent());
+
+    // m_motorAngleLeft.GetOutputCurrent()
+
+    /* if (m_motorAngleLeft.GetOutputCurrent() < 10 && m_encoderMotorTelescoping.GetPosition() < 10 && zeroComplete == false) {
+        m_motorAngleLeft.Set(0.5);
+    }
+    
+    if (m_motorAngleLeft.GetOutputCurrent() > 10 && m_encoderMotorTelescoping.GetPosition() < 10 &&zeroComplete == false) {
+        zeroComplete = true;
+        m_motorAngleLeft.StopMotor();
+        m_encoderMotorAngleLeft.SetPosition(0);
+    } */
 
     // m_encoderMotorTelescoping.SetPosition(m_encoderTelescoping.GetAbsolutePosition());
     // m_encoderMotorTelescoping.SetPosition(0);
+
+    switch (currentStateAngle) {
+        case AngleStates::MANUALZERO:
+            currentStateAngle = AngleStates::NOTZEROED;
+
+            break;
+
+        case AngleStates::INIT:
+            m_motorAngleLeft.Set(0.05);
+            if ((m_motorAngleLeft.GetOutputCurrent() + m_motorAngleRight.GetOutputCurrent()) > 10) {
+                m_encoderMotorAngleLeft.SetPosition(0);
+                currentStateAngle = AngleStates::ZEROED;
+            }
+
+            break;
+
+        case AngleStates::NOTZEROED:
+            currentStateAngle = AngleStates::INIT;
+
+            break;
+
+        case AngleStates::ZEROED:
+            m_motorAngleLeft.Set(0.0);
+            currentStateAngle = AngleStates::IDLE;
+            break;
+
+        default:
+        case AngleStates::IDLE:
+
+            break;
+    }
+
+    switch (currentStateTele) {
+        case TeleStates::MANUALZERO:
+            currentStateTele = TeleStates::NOTZEROED;
+
+            break;
+
+        case TeleStates::INIT:
+            m_motorTelescoping.Set(-0.1);
+            if (m_motorTelescoping.GetOutputCurrent() > 30) {
+                m_encoderMotorTelescoping.SetPosition(0);
+                currentStateTele = TeleStates::ZEROED;
+            }
+
+            break;
+
+        case TeleStates::NOTZEROED:
+            currentStateTele = TeleStates::INIT;
+
+            break;
+
+        case TeleStates::ZEROED:
+            m_motorTelescoping.Set(0.0);
+            currentStateTele = TeleStates::IDLE;
+            break;
+
+        default:
+        case TeleStates::IDLE:
+
+            break;
+    }
+
 }

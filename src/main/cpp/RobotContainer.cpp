@@ -34,8 +34,13 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kRightStick).OnTrue(ScoreLow(&m_robotArm).ToPtr());
 
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(ArmDown(&m_robotArm).ToPtr());
+
+  // manual zero
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kY).OnTrue(ArmUp(&m_robotArm).ToPtr());
+
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(TeleOut(&m_robotArm).ToPtr());
+
+  // manual zero
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kA).OnTrue(TeleIn(&m_robotArm).ToPtr());
 
   frc2::JoystickButton(&m_controller, frc::XboxController::Button::kRightBumper).OnTrue(ClampClose(&m_robotArm).ToPtr());

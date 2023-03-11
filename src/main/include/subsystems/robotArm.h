@@ -13,6 +13,22 @@
 #include "Constants.h"
 #include <string>
 
+enum class AngleStates {
+    INIT,
+    NOTZEROED,
+    ZEROED,
+    MANUALZERO,
+    IDLE
+};
+
+enum class TeleStates {
+    INIT,
+    NOTZEROED,
+    ZEROED,
+    MANUALZERO,
+    IDLE
+};
+
 class robotArm : public frc2::SubsystemBase {
     public:
     robotArm();
@@ -28,6 +44,8 @@ class robotArm : public frc2::SubsystemBase {
     
     void scoreLow();
     void scoreHigh();
+    void angleManualZero();
+    void teleManualZero();
 
     void Periodic() override;
 
@@ -48,4 +66,8 @@ class robotArm : public frc2::SubsystemBase {
     rev::SparkMaxPIDController m_motorTelescopingController = m_motorTelescoping.GetPIDController();
 
     const double m_encoderOffset;
+
+    AngleStates currentStateAngle = AngleStates::INIT;
+
+    TeleStates currentStateTele = TeleStates::INIT;
 };

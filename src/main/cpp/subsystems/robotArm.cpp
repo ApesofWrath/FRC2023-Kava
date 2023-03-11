@@ -70,10 +70,12 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorTelescoping.SetInverted(true);
 
     m_motorAngleRight.Follow(m_motorAngleLeft, true);
+
+    m_encoderMotorClamp.SetPosition(0);
 }
 
 void robotArm::armDown() {
-    m_motorAngleLeftController.SetReference(-38.83, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorAngleLeftController.SetReference(-42, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
 void robotArm::armUp() {
@@ -96,12 +98,25 @@ void robotArm::armDownLow() {
     m_motorAngleLeftController.SetReference(-34.69, rev::ControlType::kSmartMotion);
 }
 
+// commands
+
 void robotArm::clampClose() {
     m_motorClamp.Set(0.5);
 }
 
 void robotArm::clampOpen() {
     m_motorClamp.Set(-0.5);
+}
+
+void robotArm::grabCone() {
+    m_motorAngleLeftController.SetReference(-10, rev::ControlType::kSmartMotion);
+    m_motorTelescopingController.SetReference(52, rev::ControlType::kSmartMotion);
+
+    while (m_encoderMotorTelescoping.GetPosition() < 50) {
+
+    }
+
+    m_motorAngleLeftController.SetReference(-22, rev::ControlType::kSmartMotion);
 }
 
 void robotArm::scoreLow() {
@@ -121,9 +136,9 @@ void robotArm::scoreLow() {
 void robotArm::scoreHigh() {
     // m_motorClamp.Set(0.5);
     m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
-    m_motorTelescopingController.SetReference(142, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorTelescopingController.SetReference(146, rev::CANSparkMax::ControlType::kSmartMotion);
 
-    while (m_encoderMotorTelescoping.GetPosition() < 140) {
+    while (m_encoderMotorTelescoping.GetPosition() < 144) {
 
     }
 

@@ -46,6 +46,7 @@ class robotArm : public frc2::SubsystemBase {
     void scoreHigh();
     void angleManualZero();
     void teleManualZero();
+    void grabCone();
 
     void Periodic() override;
 
@@ -60,6 +61,7 @@ class robotArm : public frc2::SubsystemBase {
     rev::SparkMaxRelativeEncoder m_encoderMotorAngleRight = m_motorAngleRight.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
     rev::SparkMaxRelativeEncoder m_encoderMotorAngleLeft = m_motorAngleLeft.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
     rev::SparkMaxRelativeEncoder m_encoderMotorTelescoping = m_motorTelescoping.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
+    rev::SparkMaxRelativeEncoder m_encoderMotorClamp = m_motorClamp.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
 
     rev::SparkMaxPIDController m_motorAngleRightController = m_motorAngleRight.GetPIDController();
     rev::SparkMaxPIDController m_motorAngleLeftController = m_motorAngleLeft.GetPIDController();

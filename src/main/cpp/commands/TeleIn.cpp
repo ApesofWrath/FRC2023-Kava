@@ -8,7 +8,7 @@ TeleIn::TeleIn(robotArm* robotArm) : m_robotArm{robotArm} {  // constructor for 
 void TeleIn::Initialize() { printf("TeleIn Initialized \n"); } // print debug message on initialization
 
 void TeleIn::Execute() { // on command call (button press)
-    m_robotArm->teleManualZero(); // make m_robotArm point to the teleIn() command
+    m_robotArm->teleIn(); // make m_robotArm point to the teleIn() command
 }
 
 bool TeleIn::IsFinished() { return true; } // return when ??

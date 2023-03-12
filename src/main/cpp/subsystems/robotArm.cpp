@@ -12,12 +12,12 @@ robotArm::robotArm()
 m_motorAngleRight(armConstants::arm::kRobotArm[1], rev::CANSparkMax::MotorType::kBrushless),
 m_motorTelescoping(armConstants::arm::kRobotArm[2], rev::CANSparkMax::MotorType::kBrushless),
 m_motorClamp(armConstants::arm::kRobotArm[3], rev::CANSparkMax::MotorType::kBrushless),
-m_encoderTelescoping(armConstants::arm::kRobotArm[4]),
+/* m_encoderTelescoping(armConstants::arm::kRobotArm[4]), */
 m_encoderOffset(armConstants::arm::kRobotArm[5]) {
 
+    /* m_encoderTelescoping.ConfigMagnetOffset(m_encoderOffset);
     m_encoderTelescoping.ConfigMagnetOffset(m_encoderOffset);
-    m_encoderTelescoping.ConfigMagnetOffset(m_encoderOffset);
-    m_encoderTelescoping.ConfigSensorDirection(true);
+    m_encoderTelescoping.ConfigSensorDirection(true); */
 
     m_motorAngleLeft.RestoreFactoryDefaults();
     m_motorAngleRight.RestoreFactoryDefaults();
@@ -55,10 +55,10 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
 
-    m_motorClamp.SetSmartCurrentLimit(1.0);
+    m_motorClamp.SetSmartCurrentLimit(10.0);
     m_motorClamp.SetInverted(true);
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 5.0);
-    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 38.0);
+    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 37.0);
 
     m_motorClamp.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
     m_motorClamp.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
@@ -67,7 +67,7 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorAngleRight.SetSmartCurrentLimit(40.0);
     m_motorTelescoping.SetSmartCurrentLimit(40.0);
 
-    m_motorTelescoping.SetInverted(true);
+    m_motorTelescoping.SetInverted(false);
 
     m_motorAngleRight.Follow(m_motorAngleLeft, true);
 
@@ -79,8 +79,6 @@ void robotArm::armUp() {
     m_motorAngleLeftController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
 
 }
-
-// commands
 
 void robotArm::clampToggle() {
     if (clawToggle == false) {
@@ -95,46 +93,52 @@ void robotArm::clampToggle() {
 }
 
 void robotArm::grabCone() {
-    m_motorAngleLeftController.SetReference(-10, rev::ControlType::kSmartMotion);
+    /* m_motorAngleLeftController.SetReference(-10, rev::ControlType::kSmartMotion);
     m_motorTelescopingController.SetReference(52, rev::ControlType::kSmartMotion);
 
     while (m_encoderMotorTelescoping.GetPosition() < 50) {
 
     }
 
-    m_motorAngleLeftController.SetReference(-22, rev::ControlType::kSmartMotion);
+    m_motorAngleLeftController.SetReference(-22, rev::ControlType::kSmartMotion); */
+
+    currentStatePickup = ConePickupStates::FIRSTEXTEND;
 }
 
 void robotArm::scoreLow() {
+    m_motorTelescopingController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
     m_motorAngleLeftController.SetReference(-42, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
 void robotArm::scoreMid() {
-    m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
+    /* m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
     m_motorTelescopingController.SetReference(80, rev::CANSparkMax::ControlType::kSmartMotion); //137.43
 
     while (m_encoderMotorTelescoping.GetPosition() < 78) { //135
 
     }
 
-    m_motorAngleLeftController.SetReference(-30, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorAngleLeftController.SetReference(-30, rev::CANSparkMax::ControlType::kSmartMotion); */
+
+    currentStateMid = ScoreMidStates::FIRSTEXTEND;
 }
 
 void robotArm::scoreHigh() {
-    m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
+    /* m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
     m_motorTelescopingController.SetReference(146, rev::CANSparkMax::ControlType::kSmartMotion);
 
     while (m_encoderMotorTelescoping.GetPosition() < 144) {
 
     }
 
-    m_motorAngleLeftController.SetReference(-28, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorAngleLeftController.SetReference(-28, rev::CANSparkMax::ControlType::kSmartMotion); */
+
+    currentStateHigh = ScoreHighStates::FIRSTEXTEND;
 }
 
 void robotArm::angleManualZero() {
     currentStateAngle = AngleStates::MANUALZERO;
     currentStateTele = TeleStates::MANUALZERO;
-
 }
 
 void robotArm::Periodic() {
@@ -204,4 +208,84 @@ void robotArm::Periodic() {
             break;
     }
 
+    switch (currentStateHigh) {
+        case ScoreHighStates::FIRSTEXTEND:
+            m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(144, rev::CANSparkMax::ControlType::kSmartMotion);
+
+            currentStateHigh = ScoreHighStates::NOTHING;
+            break;
+
+        case ScoreHighStates::NOTHING:
+
+            if (m_encoderMotorTelescoping.GetPosition() > 141) {
+                currentStateHigh = ScoreHighStates::SECONDEXTEND;
+            }
+            break;
+
+        case ScoreHighStates::SECONDEXTEND:
+            m_motorAngleLeftController.SetReference(-28, rev::CANSparkMax::ControlType::kSmartMotion);
+
+            currentStateHigh = ScoreHighStates::INIT;
+            break;
+            
+        default:
+        case ScoreHighStates::INIT:
+
+            break;
+    }
+
+    switch (currentStateMid) {
+        case ScoreMidStates::FIRSTEXTEND:
+            m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(80, rev::CANSparkMax::ControlType::kSmartMotion);
+
+            currentStateMid = ScoreMidStates::NOTHING;
+            break;
+
+        case ScoreMidStates::NOTHING:
+
+            if (m_encoderMotorTelescoping.GetPosition() > 77) {
+                currentStateMid = ScoreMidStates::SECONDEXTEND;
+            }
+            break;
+
+        case ScoreMidStates::SECONDEXTEND:
+            m_motorAngleLeftController.SetReference(-30, rev::CANSparkMax::ControlType::kSmartMotion);
+
+            currentStateMid = ScoreMidStates::INIT;
+            break;
+
+        default:
+        case ScoreMidStates::INIT:
+
+            break;
+    }
+
+    switch (currentStatePickup) {
+        case ConePickupStates::FIRSTEXTEND:
+            m_motorAngleLeftController.SetReference(-10, rev::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(50, rev::ControlType::kSmartMotion);
+
+            currentStatePickup = ConePickupStates::NOTHING;
+            break;
+            
+        case ConePickupStates::NOTHING:
+
+            if (m_encoderMotorTelescoping.GetPosition() > 47) {
+                currentStatePickup = ConePickupStates::SECONDEXTEND;
+            }
+            break;
+
+        case ConePickupStates::SECONDEXTEND:
+            m_motorAngleLeftController.SetReference(-18, rev::ControlType::kSmartMotion);
+
+            currentStatePickup = ConePickupStates::INIT;
+            break;
+
+        default:
+        case ConePickupStates::INIT:
+
+            break;
+    }
 }

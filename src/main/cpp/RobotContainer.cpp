@@ -23,6 +23,9 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
     [this] { return m_controllerMain.GetX(); }, // m_controllerMain.GetX()
     [this] { return m_controllerMain.GetY(); }, // m_controllerMain.GetY()
     [this] { return m_controllerMain.GetRawAxis(4); })); // m_controllerMain.GetRawAxis(4)
+
+    m_chooser.SetDefaultOption("ScoreHigh", "ScoreHigh");
+    frc::SmartDashboard::PutData(&m_chooser);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -44,7 +47,10 @@ void RobotContainer::ConfigureButtonBindings() {
 
 }
 
-frc2::Command* RobotContainer::GetAutonomousCommand() {
+frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return &m_Auto;
+  if (m_chooser.GetSelected() == "Score High")
+  {
+    return std::move(ClampToggle(&m_robotArm).ToPtr()).AndThen(std::move(ScoreHigh(&m_robotArm).ToPtr())).AndThen(std::move(ClampToggle(&m_robotArm).ToPtr()));
+  }
 }

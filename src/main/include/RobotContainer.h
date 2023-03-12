@@ -17,6 +17,8 @@
 #include <frc2/command/button/CommandXboxController.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/Commands.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include <frc/Joystick.h>
 
@@ -31,7 +33,7 @@ class RobotContainer {
  public:
   RobotContainer();
 
-  frc2::Command* GetAutonomousCommand();
+  frc2::CommandPtr GetAutonomousCommand();
 
  private:
   // The robot's subsystems and commands are defined here...
@@ -39,7 +41,7 @@ class RobotContainer {
   robotArm m_robotArm;
 
   Auto m_Auto;
-
+  frc::SendableChooser<std::string> m_chooser;
   void ConfigureButtonBindings();
 
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};

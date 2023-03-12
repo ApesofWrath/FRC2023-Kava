@@ -43,5 +43,5 @@ class RobotContainer {
   void ConfigureButtonBindings();
 
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};
-  frc2::CommandXboxController m_controller{controllerConstants::kControllerMainID};
+  frc2::CommandXboxController m_controllerOperator{controllerConstants::kControllerAuxID};
 };

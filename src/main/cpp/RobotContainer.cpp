@@ -28,17 +28,17 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
   // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kRightBumper).OnTrue(ClampClose(&m_robotArm).ToPtr());
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kRightBumper).OnTrue(ClampToggle(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kRightBumper).OnTrue(ClampToggle(&m_robotArm).ToPtr());
 
   // all scoring positons
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kY).OnTrue(ScoreHigh(&m_robotArm).ToPtr());
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kX).OnTrue(ScoreMid(&m_robotArm).ToPtr());
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kA).OnTrue(ScoreLow(&m_robotArm).ToPtr());
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kB).OnTrue(GrabCode(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kY).OnTrue(ScoreHigh(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kX).OnTrue(ScoreMid(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kA).OnTrue(ScoreLow(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kB).OnTrue(GrabCode(&m_robotArm).ToPtr());
 
   // zeroing
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kStart).OnTrue(ZeroAngle(&m_robotArm).ToPtr());
-  frc2::JoystickButton(&m_controller, frc::XboxController::Button::kLeftBumper).OnTrue(ArmUp(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kStart).OnTrue(ZeroAngle(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kLeftBumper).OnTrue(ArmUp(&m_robotArm).ToPtr());
   // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kLeftStick).OnTrue(ArmUp(&m_robotArm).ToPtr());
   // frc2::JoystickButton(&m_controller, frc::XboxController::Button::kRightStick).OnTrue(TeleIn(&m_robotArm).ToPtr());
 

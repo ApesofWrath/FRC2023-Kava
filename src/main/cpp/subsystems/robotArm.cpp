@@ -74,38 +74,24 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_encoderMotorClamp.SetPosition(0);
 }
 
-void robotArm::armDown() {
-    m_motorAngleLeftController.SetReference(-42, rev::CANSparkMax::ControlType::kSmartMotion);
-}
-
 void robotArm::armUp() {
-    m_motorAngleLeftController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
-}
-
-void robotArm::teleOut() { 
-    m_motorTelescopingController.SetReference(100, rev::CANSparkMax::ControlType::kSmartMotion); // 137.43
-}
-
-void robotArm::teleIn() {
     m_motorTelescopingController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
-}
+    m_motorAngleLeftController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
 
-void robotArm::teleOutLong() {
-    m_motorTelescopingController.SetReference(141.26, rev::CANSparkMax::ControlType::kSmartMotion);
-}
-
-void robotArm::armDownLow() {
-    m_motorAngleLeftController.SetReference(-34.69, rev::ControlType::kSmartMotion);
 }
 
 // commands
 
-void robotArm::clampClose() {
-    m_motorClamp.Set(0.5);
-}
-
-void robotArm::clampOpen() {
-    m_motorClamp.Set(-0.5);
+void robotArm::clampToggle() {
+    if (clawToggle == false) {
+        m_motorClamp.Set(0.5);
+        clawToggle = true;
+    } else if (clawToggle == true) {
+        m_motorClamp.Set(-0.5);
+        clawToggle = false;
+    } else {
+        
+    }
 }
 
 void robotArm::grabCone() {
@@ -120,7 +106,10 @@ void robotArm::grabCone() {
 }
 
 void robotArm::scoreLow() {
-    // m_motorClamp.Set(0.5);
+    m_motorAngleLeftController.SetReference(-42, rev::CANSparkMax::ControlType::kSmartMotion);
+}
+
+void robotArm::scoreMid() {
     m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
     m_motorTelescopingController.SetReference(80, rev::CANSparkMax::ControlType::kSmartMotion); //137.43
 
@@ -129,12 +118,9 @@ void robotArm::scoreLow() {
     }
 
     m_motorAngleLeftController.SetReference(-30, rev::CANSparkMax::ControlType::kSmartMotion);
-    // m_motorClamp.Set(-0.5);
-
 }
 
 void robotArm::scoreHigh() {
-    // m_motorClamp.Set(0.5);
     m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
     m_motorTelescopingController.SetReference(146, rev::CANSparkMax::ControlType::kSmartMotion);
 
@@ -143,39 +129,19 @@ void robotArm::scoreHigh() {
     }
 
     m_motorAngleLeftController.SetReference(-28, rev::CANSparkMax::ControlType::kSmartMotion);
-    // m_motorClamp.Set(-0.5);
-
 }
 
 void robotArm::angleManualZero() {
     currentStateAngle = AngleStates::MANUALZERO;
-}
-
-void robotArm::teleManualZero() {
     currentStateTele = TeleStates::MANUALZERO;
+
 }
 
 void robotArm::Periodic() {
-    frc::SmartDashboard::PutNumber("Tel Rel Enc Pos: ", m_encoderMotorTelescoping.GetPosition());
+    /* frc::SmartDashboard::PutNumber("Tel Rel Enc Pos: ", m_encoderMotorTelescoping.GetPosition());
     frc::SmartDashboard::PutNumber("Tel Abs Enc Pos: ", m_encoderTelescoping.GetAbsolutePosition());
-    // std::cout << "blah \n";
     frc::SmartDashboard::PutNumber("L Angle Output Curr: ", m_motorAngleLeft.GetOutputCurrent());
-
-    // m_motorAngleLeft.GetOutputCurrent()
-
-    /* if (m_motorAngleLeft.GetOutputCurrent() < 10 && m_encoderMotorTelescoping.GetPosition() < 10 && zeroComplete == false) {
-        m_motorAngleLeft.Set(0.5);
-    }
-    
-    if (m_motorAngleLeft.GetOutputCurrent() > 10 && m_encoderMotorTelescoping.GetPosition() < 10 &&zeroComplete == false) {
-        zeroComplete = true;
-        m_motorAngleLeft.StopMotor();
-        m_encoderMotorAngleLeft.SetPosition(0);
-    } */
-
-    // m_encoderMotorTelescoping.SetPosition(m_encoderTelescoping.GetAbsolutePosition());
-    // m_encoderMotorTelescoping.SetPosition(0);
-
+ */
     switch (currentStateAngle) {
         case AngleStates::MANUALZERO:
             currentStateAngle = AngleStates::NOTZEROED;

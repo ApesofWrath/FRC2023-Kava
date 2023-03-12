@@ -5,9 +5,9 @@
 
 #include "subsystems/robotArm.h"
 
-class ArmDown : public frc2::CommandHelper<frc2::CommandBase, ArmDown> {
+class ClampToggle : public frc2::CommandHelper<frc2::CommandBase, ClampToggle> {
     public:
-    explicit ArmDown(robotArm* robotArm);
+    explicit ClampToggle(robotArm* robotArm);
 
     void Initialize() override;
 

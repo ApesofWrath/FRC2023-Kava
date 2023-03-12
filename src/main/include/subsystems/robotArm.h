@@ -33,19 +33,13 @@ class robotArm : public frc2::SubsystemBase {
     public:
     robotArm();
 
-    void armDown();
     void armUp();
-    void teleOut();
-    void teleIn();
-    void clampClose();
-    void clampOpen();
-    void teleOutLong();
-    void armDownLow();
+    void clampToggle();
     
     void scoreLow();
+    void scoreMid();
     void scoreHigh();
     void angleManualZero();
-    void teleManualZero();
     void grabCone();
 
     void Periodic() override;
@@ -70,6 +64,7 @@ class robotArm : public frc2::SubsystemBase {
     const double m_encoderOffset;
 
     AngleStates currentStateAngle = AngleStates::INIT;
-
     TeleStates currentStateTele = TeleStates::INIT;
+
+    bool clawToggle = false;
 };

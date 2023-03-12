@@ -5,9 +5,9 @@
 
 #include "subsystems/robotArm.h"
 
-class TeleOutLow : public frc2::CommandHelper<frc2::CommandBase, TeleOutLow> {
+class ZeroAngle : public frc2::CommandHelper<frc2::CommandBase, ZeroAngle> {
     public:
-    explicit TeleOutLow(robotArm* robotArm);
+    explicit ZeroAngle(robotArm* robotArm);
 
     void Initialize() override;
 

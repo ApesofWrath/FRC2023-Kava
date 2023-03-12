@@ -5,9 +5,9 @@
 
 #include "subsystems/robotArm.h"
 
-class TeleIn : public frc2::CommandHelper<frc2::CommandBase, TeleIn> {
+class GrabCode : public frc2::CommandHelper<frc2::CommandBase, GrabCode> {
     public:
-    explicit TeleIn(robotArm* robotArm);
+    explicit GrabCode(robotArm* robotArm);
 
     void Initialize() override;
 

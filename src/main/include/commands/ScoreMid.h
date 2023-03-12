@@ -5,9 +5,9 @@
 
 #include "subsystems/robotArm.h"
 
-class ArmDownLow : public frc2::CommandHelper<frc2::CommandBase, ArmDownLow> {
+class ScoreMid : public frc2::CommandHelper<frc2::CommandBase, ScoreMid> {
     public:
-    explicit ArmDownLow(robotArm* robotArm);
+    explicit ScoreMid(robotArm* robotArm);
 
     void Initialize() override;
 

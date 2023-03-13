@@ -55,7 +55,7 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
 
-    m_motorClamp.SetSmartCurrentLimit(1.0);
+    m_motorClamp.SetSmartCurrentLimit(2.0);
     m_motorClamp.SetInverted(true);
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 5.0);
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 40.0);

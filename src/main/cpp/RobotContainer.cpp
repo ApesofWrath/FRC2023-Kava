@@ -13,17 +13,17 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   frc2::JoystickButton buttonA{&m_controllerMain, 1};
   frc2::JoystickButton buttonB{&m_controllerMain, 2};
   frc2::JoystickButton buttonY{&m_controllerMain, 3}; 
-  //Bind Limelight Pipeline 0 (Apriltags) and Pipeline 1 (Retroreflective) to ButtonA and ButtonB events respectively
-  buttonA.WhenPressed(frc2::InstantCommand([this] { m_vision.SelectPipeline(0); }));
-  buttonB.WhenPressed(frc2::InstantCommand([this] { m_vision.SelectPipeline(1); }));
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetX(), 8.0); },
-    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetY(), 8.0); },
+    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetX(), controllerConstants::kControllerCurve); },
+    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetY(), controllerConstants::kControllerCurve); },
     [this] { return m_controllerMain.GetRawAxis(4); })); 
 }
 
 void RobotContainer::ConfigureButtonBindings() {
+  //Bind Limelight Pipeline 0 (Apriltags) and Pipeline 1 (Retroreflective) to ButtonA and ButtonB events respectively
+   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhileTrue(frc2::InstantCommand([this] { m_vision.SelectPipeline(0); }).ToPtr());
+   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kB).WhileTrue(frc2::InstantCommand([this] { m_vision.SelectPipeline(1); }).ToPtr());
    frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhileTrue(PointAtTarget(&m_drivetrain, &m_vision).ToPtr());
    frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kX).WhileTrue(Align(&m_drivetrain, &m_vision).ToPtr());
 

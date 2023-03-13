@@ -19,15 +19,18 @@ namespace visionConstants {
     constexpr double errorMinimum = 0.0;
 
     constexpr double xAlignMultiplier = 0.5;
-    constexpr double zAlignMultiplier = 0.5;
-    constexpr double yawAlignMultiplier = 0.05;
-    constexpr double AlignDistance = 0.0;
+    constexpr double zAlignMultiplier = -1.0;
+    constexpr double yawAlignMultiplier = 0.0;
+    // Robots distance from the April Tag it will align its self with
+    constexpr double AlignDistance = -10.0;
     constexpr double rotationDistance = 1.0;
 }
 namespace controllerConstants {
     //USB port addresses on drivestation PC.
     constexpr int kControllerMainID = 0;
     constexpr int kControllerAuxID = 1;
+    // Curve amount for drivers controller
+    constexpr double kControllerCurve = 8.0;
 }
 
 /* namespace armConstants {

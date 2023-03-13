@@ -4,15 +4,20 @@
 
 #include "RobotContainer.h"
 
+#include "commands/ArmUp.h"
+#include "commands/ClampToggle.h"
+#include "commands/ScoreHigh.h"
+#include "commands/ScoreMid.h"
+#include "commands/ScoreLow.h"
+#include "commands/ZeroAngle.h"
+#include "commands/GrabCone.h"
+
 RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
   ConfigureButtonBindings();
-  // Initialize buttonA, buttonB and buttonY Events
-  frc2::JoystickButton buttonA{&m_controllerMain, 1};
-  frc2::JoystickButton buttonB{&m_controllerMain, 2};
-  frc2::JoystickButton buttonY{&m_controllerMain, 3}; 
+
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
     [this] { return MathFunctions::joystickCurve(m_controllerMain.GetX(), controllerConstants::kControllerCurve); },
@@ -27,9 +32,26 @@ void RobotContainer::ConfigureButtonBindings() {
    frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhileTrue(PointAtTarget(&m_drivetrain, &m_vision).ToPtr());
    frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kX).WhileTrue(Align(&m_drivetrain, &m_vision).ToPtr());
 
+   
+   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kRightBumper).OnTrue(ClampToggle(&m_robotArm).ToPtr());
+  // all scoring positons
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kY).OnTrue(ScoreHigh(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kX).OnTrue(ScoreMid(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kA).OnTrue(ScoreLow(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kB).OnTrue(GrabCode(&m_robotArm).ToPtr());
+
+  // zeroing
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kStart).OnTrue(ZeroAngle(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kLeftBumper).OnTrue(ArmUp(&m_robotArm).ToPtr());
+
+    m_chooser.SetDefaultOption("ScoreHigh", "ScoreHigh");
+    frc::SmartDashboard::PutData(&m_chooser);
 }
 
-frc2::Command* RobotContainer::GetAutonomousCommand() {
+frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return &m_Auto;
+  if (m_chooser.GetSelected() == "Score High")
+  {
+    return std::move(ClampToggle(&m_robotArm).ToPtr()).AndThen(std::move(ScoreHigh(&m_robotArm).ToPtr())).AndThen(std::move(ClampToggle(&m_robotArm).ToPtr()));
+  }
 }

@@ -24,8 +24,14 @@ swerveModule::swerveModule(const double module[])
     m_motorDrive.SetSmartCurrentLimit(80.0);
     m_motorTurn.SetSmartCurrentLimit(20.0);
 
-    m_encoderTurn.ConfigAllSettings(m_settings.encoderTurn);
+    // m_encoderTurn.ConfigAllSettings(m_settings.encoderTurn);
     m_encoderTurn.ConfigMagnetOffset(m_encoderOffset);
+
+    m_encoderTurn.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_100Ms);
+    m_encoderTurn.ConfigAbsoluteSensorRange(ctre::phoenix::sensors::AbsoluteSensorRange::Signed_PlusMinus180);
+    m_encoderTurn.ConfigSensorDirection(false);
+    m_encoderTurn.ConfigSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToAbsolutePosition);
+    m_encoderTurn.ConfigFeedbackCoefficient(360.0 / 4096.0, std::string("deg"), ctre::phoenix::sensors::SensorTimeBase::PerSecond);
 
     m_driveController.SetFeedbackDevice(m_encoderDrive);
     m_turnController.SetFeedbackDevice(m_encoderTurnIntegrated);

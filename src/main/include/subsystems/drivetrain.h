@@ -12,8 +12,6 @@
 
 class drivetrain : public frc2::SubsystemBase {
  public:
-  
-
   drivetrain();
 
   void SwerveDrive(units::meters_per_second_t xSpeed,

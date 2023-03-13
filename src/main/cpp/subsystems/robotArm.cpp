@@ -39,8 +39,8 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorAngleLeft.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 4.0);
     m_motorAngleLeft.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, -38.0);
 
-    m_motorAngleLeftController.SetSmartMotionMaxVelocity(7200); //7200
-    m_motorAngleLeftController.SetSmartMotionMaxAccel(26800); //24800
+    m_motorAngleLeftController.SetSmartMotionMaxVelocity(5040); //7200
+    m_motorAngleLeftController.SetSmartMotionMaxAccel(13400); //24800
     m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
 
@@ -55,10 +55,10 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
 
-    m_motorClamp.SetSmartCurrentLimit(10.0);
+    m_motorClamp.SetSmartCurrentLimit(1.0);
     m_motorClamp.SetInverted(true);
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 5.0);
-    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 37.0);
+    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 40.0);
 
     m_motorClamp.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
     m_motorClamp.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);

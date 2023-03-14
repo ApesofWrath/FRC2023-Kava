@@ -41,7 +41,7 @@ void Align::Execute() {
 }
 
 
-void Align::End(bool interrupted) {interrupted ? printf("Alligned Inturrupted!") : printf("Align Finished!");}
+void Align::End(bool interrupted) {interrupted ? printf("Alligned Inturrupted! \n") : printf("Align Finished!");}
 
 
 bool Align::IsFinished() { return false; }

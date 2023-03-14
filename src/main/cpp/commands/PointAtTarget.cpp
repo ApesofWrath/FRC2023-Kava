@@ -21,6 +21,6 @@ void PointAtTarget::Execute() {
        
 }
 
-void PointAtTarget::End(bool interrupted) {interrupted ? printf("Alligned Inturrupted!") : printf("PointAtTarget Finished!");}
+void PointAtTarget::End(bool interrupted) {interrupted ? printf("Alligned Inturrupted! \n") : printf("PointAtTarget Finished!");}
 
 bool PointAtTarget::IsFinished() { return false; }

@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandPtr.h>
@@ -12,8 +13,8 @@
 #include <pathplanner/lib/auto/SwerveAutoBuilder.h>
 #include <pathplanner/lib/PathPlanner.h>
 #include <pathplanner/lib/auto/PIDConstants.h>
-#include "commands/Auto.h"
 #include "commands/Drive.h"
+#include "commands/RequireDrive.h"
 #include "subsystems/drivetrain.h"
 
 #include <frc/Joystick.h>
@@ -29,13 +30,13 @@ class RobotContainer {
  public:
   RobotContainer();
   
-  frc2::Command* GetAutonomousCommand();
+  frc2::CommandPtr GetAutonomousCommand();
  private:
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;
-  Auto m_Auto;
   pathplanner::SwerveAutoBuilder m_autoBuilder;
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 
+  {{"Marker1", std::make_shared<frc2::PrintCommand>("Passed marker 1")}};
   frc::SendableChooser<std::string> m_chooser;
   void ConfigureButtonBindings();
 

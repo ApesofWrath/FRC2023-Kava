@@ -51,7 +51,6 @@ void drivetrain::ResetOdometry(frc::Pose2d initPose) {
 
 void drivetrain::Periodic() {
     UpdateOdometry();
-
     // Test posting angle to Dashboard.
     /* frc::SmartDashboard::PutNumber("Front Right Angle", m_frontRight.DashboardInfo(swerveModule::DataType::kCurrentAngle));
     frc::SmartDashboard::PutNumber("Rear Right Angle", m_rearRight.DashboardInfo(swerveModule::DataType::kCurrentAngle));

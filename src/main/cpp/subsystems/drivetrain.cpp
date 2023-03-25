@@ -4,10 +4,12 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <iostream>
 
+// Constructor, zeros the gyro for swervedrive
 drivetrain::drivetrain() {
     m_navX.ZeroYaw();
 }
 
+// Sets Desired States of the swerve modules for swervedrive
 void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
                              units::meters_per_second_t ySpeed,
                              units::radians_per_second_t zRot,
@@ -31,13 +33,14 @@ void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
     m_rearLeft.SetDesiredState(rearLeft);
 }
 
+// Updates the odometry of the swervedrive
 void drivetrain::UpdateOdometry() {
     m_odometry.Update(m_navX.GetRotation2d(), {m_frontRight.GetPosition(),
                       m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
                       m_rearLeft.GetPosition()});
 }
 
-
+// Perodically (Constantly runs during periodic), updates the odometry of the swervedrive
 void drivetrain::Periodic() {
     UpdateOdometry();
 

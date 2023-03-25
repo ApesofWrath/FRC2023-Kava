@@ -13,6 +13,7 @@
 #include "Constants.h"
 #include <string>
 
+// Creation of state machines used for score mid, score high, human player cone pickup, zeroing arm angle, zeroing telescope
 enum class AngleStates {
     INIT,
     NOTZEROED,
@@ -66,6 +67,7 @@ class robotArm : public frc2::SubsystemBase {
     void Periodic() override;
 
     private:
+    // Creates motor objects
     rev::CANSparkMax m_motorAngleRight;
     rev::CANSparkMax m_motorAngleLeft;
     rev::CANSparkMax m_motorTelescoping;
@@ -73,6 +75,7 @@ class robotArm : public frc2::SubsystemBase {
  
     // ctre::phoenix::sensors::WPI_CANCoder m_encoderTelescoping;
     
+    // Creates built in encoder objects and PID controller objects for the motors
     rev::SparkMaxRelativeEncoder m_encoderMotorAngleRight = m_motorAngleRight.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
     rev::SparkMaxRelativeEncoder m_encoderMotorAngleLeft = m_motorAngleLeft.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
     rev::SparkMaxRelativeEncoder m_encoderMotorTelescoping = m_motorTelescoping.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
@@ -84,11 +87,13 @@ class robotArm : public frc2::SubsystemBase {
 
     const double m_encoderOffset;
 
+    // Sets initial states for each state machine
     AngleStates currentStateAngle = AngleStates::INIT;
     TeleStates currentStateTele = TeleStates::INIT;
     ScoreHighStates currentStateHigh = ScoreHighStates::INIT;
     ScoreMidStates currentStateMid = ScoreMidStates::INIT;
     ConePickupStates currentStatePickup = ConePickupStates::INIT;
 
+    // Boolean variable for claw toggle command
     bool clawToggle = false;
 };

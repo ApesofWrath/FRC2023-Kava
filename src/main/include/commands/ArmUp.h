@@ -16,5 +16,6 @@ class ArmUp : public frc2::CommandHelper<frc2::CommandBase, ArmUp> {
     bool IsFinished() override;
 
     private:
+    // Creates robotArm pointer to robotArm subsystem
     robotArm* m_robotArm;
 };

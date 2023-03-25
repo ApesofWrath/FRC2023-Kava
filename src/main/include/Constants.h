@@ -25,6 +25,8 @@ namespace visionConstants {
     constexpr double AlignDistance = -10.0;
     constexpr double rotationDistance = 1.0;
 }
+
+// IDs for controllers
 namespace controllerConstants {
     //USB port addresses on drivestation PC.
     constexpr int kControllerMainID = 0;
@@ -33,6 +35,7 @@ namespace controllerConstants {
     constexpr double kControllerCurve = 8.0;
 }
 
+// Motor IDs for robot arm
  namespace armConstants {
     constexpr int kMotorArmAngleLeftID = 12;
     constexpr int kMotorArmAngleRightID = 13;
@@ -52,6 +55,7 @@ namespace controllerConstants {
     }
 }
 
+// Motor IDs, Encoder IDs, and Offsets for swervedrive
 namespace drivetrainConstants {
     //CAN IDs
     constexpr int kMotorDriveFrontRightID = 26;
@@ -81,6 +85,7 @@ namespace drivetrainConstants {
         constexpr double kRearLeft{89.912};
     }
 
+    // Values for each swerve module object to use
     namespace swerveModules {
         constexpr double kModuleFrontRight[4]{kMotorDriveFrontRightID,
                                                    kMotorTurnFrontRightID,
@@ -100,6 +105,7 @@ namespace drivetrainConstants {
                                                  offsets::kRearLeft};
     }
 
+    // Math constants and calculations to be used by swervedrive
     namespace calculations {
         constexpr auto kFinalDriveRatio{6.75 * 360_deg};
         constexpr auto kFinalTurnRatio{(14.0 / 50.0) * (10.0 / 60.0)};

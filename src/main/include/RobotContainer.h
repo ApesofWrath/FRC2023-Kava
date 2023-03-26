@@ -44,6 +44,8 @@ class RobotContainer {
 
   frc2::CommandPtr GetAutonomousCommand();
 
+  int slowConst = 1;
+
  private:
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;

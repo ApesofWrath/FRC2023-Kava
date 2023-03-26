@@ -19,9 +19,9 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
 
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetX(), controllerConstants::kControllerCurve); },
-    [this] { return MathFunctions::joystickCurve(m_controllerMain.GetY(), controllerConstants::kControllerCurve); },
-    [this] { return m_controllerMain.GetRawAxis(4); })); 
+    [this] { return ((MathFunctions::joystickCurve(m_controllerMain.GetX(), controllerConstants::kControllerCurve)) * slowConst); },
+    [this] { return ((MathFunctions::joystickCurve(m_controllerMain.GetY(), controllerConstants::kControllerCurve)) * slowConst); },
+    [this] { return ((m_controllerMain.GetRawAxis(4)) * slowConst); })); 
 }
 
 // All the button commands are set in this function

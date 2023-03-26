@@ -20,7 +20,7 @@ void Align::Execute() {
     std::vector<double> TargetNormal{TargetPose[3], TargetPose[4]};
     // std::vector<double> DestinationPosition{TargetPose[0]+(TargetNormal[0]*visionConstants::AlignDistance), TargetPose[1]+(TargetNormal[1]*visionConstants::AlignDistance)}; 
     double xerror = TargetPosition[0]*visionConstants::xAlignMultiplier;
-    double yerror = TargetPosition[1]*visionConstants::zAlignMultiplier;    
+    double yerror = TargetPosition[1]*visionConstants::yAlignMultiplier;    
     double yawerror = Targetx*visionConstants::errorMultiplier;
 
     // std::span<double> TargetPositionSpan = std::span<double>(TargetPosition.data(), TargetPosition.size());

@@ -19,10 +19,10 @@ namespace visionConstants {
     constexpr double errorMinimum = 0.0;
 
     constexpr double xAlignMultiplier = 0.5;
-    constexpr double zAlignMultiplier = -1.0;
+    constexpr double yAlignMultiplier = 0;
     constexpr double yawAlignMultiplier = 0.0;
     // Robots distance from the April Tag it will align its self with
-    constexpr double AlignDistance = -10.0;
+    constexpr double AlignDistance = 10.0;
     constexpr double rotationDistance = 1.0;
 }
 namespace controllerConstants {
@@ -72,15 +72,15 @@ namespace drivetrainConstants {
     constexpr int kEncoderTurnRearLeftID = 11;
 
     namespace offsets {
-        constexpr double kFrontRight{-38.057+180}; // tshirt shooter offsets
-        constexpr double kRearRight{61.787};
-        constexpr double kFrontLeft{38.057};
-        constexpr double kRearLeft{3.164};
+        // constexpr double kFrontRight{-38.057+180}; // tshirt shooter offsets
+        // constexpr double kRearRight{61.787};
+        // constexpr double kFrontLeft{38.057};
+        // constexpr double kRearLeft{3.164};
 
-        // constexpr double kFrontRight{-40.429}; // curr robo offsets
-        // constexpr double kRearRight{66.181};
-        // constexpr double kFrontLeft{-94.921};
-        // constexpr double kRearLeft{-1.142};
+        constexpr double kFrontRight{50.713}; // curr robo offsets
+        constexpr double kRearRight{154.160};
+        constexpr double kFrontLeft{6.416};
+        constexpr double kRearLeft{89.912};
     }
 
     namespace swerveModules {

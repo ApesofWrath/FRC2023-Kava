@@ -73,8 +73,6 @@ namespace drivetrainConstants {
     constexpr int kEncoderTurnFrontLeftID = 10;
     constexpr int kEncoderTurnRearLeftID = 11;
 
-    double kslowConst = 1.0;
-
     namespace offsets {
         /* constexpr double kFrontRight{-38.057+180}; // tshirt shooter offsets
         constexpr double kRearRight{61.787};

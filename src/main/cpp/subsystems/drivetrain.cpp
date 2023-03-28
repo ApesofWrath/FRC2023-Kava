@@ -14,6 +14,14 @@ void drivetrain::resetGyro() {
     m_navX.ZeroYaw();
 }
 
+void drivetrain::slowDown() {
+    kslowConst = 0.25;
+}
+
+void drivetrain::normalSpeed() {
+    kslowConst = 1.0;
+}
+
 // Sets Desired States of the swerve modules for swervedrive
 void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
                              units::meters_per_second_t ySpeed,

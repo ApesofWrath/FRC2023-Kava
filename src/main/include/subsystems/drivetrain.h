@@ -9,7 +9,6 @@
 
 #include "swerveModule.h"
 #include "Constants.h"
-#include "RobotContainer.h"
 
 class drivetrain : public frc2::SubsystemBase {
  public:
@@ -34,6 +33,11 @@ class drivetrain : public frc2::SubsystemBase {
    * simulation.
    */
   void SimulationPeriodic() override;
+
+  void slowDown();
+  void normalSpeed();
+
+  double kslowConst = 1.0;
 
 private:
 

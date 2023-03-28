@@ -23,9 +23,9 @@ RobotContainer::RobotContainer() : m_Auto(&m_drivetrain) {
   // $ CONTROLLER INPUTS FOR SWERVE DRIVE BELOW
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return ((MathFunctions::joystickCurve(m_controllerMain.GetX(), controllerConstants::kControllerCurve)) * drivetrainConstants::kslowConst); },
-    [this] { return ((MathFunctions::joystickCurve(m_controllerMain.GetY(), controllerConstants::kControllerCurve)) * drivetrainConstants::kslowConst); },
-    [this] { return ((m_controllerMain.GetRawAxis(4)) * drivetrainConstants::kslowConst); })); 
+    [this] { return (MathFunctions::joystickCurve(m_controllerMain.GetX(), controllerConstants::kControllerCurve)); },
+    [this] { return (MathFunctions::joystickCurve(m_controllerMain.GetY(), controllerConstants::kControllerCurve)); },
+    [this] { return (m_controllerMain.GetRawAxis(4)); })); 
 }
 
 // All the button commands are set in this function

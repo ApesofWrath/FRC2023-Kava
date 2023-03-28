@@ -16,12 +16,9 @@
 #include "subsystems/drivetrain.h"
 #include "subsystems/vision.h"
 #include "MathFunctions.h"
-
 #include "subsystems/robotArm.h"
 
-#include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/button/CommandXboxController.h>
-#include <frc2/command/InstantCommand.h>
 #include <frc2/command/Commands.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>

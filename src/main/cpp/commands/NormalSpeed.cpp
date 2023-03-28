@@ -8,7 +8,7 @@ NormalSpeed::NormalSpeed(drivetrain* drivetrain) : m_drivetrain{drivetrain} { //
 void NormalSpeed::Initialize() { printf("NormalSpeed Initialized \n"); } // print debug message on initialization
 
 void NormalSpeed::Execute() { // on command call (button press)
-    drivetrainConstants::kslowConst = 1.0; // sets slowconst variable to 1.0
+    m_drivetrain->normalSpeed(); // sets slowconst variable to 1.0
 }
 
 bool NormalSpeed::IsFinished() { return true; } // return when ??

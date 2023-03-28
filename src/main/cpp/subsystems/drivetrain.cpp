@@ -18,9 +18,9 @@ void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
                       : frc::ChassisSpeeds{xSpeed, ySpeed, zRot});
     m_kinematics.DesaturateWheelSpeeds(&moduleStates, drivetrainConstants::calculations::kModuleMaxSpeed);
 
-    //frc::SmartDashboard::PutNumber("xSpeed", xSpeed.value());
-    //frc::SmartDashboard::PutNumber("ySpeed", ySpeed.value());
-    //frc::SmartDashboard::PutNumber("zRotation", zRot.value());
+    frc::SmartDashboard::PutNumber("xSpeed", xSpeed.value());
+    frc::SmartDashboard::PutNumber("ySpeed", ySpeed.value());
+    frc::SmartDashboard::PutNumber("zRotation", zRot.value());
     frc::SmartDashboard::PutNumber("Robot Position", m_navX.GetYaw());
     
     
@@ -48,6 +48,21 @@ void drivetrain::ResetOdometry(frc::Pose2d initPose) {
                       m_rearLeft.GetPosition()}, initPose);
 }
 
+std::string drivetrain::AutoBalance()
+{
+    if(m_navX.GetPitch() > 3.5)
+    {
+        return "Forward";
+    }
+    else if (m_navX.GetPitch() < -3.5)
+    {
+        return "Backward";
+    }
+    else
+    {
+        return "Stop";
+    }
+}
 
 void drivetrain::Periodic() {
     UpdateOdometry();
@@ -61,6 +76,11 @@ void drivetrain::Periodic() {
     frc::SmartDashboard::PutNumber("Rear Right TARGET", m_rearRight.DashboardInfo(swerveModule::DataType::kTargetAngle));
     frc::SmartDashboard::PutNumber("Front Left TARGET", m_frontLeft.DashboardInfo(swerveModule::DataType::kTargetAngle));
     frc::SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle)); */
+    frc::SmartDashboard::PutNumber("Odometry X", units::unit_cast<double>(m_odometry.GetPose().Translation().X()));
+    frc::SmartDashboard::PutNumber("Odometry Y", units::unit_cast<double>(m_odometry.GetPose().Translation().Y()));
+    frc::SmartDashboard::PutNumber("Odometry Rot", units::unit_cast<double>(m_odometry.GetPose().Rotation().Degrees()));
+
+    
 }
 
 void drivetrain::SimulationPeriodic() {}

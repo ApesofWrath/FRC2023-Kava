@@ -42,10 +42,10 @@ namespace drivetrainConstants {
         constexpr double kFrontLeft{39.023};
         constexpr double kRearLeft{2.285};
 
-        /* constexpr double kFrontRight{-40.429}; // curr robo offsets
-        constexpr double kRearRight{66.181};
-        constexpr double kFrontLeft{-94.921};
-        constexpr double kRearLeft{-1.142}; */
+        /* constexpr double kFrontRight{50.713}; // curr robo offsets
+        constexpr double kRearRight{154.160};
+        constexpr double kFrontLeft{-6.416};
+        constexpr double kRearLeft{89.912}; */
     }
 
     namespace swerveModules {

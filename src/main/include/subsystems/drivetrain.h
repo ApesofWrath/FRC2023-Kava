@@ -24,8 +24,7 @@ class drivetrain : public frc2::SubsystemBase {
   void UpdateOdometry();
   frc::Pose2d GetOdometry();
   void ResetOdometry(frc::Pose2d initPose);
-
-
+  std::string AutoBalance();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */

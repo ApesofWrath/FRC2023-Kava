@@ -9,14 +9,17 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandPtr.h>
+#include <frc2/command/ParallelCommandGroup.h>
+#include <frc2/command/WaitCommand.h>
 #include "Constants.h"
+#include "commands/Drive.h"
+#include "commands/RequireDrive.h"
+#include "commands/AutoBalance.h"
+#include "commands/RequireDrive.h"
+#include "subsystems/drivetrain.h"
 #include <pathplanner/lib/auto/SwerveAutoBuilder.h>
 #include <pathplanner/lib/PathPlanner.h>
 #include <pathplanner/lib/auto/PIDConstants.h>
-#include "commands/Drive.h"
-#include "commands/RequireDrive.h"
-#include "subsystems/drivetrain.h"
-
 #include <frc/Joystick.h>
 
 /**
@@ -34,11 +37,9 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;
-  pathplanner::SwerveAutoBuilder m_autoBuilder;
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 
-  {{"Marker1", std::make_shared<frc2::PrintCommand>("Passed marker 1")}};
   frc::SendableChooser<std::string> m_chooser;
+  pathplanner::SwerveAutoBuilder m_autoBuilder;
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
   void ConfigureButtonBindings();
-
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};
 };

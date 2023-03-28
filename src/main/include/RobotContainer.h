@@ -42,9 +42,7 @@ class RobotContainer {
  public:
   RobotContainer();
 
-  frc2::CommandPtr GetAutonomousCommand();
-
-  int slowConst = 1;
+  frc2::Command* GetAutonomousCommand();
 
  private:
   // The robot's subsystems and commands are defined here...
@@ -53,7 +51,7 @@ class RobotContainer {
   robotArm m_robotArm;
 
   Auto m_Auto;
-  frc::SendableChooser<std::string> m_chooser;
+  // frc::SendableChooser<std::string> m_chooser;
   void ConfigureButtonBindings();
 
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};

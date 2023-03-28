@@ -65,9 +65,17 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
 
     // Sets current limit for the clamp motor on the arm, sets the motors direction inverted, and sets position limits for the motor
-    m_motorClamp.SetSmartCurrentLimit(4.0);
+
+    // $ CURRENT LIMIT OF CLAMP
+    m_motorClamp.SetSmartCurrentLimit(8.0);
+
+    // $ SETS CLAMP INVERTED OR NOT
     m_motorClamp.SetInverted(true);
+
+    // $ FORWARD LIMIT OF CLAMP
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 5.0);
+
+    // $ REVERSE LIMIT OF CLAMP
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 40.0);
 
     // Just enables the position limits for the clamp motor

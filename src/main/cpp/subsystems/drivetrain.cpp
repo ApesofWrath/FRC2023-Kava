@@ -9,6 +9,11 @@ drivetrain::drivetrain() {
     m_navX.ZeroYaw();
 }
 
+// Resets the gyro when function run
+void drivetrain::resetGyro() {
+    m_navX.ZeroYaw();
+}
+
 // Sets Desired States of the swerve modules for swervedrive
 void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
                              units::meters_per_second_t ySpeed,

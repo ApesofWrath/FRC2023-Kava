@@ -9,6 +9,7 @@
 
 #include "swerveModule.h"
 #include "Constants.h"
+#include "RobotContainer.h"
 
 class drivetrain : public frc2::SubsystemBase {
  public:
@@ -20,6 +21,8 @@ class drivetrain : public frc2::SubsystemBase {
                    bool fieldRelative);
 
   void UpdateOdometry();
+
+  void resetGyro();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.

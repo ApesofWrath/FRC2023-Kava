@@ -42,7 +42,8 @@ class RobotContainer {
   frc::SendableChooser<std::string> m_chooser;
   pathplanner::SwerveAutoBuilder m_autoBuilder;
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 
-  {{"AutoBalance", std::make_shared<AutoBalance>(&m_drivetrain)}};
+  {{"AutoBalance", std::make_shared<AutoBalance>(&m_drivetrain)},
+  {"event", std::make_shared<frc2::PrintCommand>("path end")}};
   void ConfigureButtonBindings();
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};
   frc2::CommandXboxController m_controllerOperator{controllerConstants::kControllerAuxID};

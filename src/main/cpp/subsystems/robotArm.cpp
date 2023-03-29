@@ -48,7 +48,7 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
 
     // Velocity values for the arm angling motors (not telescoping)
     m_motorAngleLeftController.SetSmartMotionMaxVelocity(5040); //7200
-    m_motorAngleLeftController.SetSmartMotionMaxAccel(13400); //24800
+    m_motorAngleLeftController.SetSmartMotionMaxAccel(6700); //24800
     m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
 
@@ -104,7 +104,7 @@ void robotArm::armUp() {
     m_motorAngleLeftController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
-// Opens and closes the clamp with a toggle
+// Opens and closes the clamp with a toggle boolean
 void robotArm::clampToggle() {
     if (clawToggle == false) {
         m_motorClamp.Set(0.5);
@@ -146,8 +146,11 @@ void robotArm::angleManualZero() {
 
 // All code in this function runs continuosly as the robot is running in Periodic
 void robotArm::Periodic() {
+    
+    // Says whether clamp is open or closed in smartdashboard
+    frc::SmartDashboard::PutBoolean("Clamp Closed?", clawToggle);
 
-    // zeroing state machine for the arm angle position
+    // ZEROING state machine for the arm angle position
     switch (currentStateAngle) {
         case AngleStates::MANUALZERO:
             currentStateAngle = AngleStates::NOTZEROED;
@@ -179,7 +182,7 @@ void robotArm::Periodic() {
             break;
     }
 
-    // zeroing state machine for the telescoping position
+    // ZEROING state machine for the telescoping position
     switch (currentStateTele) {
         case TeleStates::MANUALZERO:
             currentStateTele = TeleStates::NOTZEROED;
@@ -211,10 +214,12 @@ void robotArm::Periodic() {
             break;
     }
 
-    // state machine for moving the arm to a position to score the cone in a high position
+    // $ state machine for moving the arm to a position to score the cone in a HIGH POSITION
     switch (currentStateHigh) {
         case ScoreHighStates::FIRSTEXTEND:
-            m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
+            // First time arm angles down
+            m_motorAngleLeftController.SetReference(-24, rev::CANSparkMax::ControlType::kSmartMotion);
+            // Sets telescope position to telescope out for scoring
             m_motorTelescopingController.SetReference(141, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateHigh = ScoreHighStates::NOTHING;
@@ -222,12 +227,14 @@ void robotArm::Periodic() {
 
         case ScoreHighStates::NOTHING:
 
+            // Waits until telescope reaches its position (if statement value should be 3 less than actual position)
             if (m_encoderMotorTelescoping.GetPosition() > 138) {
                 currentStateHigh = ScoreHighStates::SECONDEXTEND;
             }
             break;
 
         case ScoreHighStates::SECONDEXTEND:
+            // After telescope reaches its position, arm angles down more to its socring position
             m_motorAngleLeftController.SetReference(-32, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateHigh = ScoreHighStates::INIT;
@@ -239,23 +246,26 @@ void robotArm::Periodic() {
             break;
     }
 
-    // state machine for moving the arm to a position to score the cone in the middle position
+    // $ state machine for moving the arm to a position to score the cone in the MIDDLE POSITION
     switch (currentStateMid) {
         case ScoreMidStates::FIRSTEXTEND:
+            // First time arm angles down
             m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
+            // Sets telescope position to telescope out for scoring
             m_motorTelescopingController.SetReference(78, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateMid = ScoreMidStates::NOTHING;
             break;
 
         case ScoreMidStates::NOTHING:
-
+            // Waits until telescope reaches its position (if statement value should be 3 less than actual position)
             if (m_encoderMotorTelescoping.GetPosition() > 75) {
                 currentStateMid = ScoreMidStates::SECONDEXTEND;
             }
             break;
 
         case ScoreMidStates::SECONDEXTEND:
+            // After telescope reaches its position, arm angles down more for scoring position
             m_motorAngleLeftController.SetReference(-32, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateMid = ScoreMidStates::INIT;
@@ -267,23 +277,26 @@ void robotArm::Periodic() {
             break;
     }
 
-    // state machine to move the arm to a position to pick up the cone from the human player
+    // $ state machine to move the arm to a position to PICK UP the CONE from the HUMAN PLAYER
     switch (currentStatePickup) {
         case ConePickupStates::FIRSTEXTEND:
+            // First time arm angles down
             m_motorAngleLeftController.SetReference(-10, rev::ControlType::kSmartMotion);
+            // Sets telescope position to telescope out for scoring
             m_motorTelescopingController.SetReference(45, rev::ControlType::kSmartMotion);
 
             currentStatePickup = ConePickupStates::NOTHING;
             break;
             
         case ConePickupStates::NOTHING:
-
+            // Waits until telescope reaches its position (if statement value should be 1 less than actual value)
             if (m_encoderMotorTelescoping.GetPosition() > 44) {
                 currentStatePickup = ConePickupStates::SECONDEXTEND;
             }
             break;
 
         case ConePickupStates::SECONDEXTEND:
+            // After telescope reaches its position, arm angles down more to its scoring position
             m_motorAngleLeftController.SetReference(-25, rev::ControlType::kSmartMotion);
 
             currentStatePickup = ConePickupStates::INIT;

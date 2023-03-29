@@ -8,7 +8,7 @@ SlowDown::SlowDown(drivetrain* drivetrain) : m_drivetrain{drivetrain} { // const
 void SlowDown::Initialize() { printf("SlowDown Initialized \n"); } // print debug message on initialization
 
 void SlowDown::Execute() { // on command call (button press)
-    m_drivetrain->slowDown(); // sets slowconst variable to 0.25
+    m_drivetrain->slowDown(); // sets slowconst variable to 0.5
 }
 
 bool SlowDown::IsFinished() { return true; } // return when ??

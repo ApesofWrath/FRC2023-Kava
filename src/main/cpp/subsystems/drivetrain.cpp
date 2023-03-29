@@ -14,10 +14,12 @@ void drivetrain::resetGyro() {
     m_navX.ZeroYaw();
 }
 
+// $ Slow constant value
 void drivetrain::slowDown() {
     kslowConst = 0.25;
 }
 
+// Normal speed value (should always be 1.0)
 void drivetrain::normalSpeed() {
     kslowConst = 1.0;
 }

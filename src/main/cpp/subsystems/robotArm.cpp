@@ -29,6 +29,7 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     // Sets idle mode of the motors to Brake (motors breake while not doing anything)
     m_motorAngleLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     m_motorAngleRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    m_motorClamp.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
     // Sets the encoder the motors use for positioning to the built in motor encoders
     m_motorAngleLeftController.SetFeedbackDevice(m_encoderMotorAngleLeft);
@@ -67,7 +68,7 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     // Sets current limit for the clamp motor on the arm, sets the motors direction inverted, and sets position limits for the motor
 
     // $ CURRENT LIMIT OF CLAMP
-    m_motorClamp.SetSmartCurrentLimit(8.0);
+    m_motorClamp.SetSmartCurrentLimit(1.0);
 
     // $ SETS CLAMP INVERTED OR NOT
     m_motorClamp.SetInverted(true);
@@ -76,7 +77,7 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 5.0);
 
     // $ REVERSE LIMIT OF CLAMP
-    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 40.0);
+    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 30.0);
 
     // Just enables the position limits for the clamp motor
     m_motorClamp.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
@@ -214,20 +215,20 @@ void robotArm::Periodic() {
     switch (currentStateHigh) {
         case ScoreHighStates::FIRSTEXTEND:
             m_motorAngleLeftController.SetReference(-20, rev::CANSparkMax::ControlType::kSmartMotion);
-            m_motorTelescopingController.SetReference(148, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(141, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateHigh = ScoreHighStates::NOTHING;
             break;
 
         case ScoreHighStates::NOTHING:
 
-            if (m_encoderMotorTelescoping.GetPosition() > 145) {
+            if (m_encoderMotorTelescoping.GetPosition() > 138) {
                 currentStateHigh = ScoreHighStates::SECONDEXTEND;
             }
             break;
 
         case ScoreHighStates::SECONDEXTEND:
-            m_motorAngleLeftController.SetReference(-30, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-32, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateHigh = ScoreHighStates::INIT;
             break;
@@ -242,20 +243,20 @@ void robotArm::Periodic() {
     switch (currentStateMid) {
         case ScoreMidStates::FIRSTEXTEND:
             m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
-            m_motorTelescopingController.SetReference(80, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(78, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateMid = ScoreMidStates::NOTHING;
             break;
 
         case ScoreMidStates::NOTHING:
 
-            if (m_encoderMotorTelescoping.GetPosition() > 77) {
+            if (m_encoderMotorTelescoping.GetPosition() > 75) {
                 currentStateMid = ScoreMidStates::SECONDEXTEND;
             }
             break;
 
         case ScoreMidStates::SECONDEXTEND:
-            m_motorAngleLeftController.SetReference(-30, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-32, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateMid = ScoreMidStates::INIT;
             break;
@@ -270,20 +271,20 @@ void robotArm::Periodic() {
     switch (currentStatePickup) {
         case ConePickupStates::FIRSTEXTEND:
             m_motorAngleLeftController.SetReference(-10, rev::ControlType::kSmartMotion);
-            m_motorTelescopingController.SetReference(42, rev::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(45, rev::ControlType::kSmartMotion);
 
             currentStatePickup = ConePickupStates::NOTHING;
             break;
             
         case ConePickupStates::NOTHING:
 
-            if (m_encoderMotorTelescoping.GetPosition() > 41) {
+            if (m_encoderMotorTelescoping.GetPosition() > 44) {
                 currentStatePickup = ConePickupStates::SECONDEXTEND;
             }
             break;
 
         case ConePickupStates::SECONDEXTEND:
-            m_motorAngleLeftController.SetReference(-22, rev::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-25, rev::ControlType::kSmartMotion);
 
             currentStatePickup = ConePickupStates::INIT;
             break;

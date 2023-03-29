@@ -6,13 +6,13 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/InstantCommand.h>
-
 #include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/WaitCommand.h>
+
 #include "Constants.h"
 #include "commands/Drive.h"
 #include "commands/PointAtTarget.h"
@@ -24,8 +24,6 @@
 
 #include <frc2/command/button/CommandXboxController.h>
 #include <frc2/command/Commands.h>
-#include <frc/smartdashboard/SendableChooser.h>
-#include <frc/smartdashboard/SmartDashboard.h>
 
 #include <frc/Joystick.h>
 #include <frc2/Command/Button/CommandXboxController.h>
@@ -34,13 +32,9 @@
 #include "commands/RequireDrive.h"
 #include "commands/AutoBalance.h"
 #include "commands/RequireDrive.h"
-#include "subsystems/drivetrain.h"
 #include <pathplanner/lib/auto/SwerveAutoBuilder.h>
 #include <pathplanner/lib/PathPlanner.h>
 #include <pathplanner/lib/auto/PIDConstants.h>
-#include <frc/Joystick.h>
-#include <frc2/Command/Button/CommandXboxController.h>
-#include <frc2/command/button/JoystickButton.h>
 
 /**
  * This class is where the bulk of the robot should be declared.  Since

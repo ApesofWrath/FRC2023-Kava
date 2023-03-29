@@ -30,13 +30,15 @@ m_autoBuilder{
     m_chooser.SetDefaultOption("DoNothing", "DoNothing");
     m_chooser.AddOption("StraightLineTestX", "StraightLineTestX");
     m_chooser.AddOption("StraightLineTestY", "StraightLineTestY");
-    m_chooser.AddOption("CurvedLineTest", "CurvedLineTest");
-    m_chooser.AddOption("BumpcubeBalance", "BumpcubeBalance");
+    m_chooser.AddOption("BumpCubeBackOffCommunityNoCableBump", "BumpCubeBackOffCommunityNoBump");
+    m_chooser.AddOption("BumpCubeBackOffCommunityCableBump", "BumpCubeBackOffCommunityCableBump");
+    m_chooser.AddOption("BumpCubeDockChargeStationNoCableBump", "BumpCubeDockChargeStationNoBump");
     frc::SmartDashboard::PutData(&m_chooser);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kB).OnTrue(AutoBalance(&m_drivetrain).ToPtr());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
@@ -47,7 +49,7 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   }
   else
   {
-    std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(4_mps, 3_mps_sq)});
+    std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(3_mps, 2_mps_sq)});
     frc2::CommandPtr fullAuto = m_autoBuilder.fullAuto(pathGroup);
     frc2::CommandPtr fullAutoReqDrive = std::move(fullAuto).AlongWith(std::move(RequireDrive(&m_drivetrain).ToPtr()));
     return std::move(fullAutoReqDrive).AndThen(std::move(Drive(&m_drivetrain, 0, 0, 0).ToPtr()));

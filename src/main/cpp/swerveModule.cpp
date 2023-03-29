@@ -30,7 +30,7 @@ swerveModule::swerveModule(const double module[])
     m_driveController.SetFeedbackDevice(m_encoderDrive);
     m_turnController.SetFeedbackDevice(m_encoderTurnIntegrated);
 
-    m_driveController.SetP(0);
+    m_driveController.SetP(0.001);
     m_driveController.SetI(0);
     m_driveController.SetD(0);
     //m_driveController.SetFF(1/107.9101*2); //(0.5*1023.0)/(22100.0*0.5)
@@ -46,8 +46,8 @@ swerveModule::swerveModule(const double module[])
     m_encoderTurnIntegrated.SetPositionConversionFactor(2.0 * 3.141592653589 * ((14.0 / 50.0) * (10.0 / 60.0)));
     m_encoderTurnIntegrated.SetVelocityConversionFactor((2.0 * 3.141592653589 * ((14.0 / 50.0) * (10.0 / 60.0))) / 60.0);
 
-    m_encoderDrive.SetPositionConversionFactor(2.0 * 3.141592653589 * ((14.0 / 50.0) * (25.0 / 19.0) * (15.0 / 45.0)));
-    m_encoderDrive.SetVelocityConversionFactor((2.0 * 3.141592653589 * ((14.0 / 50.0) * (25.0 / 19.0) * (15.0 / 45.0))) / 60.0);
+    m_encoderDrive.SetPositionConversionFactor(0.0508 * 2.0 * 3.141592653589 * ((14.0 / 50.0) * (25.0 / 19.0) * (15.0 / 45.0)));
+    m_encoderDrive.SetVelocityConversionFactor(0.0508 * (2.0 * 3.141592653589 * ((14.0 / 50.0) * (25.0 / 19.0) * (15.0 / 45.0))) / 60.0);
 }
 
 /* void swerveModule::ConfigModule(const ConfigType& type) {

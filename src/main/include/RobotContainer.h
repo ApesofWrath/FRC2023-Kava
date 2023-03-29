@@ -21,6 +21,8 @@
 #include <pathplanner/lib/PathPlanner.h>
 #include <pathplanner/lib/auto/PIDConstants.h>
 #include <frc/Joystick.h>
+#include <frc2/Command/Button/CommandXboxController.h>
+#include <frc2/command/button/JoystickButton.h>
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -39,7 +41,9 @@ class RobotContainer {
   drivetrain m_drivetrain;
   frc::SendableChooser<std::string> m_chooser;
   pathplanner::SwerveAutoBuilder m_autoBuilder;
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 
+  {{"AutoBalance", std::make_shared<AutoBalance>(&m_drivetrain)}};
   void ConfigureButtonBindings();
   frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};
+  frc2::CommandXboxController m_controllerOperator{controllerConstants::kControllerAuxID};
 };

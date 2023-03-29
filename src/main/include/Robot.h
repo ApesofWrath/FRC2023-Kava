@@ -6,6 +6,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc2/command/Command.h>
+#include <subsystems/robotArm.h>
 
 #include "RobotContainer.h"
 
@@ -27,6 +28,4 @@ class Robot : public frc::TimedRobot {
   frc2::Command* m_autonomousCommand = nullptr;
 
   RobotContainer m_container;
-  frc::Joystick m_controllerMain{controllerConstants::kControllerMainID};
-
 };

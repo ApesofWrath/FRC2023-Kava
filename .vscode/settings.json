@@ -117,5 +117,8 @@
     "spanstream": "cpp",
     "cinttypes": "cpp"
   },
-  "wpilib.deployOffline": false
+  "wpilib.deployOffline": false,
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "master"
+  ]
 }

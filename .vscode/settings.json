@@ -114,7 +114,14 @@
     "memory_resource": "cpp",
     "string_view": "cpp",
     "semaphore": "cpp",
+<<<<<<< HEAD
+    "spanstream": "cpp",
+=======
+>>>>>>> 258d7abfa06596b614b6a96a465a4d548304069d
     "cinttypes": "cpp"
   },
-  "wpilib.deployOffline": false
+  "wpilib.deployOffline": false,
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "master"
+  ]
 }

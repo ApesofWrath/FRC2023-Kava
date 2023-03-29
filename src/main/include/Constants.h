@@ -12,13 +12,50 @@
  * Place constants into subsystem/command -specific NAMESPACES within this
  * header, which can then be included (where they are needed).
  */
+namespace visionConstants {
+    //How fast the robot attempts to correct its self
+    constexpr double errorMultiplier = 0.05;
+    //The minumum error for the robot to move
+    constexpr double errorMinimum = 0.0;
 
+    constexpr double xAlignMultiplier = 0.5;
+    constexpr double yAlignMultiplier = 0;
+    constexpr double yawAlignMultiplier = 0.0;
+    // Robots distance from the April Tag it will align its self with
+    constexpr double AlignDistance = 10.0;
+    constexpr double rotationDistance = 1.0;
+}
+
+// IDs for controllers
 namespace controllerConstants {
     //USB port addresses on drivestation PC.
     constexpr int kControllerMainID = 0;
     constexpr int kControllerAuxID = 1;
+    // Curve amount for drivers controller
+    constexpr double kControllerCurve = 8.0;
 }
 
+// Motor IDs for robot arm
+ namespace armConstants {
+    constexpr int kMotorArmAngleLeftID = 12;
+    constexpr int kMotorArmAngleRightID = 13;
+    constexpr int kMotorArmTelescopingID = 14;
+    constexpr int kMotorArmClampID = 15;
+    constexpr int kEncoderTelescopingID = 16;
+    namespace offsets {
+        constexpr double kTelescoping{-267.1};
+    }
+    namespace arm {
+        constexpr double kRobotArm[6]{kMotorArmAngleLeftID,
+                                        kMotorArmAngleRightID, 
+                                        kMotorArmTelescopingID,
+                                        kMotorArmClampID,
+                                        kEncoderTelescopingID,
+                                        offsets::kTelescoping};
+    }
+}
+
+// Motor IDs, Encoder IDs, and Offsets for swervedrive
 namespace drivetrainConstants {
     //CAN IDs
     constexpr int kMotorDriveFrontRightID = 26;
@@ -37,17 +74,18 @@ namespace drivetrainConstants {
     constexpr int kEncoderTurnRearLeftID = 11;
 
     namespace offsets {
-        constexpr double kFrontRight{145.107}; // tshirt shooter offsets
-        constexpr double kRearRight{60.732};
-        constexpr double kFrontLeft{39.023};
-        constexpr double kRearLeft{2.285};
+        /* constexpr double kFrontRight{-38.057+180}; // tshirt shooter offsets
+        constexpr double kRearRight{61.787};
+        constexpr double kFrontLeft{38.057};
+        constexpr double kRearLeft{3.164}; */
 
-        /* constexpr double kFrontRight{50.713}; // curr robo offsets
+        constexpr double kFrontRight{50.713}; // curr robo offsets
         constexpr double kRearRight{154.160};
         constexpr double kFrontLeft{-6.416};
-        constexpr double kRearLeft{89.912}; */
+        constexpr double kRearLeft{89.912};
     }
 
+    // Values for each swerve module object to use
     namespace swerveModules {
         constexpr double kModuleFrontRight[4]{kMotorDriveFrontRightID,
                                                    kMotorTurnFrontRightID,
@@ -67,6 +105,7 @@ namespace drivetrainConstants {
                                                  offsets::kRearLeft};
     }
 
+    // Math constants and calculations to be used by swervedrive
     namespace calculations {
         constexpr auto kFinalDriveRatio{6.75 * 360_deg};
         constexpr auto kFinalTurnRatio{(14.0 / 50.0) * (10.0 / 60.0)};

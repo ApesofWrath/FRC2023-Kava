@@ -5,6 +5,8 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc2/command/InstantCommand.h>
+
 #include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -13,6 +15,22 @@
 #include <frc2/command/WaitCommand.h>
 #include "Constants.h"
 #include "commands/Drive.h"
+#include "commands/PointAtTarget.h"
+#include "commands/Align.h"
+#include "subsystems/drivetrain.h"
+#include "subsystems/vision.h"
+#include "MathFunctions.h"
+#include "subsystems/robotArm.h"
+
+#include <frc2/command/button/CommandXboxController.h>
+#include <frc2/command/Commands.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
+#include <frc/Joystick.h>
+#include <frc2/Command/Button/CommandXboxController.h>
+#include <frc2/command/button/JoystickButton.h>
+
 #include "commands/RequireDrive.h"
 #include "commands/AutoBalance.h"
 #include "commands/RequireDrive.h"
@@ -39,6 +57,10 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   drivetrain m_drivetrain;
+  Vision m_vision;
+  robotArm m_robotArm;
+
+  // frc::SendableChooser<std::string> m_chooser;
   frc::SendableChooser<std::string> m_chooser;
   pathplanner::SwerveAutoBuilder m_autoBuilder;
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 

@@ -6,8 +6,16 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include "subsystems/drivetrain.h"
+#include <units/velocity.h>
+#include <units/angular_velocity.h>
+#include <frc/XboxController.h>
+#include <commands/Drive.h>
+#include <frc/Joystick.h>
 
-void Robot::RobotInit() {}
+
+void Robot::RobotInit() {
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use
@@ -61,7 +69,20 @@ void Robot::TeleopPeriodic() {}
 /**
  * This function is called periodically during test mode.
  */
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic() {
+  // Vision visionSubsystem;
+  // // visionSubsystem.SelectPipeline(1);
+  // // if (m_controllerMain.GetRawButton(1)){
+  // visionSubsystem.SelectPipeline(0);
+  // }
+  //   if (m_controllerMain.GetRawButton(2)){
+  //   visionSubsystem.SelectPipeline(1);
+  // }
+    
+  // frc::SmartDashboard::PutNumber("Target X", visionSubsystem.GetTargetX());
+  
+  }
+
 
 #ifndef RUNNING_FRC_TESTS
 int main() {

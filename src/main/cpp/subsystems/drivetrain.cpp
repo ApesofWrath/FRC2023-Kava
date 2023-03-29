@@ -4,10 +4,25 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <iostream>
 
+// Constructor, zeros the gyro for swervedrive
 drivetrain::drivetrain() {
     m_navX.ZeroYaw();
 }
 
+// Resets the gyro when function run
+void drivetrain::resetGyro() {
+    m_navX.ZeroYaw();
+}
+
+void drivetrain::slowDown() {
+    kslowConst = 0.25;
+}
+
+void drivetrain::normalSpeed() {
+    kslowConst = 1.0;
+}
+
+// Sets Desired States of the swerve modules for swervedrive
 void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
                              units::meters_per_second_t ySpeed,
                              units::radians_per_second_t zRot,
@@ -32,12 +47,14 @@ void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
     m_rearLeft.SetDesiredState(rearLeft);
 }
 
+// Updates the odometry of the swervedrive
 void drivetrain::UpdateOdometry() {
     m_odometry.Update(m_navX.GetRotation2d(), {m_frontRight.GetPosition(),
                       m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
                       m_rearLeft.GetPosition()});
 }
 
+// Perodically (Constantly runs during periodic), updates the odometry of the swervedrive
 frc::Pose2d drivetrain::GetOdometry() {
     return m_odometry.GetPose();
 }
@@ -75,7 +92,10 @@ void drivetrain::Periodic() {
     frc::SmartDashboard::PutNumber("Front Right TARGET", m_frontRight.DashboardInfo(swerveModule::DataType::kTargetAngle));
     frc::SmartDashboard::PutNumber("Rear Right TARGET", m_rearRight.DashboardInfo(swerveModule::DataType::kTargetAngle));
     frc::SmartDashboard::PutNumber("Front Left TARGET", m_frontLeft.DashboardInfo(swerveModule::DataType::kTargetAngle));
-    frc::SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle)); */
+    frc:
+    
+    :SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle)); */
+    frc::SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle));
     frc::SmartDashboard::PutNumber("Odometry X", units::unit_cast<double>(m_odometry.GetPose().Translation().X()));
     frc::SmartDashboard::PutNumber("Odometry Y", units::unit_cast<double>(m_odometry.GetPose().Translation().Y()));
     frc::SmartDashboard::PutNumber("Odometry Rot", units::unit_cast<double>(m_odometry.GetPose().Rotation().Degrees()));

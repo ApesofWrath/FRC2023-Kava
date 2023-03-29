@@ -12,7 +12,6 @@
 #include <frc/kinematics/SwerveModulePosition.h>
 
 #include "Constants.h"
-#include "hardwareSettings.h"
 
 class swerveModule {
  public:
@@ -20,9 +19,6 @@ class swerveModule {
 
   enum class ConfigType {motorDrive, motorTurn, encoderTurn};
   //void ConfigModule(const ConfigType& type);
-
-  void ConfigNeoTurn();
-  void ConfigNeoDrive();
 
   // frc::SwerveModuleState GetState();
   frc::SwerveModulePosition GetPosition();
@@ -49,7 +45,7 @@ class swerveModule {
   const double m_encoderOffset;
   double m_targetAngle;
 
-  hardwareSettings m_settings;
+  // hardwareSettings m_settings;
 };
 
 namespace units {

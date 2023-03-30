@@ -68,7 +68,7 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     // Sets current limit for the clamp motor on the arm, sets the motors direction inverted, and sets position limits for the motor
 
     // $ CURRENT LIMIT OF CLAMP
-    m_motorClamp.SetSmartCurrentLimit(1.0);
+    m_motorClamp.SetSmartCurrentLimit(2.0);
 
     // $ SETS CLAMP INVERTED OR NOT
     m_motorClamp.SetInverted(true);
@@ -77,7 +77,7 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 5.0);
 
     // $ REVERSE LIMIT OF CLAMP
-    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 30.0);
+    m_motorClamp.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 32.0);
 
     // Just enables the position limits for the clamp motor
     m_motorClamp.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);

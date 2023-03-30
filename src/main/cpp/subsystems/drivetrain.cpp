@@ -16,7 +16,7 @@ void drivetrain::resetGyro() {
 
 // $ Slow constant value
 void drivetrain::slowDown() {
-    kslowConst = 0.25;
+    kslowConst = 0.5;
 }
 
 // Normal speed value (should always be 1.0)

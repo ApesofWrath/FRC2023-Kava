@@ -4,7 +4,7 @@
 #include <frc2/command/CommandHelper.h>
 
 #include <frc/filter/SlewRateLimiter.h>
-
+#include <frc/Timer.h>
 #include "subsystems/drivetrain.h"
 
 /**
@@ -29,4 +29,5 @@ class AutoBalance
 
  private:
   drivetrain* m_drivetrain;
+  frc::Timer m_timer;
 };

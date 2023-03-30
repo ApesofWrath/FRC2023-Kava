@@ -10,13 +10,13 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandPtr.h>
-#include <frc2/command/ParallelCommandGroup.h>
-#include <frc2/command/WaitCommand.h>
 
 #include "Constants.h"
 #include "commands/Drive.h"
 #include "commands/PointAtTarget.h"
 #include "commands/Align.h"
+#include "commands/ScoreHighPreload.h"
+#include "commands/ScoreMidPreload.h"
 #include "subsystems/drivetrain.h"
 #include "subsystems/vision.h"
 #include "MathFunctions.h"
@@ -24,6 +24,7 @@
 
 #include <frc2/command/button/CommandXboxController.h>
 #include <frc2/command/Commands.h>
+#include <frc2/command/InstantCommand.h>
 
 #include <frc/Joystick.h>
 #include <frc2/Command/Button/CommandXboxController.h>
@@ -55,10 +56,12 @@ class RobotContainer {
   robotArm m_robotArm;
 
   frc::SendableChooser<std::string> m_chooser;
-  pathplanner::SwerveAutoBuilder m_autoBuilder;
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 
   {{"AutoBalance", std::make_shared<AutoBalance>(&m_drivetrain)},
-  {"event", std::make_shared<frc2::PrintCommand>("path end")}};
+  {"ScorePreloadHigh", std::make_shared<ScoreHighPreload>(&m_robotArm)},
+  {"ScorePreloadMid", std::make_shared<ScoreMidPreload>(&m_robotArm)}
+  };
+  pathplanner::SwerveAutoBuilder m_autoBuilder;
   void ConfigureButtonBindings();
 
   // Controller creation

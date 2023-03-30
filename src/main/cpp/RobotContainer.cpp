@@ -42,9 +42,16 @@ m_autoBuilder{
     m_chooser.SetDefaultOption("DoNothing", "DoNothing");
     m_chooser.AddOption("StraightLineTestX", "StraightLineTestX");
     m_chooser.AddOption("StraightLineTestY", "StraightLineTestY");
-    m_chooser.AddOption("BumpCubeBackOffCommunityNoCableBump", "BumpCubeBackOffCommunityNoBump");
     m_chooser.AddOption("BumpCubeBackOffCommunityCableBump", "BumpCubeBackOffCommunityCableBump");
-    m_chooser.AddOption("BumpCubeDockChargeStationNoCableBump", "BumpCubeDockChargeStationNoBump");
+    m_chooser.AddOption("BumpCubeBackOffCommunityNoCableBump", "BumpCubeBackOffCommunityNoCableBump");
+    m_chooser.AddOption("BumpCubeBalanceChargeStationNoBump", "BumpCubeBalanceChargeStationNoBump");
+    m_chooser.AddOption("ScoreConeHighBackOffCommunityCableBump", "ScoreConeHighBackOffCommunityCableBump");
+    m_chooser.AddOption("ScoreConeHighBackOffCommunityNoCableBump", "ScoreConeHighBackOffCommunityNoCableBump");
+    m_chooser.AddOption("ScoreConeHighBalanceChargeStationNoBump", "ScoreConeHighBalanceChargeStationNoBump");
+    m_chooser.AddOption("ScoreConeMidBackOffCommunityCableBump", "ScoreConeMidBackOffCommunityCableBump");
+    m_chooser.AddOption("ScoreConeMidBackOffCommunityNoCableBump", "ScoreConeMidBackOffCommunityNoCableBump");
+    m_chooser.AddOption("ScoreConeMidBalanceChargeStationNoBump", "ScoreConeMidBalanceChargeStationNoBump");
+
     frc::SmartDashboard::PutData(&m_chooser);
 }
 
@@ -89,18 +96,18 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
   if (m_chooser.GetSelected() == "DoNothing")
   {
-    return frc2::WaitCommand(15_s).ToPtr();
+    return frc2::cmd::Wait(15_s);
   }
   else
   {
     std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(3_mps, 2_mps_sq)});
     frc2::CommandPtr fullAuto = m_autoBuilder.fullAuto(pathGroup);
-    return fullAuto;
+    return RequireDrive(&m_drivetrain).ToPtr().AndThen(std::move(fullAuto));
   }
   
   /* if (path == "AutonTest")
   {
     return new Drive(&m_drivetrain, 1_mps, 1_mps, 15_deg_per_s);
-  } */
-  //return &m_Auto;
+  } 
+  return &m_Auto;*/
 }

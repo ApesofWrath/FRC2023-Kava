@@ -15,7 +15,7 @@ void drivetrain::resetGyro() {
 }
 
 void drivetrain::slowDown() {
-    kslowConst = 0.25;
+    kslowConst = 0.5;
 }
 
 void drivetrain::normalSpeed() {

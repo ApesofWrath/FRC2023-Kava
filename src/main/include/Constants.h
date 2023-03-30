@@ -32,7 +32,7 @@ namespace controllerConstants {
     constexpr int kControllerMainID = 0;
     constexpr int kControllerAuxID = 1;
     // Curve amount for drivers controller
-    constexpr double kControllerCurve = 8.0;
+    constexpr double kControllerCurve = 1.0;
 }
 
 // Motor IDs for robot arm

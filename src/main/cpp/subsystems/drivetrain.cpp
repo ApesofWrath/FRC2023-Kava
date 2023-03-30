@@ -16,12 +16,12 @@ void drivetrain::resetGyro() {
 
 // $ Slow constant value
 void drivetrain::slowDown() {
-    kslowConst = 0.5;
+    kslowConst = -0.5;
 }
 
 // Normal speed value (should always be 1.0)
 void drivetrain::normalSpeed() {
-    kslowConst = 1.0;
+    kslowConst = -1.0;
 }
 
 // Sets Desired States of the swerve modules for swervedrive
@@ -97,7 +97,7 @@ void drivetrain::Periodic() {
     frc:
     
     :SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle)); */
-    frc::SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle));
+    // frc::SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle));
     frc::SmartDashboard::PutNumber("Odometry X", units::unit_cast<double>(m_odometry.GetPose().Translation().X()));
     frc::SmartDashboard::PutNumber("Odometry Y", units::unit_cast<double>(m_odometry.GetPose().Translation().Y()));
     frc::SmartDashboard::PutNumber("Odometry Rot", units::unit_cast<double>(m_odometry.GetPose().Rotation().Degrees()));

@@ -40,7 +40,7 @@ class drivetrain : public frc2::SubsystemBase {
   void slowDown();
   void normalSpeed();
 
-  double kslowConst = 1.0;
+  double kslowConst = -1.0;
 
 private:
 

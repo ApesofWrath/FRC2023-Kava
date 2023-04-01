@@ -51,6 +51,7 @@ m_autoBuilder{
     m_chooser.AddOption("ScoreConeMidBackOffCommunityCableBump", "ScoreConeMidBackOffCommunityCableBump");
     m_chooser.AddOption("ScoreConeMidBackOffCommunityNoCableBump", "ScoreConeMidBackOffCommunityNoCableBump");
     m_chooser.AddOption("ScoreConeMidBalanceChargeStationNoBump", "ScoreConeMidBalanceChargeStationNoBump");
+    m_chooser.AddOption("ScorePreloadMid", "ScorePreloadMid");
 
     frc::SmartDashboard::PutData(&m_chooser);
 }
@@ -97,6 +98,10 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   if (m_chooser.GetSelected() == "DoNothing")
   {
     return frc2::cmd::Wait(15_s);
+  }
+  else if (m_chooser.GetSelected() == "ScorePreloadMid")
+  {
+    return ScoreMidPreload(&m_robotArm).ToPtr();
   }
   else
   {

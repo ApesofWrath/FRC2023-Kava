@@ -51,7 +51,7 @@ void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
 
 // Updates the odometry of the swervedrive
 void drivetrain::UpdateOdometry() {
-    m_odometry.Update(m_navX.GetRotation2d(), {m_frontRight.GetPosition(),
+    m_odometry.Update(m_navX.GetRotation2d() + frc::Rotation2d(180_deg), {m_frontRight.GetPosition(),
                       m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
                       m_rearLeft.GetPosition()});
 }

@@ -59,7 +59,7 @@ class RobotContainer {
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 
   {{"AutoBalance", std::make_shared<AutoBalance>(&m_drivetrain)},
   {"ScorePreloadHigh", std::make_shared<ScoreHighPreload>(&m_robotArm)},
-  {"ScorePreloadMid", std::make_shared<ScoreMidPreload>(&m_robotArm)}
+  {"ScoreMidPreload", std::make_shared<ScoreMidPreload>(&m_robotArm)}
   };
   pathplanner::SwerveAutoBuilder m_autoBuilder;
   void ConfigureButtonBindings();

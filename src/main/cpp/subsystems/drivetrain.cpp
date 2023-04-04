@@ -16,12 +16,12 @@ void drivetrain::resetGyro() {
 
 // $ Slow constant value
 void drivetrain::slowDown() {
-    kslowConst = -0.5;
+    kslowConst = 0.5;
 }
 
 // Normal speed value (should always be 1.0)
 void drivetrain::normalSpeed() {
-    kslowConst = -1.0;
+    kslowConst = 1.0;
 }
 
 // Sets Desired States of the swerve modules for swervedrive
@@ -62,7 +62,7 @@ frc::Pose2d drivetrain::GetOdometry() {
 }
 
 void drivetrain::ResetOdometry(frc::Pose2d initPose) {
-    m_odometry.ResetPosition(m_navX.GetRotation2d(), {m_frontRight.GetPosition(),
+    m_odometry.ResetPosition(m_navX.GetRotation2d() + frc::Rotation2d(180_deg), {m_frontRight.GetPosition(),
                       m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
                       m_rearLeft.GetPosition()}, initPose);
 }

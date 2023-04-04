@@ -7,7 +7,7 @@ ScoreMidPreload::ScoreMidPreload(robotArm* robotArm) : m_robotArm{robotArm} { //
     AddRequirements({m_robotArm}); // require the m_robotArm pointer
     AddCommands(
         ClampToggle(m_robotArm),
-        frc2::WaitCommand(5.0_s),
+        frc2::WaitCommand(2.0_s),
         ScoreMid(m_robotArm),
         frc2::WaitCommand(2.5_s),
         ClampToggle(m_robotArm),

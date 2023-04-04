@@ -51,6 +51,7 @@ m_autoBuilder{
     m_chooser.AddOption("ScoreConeMidBackOffCommunityCableBump", "ScoreConeMidBackOffCommunityCableBump");
     m_chooser.AddOption("ScoreConeMidBackOffCommunityNoCableBump", "ScoreConeMidBackOffCommunityNoCableBump");
     m_chooser.AddOption("ScoreConeMidBalanceChargeStationNoBump", "ScoreConeMidBalanceChargeStationNoBump");
+    m_chooser.AddOption("OverChargeStation", "OverChargeStation");
 
     frc::SmartDashboard::PutData(&m_chooser);
 }

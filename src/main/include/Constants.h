@@ -121,3 +121,11 @@ namespace drivetrainConstants {
         constexpr double kMotorDeadband = 0.1;
     }
 }
+namespace suckerConstants {
+    int elevation1Id = 17;
+    int elevation2Id = 18;
+    int Spin1Id = 19;
+    int Spin2Id = 20;
+
+
+}

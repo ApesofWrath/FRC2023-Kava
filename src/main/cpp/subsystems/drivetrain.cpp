@@ -62,7 +62,7 @@ frc::Pose2d drivetrain::GetOdometry() {
 }
 
 void drivetrain::ResetOdometry(frc::Pose2d initPose) {
-    m_odometry.ResetPosition(m_navX.GetRotation2d() + frc::Rotation2d(180_deg), {m_frontRight.GetPosition(),
+    m_odometry.ResetPosition(m_navX.GetRotation2d(), {m_frontRight.GetPosition(),
                       m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
                       m_rearLeft.GetPosition()}, initPose);
 }

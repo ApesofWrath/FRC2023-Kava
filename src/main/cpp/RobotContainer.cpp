@@ -19,7 +19,7 @@ RobotContainer::RobotContainer() :
 m_autoBuilder{
     [this]() { return m_drivetrain.GetOdometry(); }, // Function to supply current robot pose
     [this](auto initPose) { m_drivetrain.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-    pathplanner::PIDConstants(1.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+    pathplanner::PIDConstants(3.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
     pathplanner::PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
     [this](frc::ChassisSpeeds speeds) {m_drivetrain.SwerveDrive(speeds.vx, speeds.vy, speeds.omega, true);}, // Output function that accepts field relative ChassisSpeeds
     eventMap,
@@ -109,7 +109,8 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   {
     std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(3_mps, 2_mps_sq)});
     frc2::CommandPtr fullAuto = m_autoBuilder.fullAuto(pathGroup);
-    return RequireDrive(&m_drivetrain).ToPtr().AndThen(std::move(fullAuto));
+    Drive(&m_drivetrain, 0, 0, 0).End(true);
+    return std::move(fullAuto).AndThen(std::move(RequireDrive(&m_drivetrain)).ToPtr());
   }
   
   /* if (path == "AutonTest")

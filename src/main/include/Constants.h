@@ -74,15 +74,15 @@ namespace drivetrainConstants {
     constexpr int kEncoderTurnRearLeftID = 11;
 
     namespace offsets {
-        /* constexpr double kFrontRight{-38.057+180}; // tshirt shooter offsets
+        constexpr double kFrontRight{-38.057+180}; // tshirt shooter offsets
         constexpr double kRearRight{61.787};
         constexpr double kFrontLeft{38.057};
-        constexpr double kRearLeft{3.164}; */
+        constexpr double kRearLeft{3.164};
 
-        constexpr double kFrontRight{50.713}; // curr robo offsets
+        /* constexpr double kFrontRight{50.713}; // curr robo offsets
         constexpr double kRearRight{154.160};
         constexpr double kFrontLeft{-6.416};
-        constexpr double kRearLeft{89.912};
+        constexpr double kRearLeft{89.912}; */
     }
 
     // Values for each swerve module object to use

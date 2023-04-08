@@ -11,4 +11,4 @@ void SuckSpeed::Execute() { // on command call (button press)
     m_sucker->SetSpinSpeed(m_speed);
 }
 
-bool SuckSpeed::IsFinished() { return true; } // return when ??
+bool SuckSpeed::IsFinished() { return false; } // return when ??

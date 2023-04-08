@@ -92,7 +92,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kLeftBumper).OnTrue(ArmUp(&m_robotArm).ToPtr());
 
   // Auto Balance command for driver controller (back button, right next to start button)
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kBack).OnTrue(AutoBalance(&m_drivetrain).ToPtr());
+  // frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kBack).OnTrue(AutoBalance(&m_drivetrain).ToPtr());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

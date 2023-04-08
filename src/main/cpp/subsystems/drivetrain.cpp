@@ -74,7 +74,7 @@ std::string drivetrain::AutoBalance()
     {
         return "Forward";
     }
-    if (m_navX.GetPitch() > 5.5)
+    else if (m_navX.GetPitch() > 5.5)
     {
         return "ForwardSlow";
     }

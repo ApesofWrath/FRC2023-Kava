@@ -62,6 +62,7 @@ frc::Pose2d drivetrain::GetOdometry() {
 }
 
 void drivetrain::ResetOdometry(frc::Pose2d initPose) {
+    initPose.TransformBy(frc::Transform2d(frc::Translation2d(0_m, 0_m), frc::Rotation2d(180_deg)));
     m_odometry.ResetPosition(m_navX.GetRotation2d(), {m_frontRight.GetPosition(),
                       m_rearRight.GetPosition(), m_frontLeft.GetPosition(),
                       m_rearLeft.GetPosition()}, initPose);
@@ -69,13 +70,21 @@ void drivetrain::ResetOdometry(frc::Pose2d initPose) {
 
 std::string drivetrain::AutoBalance()
 {
-    if(m_navX.GetPitch() > 3.5)
+    if(m_navX.GetPitch() > 11)
     {
         return "Forward";
     }
-    else if (m_navX.GetPitch() < -3.5)
+    if (m_navX.GetPitch() > 5.5)
+    {
+        return "ForwardSlow";
+    }
+    else if (m_navX.GetPitch() < -11)
     {
         return "Backward";
+    }
+    else if(m_navX.GetPitch() < -5.5)
+    {
+        return "BackwardSlow";
     }
     else
     {

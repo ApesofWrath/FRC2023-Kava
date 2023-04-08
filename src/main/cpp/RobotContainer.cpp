@@ -109,8 +109,8 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   {
     std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(3_mps, 2_mps_sq)});
     frc2::CommandPtr fullAuto = m_autoBuilder.fullAuto(pathGroup);
-    Drive(&m_drivetrain, 0, 0, 0).End(true);
-    return std::move(fullAuto).AndThen(std::move(RequireDrive(&m_drivetrain)).ToPtr());
+    fullAuto.get()->AddRequirements(&m_drivetrain);
+    return fullAuto;
   }
   
   /* if (path == "AutonTest")

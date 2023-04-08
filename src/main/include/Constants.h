@@ -122,10 +122,8 @@ namespace drivetrainConstants {
     }
 }
 namespace suckerConstants {
-    int elevation1Id = 17;
-    int elevation2Id = 18;
-    int Spin1Id = 19;
-    int Spin2Id = 20;
-
-
+    constexpr int elevation1Id = 17;
+    constexpr int elevation2Id = 18;
+    constexpr int Spin1Id = 19;
+    constexpr int Spin2Id = 20;
 }

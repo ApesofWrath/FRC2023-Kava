@@ -4,4 +4,11 @@ using namespace suckerConstants;
 Sucker::Sucker() : m_Elevation1(elevation1Id, rev::CANSparkMax::MotorType::kBrushless),
 m_Elevation2(elevation2Id, rev::CANSparkMax::MotorType::kBrushless),
 m_Spin1(Spin1Id, rev::CANSparkMax::MotorType::kBrushless),
-m_Spin2(Spin2Id, rev::CANSparkMax::MotorType::kBrushless){}
+m_Spin2(Spin2Id, rev::CANSparkMax::MotorType::kBrushless){
+    m_Spin2.SetInverted(true);
+}
+
+void Sucker::SetSpinSpeed(float speed){
+    m_Spin1.Set(speed);
+    m_Spin2.Set(speed);
+}

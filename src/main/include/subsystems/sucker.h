@@ -14,6 +14,7 @@
 class Sucker : public frc2::SubsystemBase {
  public:
   Sucker();
+  void SetSpinSpeed(float speed);
 
 
  private:

@@ -21,6 +21,7 @@
 #include "subsystems/vision.h"
 #include "MathFunctions.h"
 #include "subsystems/robotArm.h"
+#include "subsystems/sucker.h"
 
 #include <frc2/command/button/CommandXboxController.h>
 #include <frc2/command/Commands.h>
@@ -54,6 +55,8 @@ class RobotContainer {
   drivetrain m_drivetrain;
   Vision m_vision;
   robotArm m_robotArm;
+  Sucker m_sucker;
+
 
   frc::SendableChooser<std::string> m_chooser;
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 

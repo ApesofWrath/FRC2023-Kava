@@ -30,10 +30,8 @@
 #include <frc2/Command/Button/CommandXboxController.h>
 #include <frc2/command/button/JoystickButton.h>
 
-#include "commands/RequireDrive.h"
 #include "commands/AutoBalance.h"
 #include "commands/RequireDrive.h"
-#include <pathplanner/lib/auto/SwerveAutoBuilder.h>
 #include <pathplanner/lib/PathPlanner.h>
 #include <pathplanner/lib/auto/PIDConstants.h>
 

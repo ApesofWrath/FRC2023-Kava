@@ -12,9 +12,9 @@
 #include <frc2/command/CommandPtr.h>
 
 #include "Constants.h"
-#include "commands/Drive.h"
-#include "commands/PointAtTarget.h"
-#include "commands/Align.h"
+#include "commands/Drivetrain/Drive.h"
+#include "commands/Vision/PointAtTarget.h"
+#include "commands/Vision/Align.h"
 #include "commands/ScoreHighPreload.h"
 #include "commands/ScoreMidPreload.h"
 #include "subsystems/drivetrain.h"

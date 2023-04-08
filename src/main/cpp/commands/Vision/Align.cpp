@@ -1,4 +1,4 @@
-#include "commands/Align.h"
+#include "commands/Vision/Align.h"
 
 
 Align::Align(drivetrain* drivetrain, Vision* vision) : m_drivetrain(drivetrain), m_vision(vision) {

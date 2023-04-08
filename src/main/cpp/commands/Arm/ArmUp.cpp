@@ -1,4 +1,4 @@
-#include "commands/ArmUp.h" // relevent header file
+#include "commands/Arm/ArmUp.h" // relevent header file
 
 // Constructor for command, takes in pointer to subsystem and sets the name of the command, etc
 ArmUp::ArmUp(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class

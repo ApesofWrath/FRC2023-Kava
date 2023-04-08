@@ -1,4 +1,4 @@
-#include "commands/GrabCone.h" // relevent header file
+#include "commands/Arm/GrabCone.h" // relevent header file
 
 GrabCode::GrabCode(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
     SetName("GrabCode"); // set the ?? name

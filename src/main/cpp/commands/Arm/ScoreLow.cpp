@@ -1,4 +1,4 @@
-#include "commands/ScoreLow.h" // relevent header file
+#include "commands/Arm/ScoreLow.h" // relevent header file
 
 ScoreLow::ScoreLow(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
     SetName("ScoreLow"); // set the ?? name

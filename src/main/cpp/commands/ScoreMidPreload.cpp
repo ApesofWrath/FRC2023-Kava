@@ -1,7 +1,7 @@
 #include "commands/ScoreMidPreload.h" // relevent header file
-#include "commands/ClampToggle.h"
-#include "commands/ScoreMid.h"
-#include "commands/ArmUp.h"
+#include "commands/Arm/ClampToggle.h"
+#include "commands/Arm/ScoreMid.h"
+#include "commands/Arm/ArmUp.h"
 ScoreMidPreload::ScoreMidPreload(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
     SetName("ScoreMidPreload"); // set the ?? name
     AddRequirements({m_robotArm}); // require the m_robotArm pointer

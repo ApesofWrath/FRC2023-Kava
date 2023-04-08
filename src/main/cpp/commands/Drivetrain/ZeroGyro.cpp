@@ -1,4 +1,4 @@
-#include "commands/ZeroGyro.h" // relevent header file
+#include "commands/Drivetrain/ZeroGyro.h" // relevent header file
 
 ZeroGyro::ZeroGyro(drivetrain* drivetrain) : m_drivetrain{drivetrain} { // constructor for command class
     SetName("ZeroGyro"); // set the ?? name

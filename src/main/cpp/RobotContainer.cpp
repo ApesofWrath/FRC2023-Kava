@@ -4,16 +4,16 @@
 
 #include "RobotContainer.h"
 
-#include "commands/ArmUp.h"
-#include "commands/ClampToggle.h"
-#include "commands/ScoreHigh.h"
-#include "commands/ScoreMid.h"
-#include "commands/ScoreLow.h"
-#include "commands/ZeroAngle.h"
-#include "commands/GrabCone.h"
-#include "commands/ZeroGyro.h"
-#include "commands/NormalSpeed.h"
-#include "commands/SlowDown.h"
+#include "commands/Arm/ArmUp.h"
+#include "commands/Arm/ClampToggle.h"
+#include "commands/Arm/ScoreHigh.h"
+#include "commands/Arm/ScoreMid.h"
+#include "commands/Arm/ScoreLow.h"
+#include "commands/Arm/ZeroAngle.h"
+#include "commands/Arm/GrabCone.h"
+#include "commands/Drivetrain/ZeroGyro.h"
+#include "commands/Drivetrain/NormalSpeed.h"
+#include "commands/Drivetrain/SlowDown.h"
 
 RobotContainer::RobotContainer() :
 m_autoBuilder{

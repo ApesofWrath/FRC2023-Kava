@@ -1,4 +1,4 @@
-#include "commands/ScoreMid.h" // relevent header file
+#include "commands/Arm/ScoreMid.h" // relevent header file
 
 ScoreMid::ScoreMid(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
     SetName("ScoreMid"); // set the ?? name

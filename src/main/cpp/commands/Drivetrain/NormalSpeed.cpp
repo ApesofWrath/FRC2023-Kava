@@ -1,4 +1,4 @@
-#include "commands/NormalSpeed.h" // relevent header file
+#include "commands/Drivetrain/NormalSpeed.h" // relevent header file
 
 NormalSpeed::NormalSpeed(drivetrain* drivetrain) : m_drivetrain{drivetrain} { // constructor for command class
     SetName("NormalSpeed"); // set the ?? name

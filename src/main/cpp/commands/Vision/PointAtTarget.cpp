@@ -1,4 +1,4 @@
-#include "commands/PointAtTarget.h"
+#include "commands/Vision/PointAtTarget.h"
 #include "MathFunctions.h"
 
 PointAtTarget::PointAtTarget(drivetrain* drivetrain, Vision* vision) : m_drivetrain(drivetrain), m_vision(vision) {

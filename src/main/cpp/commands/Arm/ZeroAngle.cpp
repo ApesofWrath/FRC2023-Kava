@@ -1,4 +1,4 @@
-#include "commands/ZeroAngle.h" // relevent header file
+#include "commands/Arm/ZeroAngle.h" // relevent header file
 
 ZeroAngle::ZeroAngle(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
     SetName("ZeroAngle"); // set the ?? name

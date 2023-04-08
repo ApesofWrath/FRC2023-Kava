@@ -1,4 +1,4 @@
-#include "commands/ClampToggle.h" // relevent header file
+#include "commands/Arm/ClampToggle.h" // relevent header file
 
 ClampToggle::ClampToggle(robotArm* robotArm) : m_robotArm{robotArm} {  // constructor for command class
     SetName("ClampToggle"); // set the ?? name

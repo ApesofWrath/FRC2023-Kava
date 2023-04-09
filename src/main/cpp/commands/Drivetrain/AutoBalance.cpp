@@ -1,4 +1,4 @@
-#include "commands/AutoBalance.h"
+#include "commands/Drivetrain/AutoBalance.h"
 
 #include <frc/MathUtil.h>
 

@@ -39,10 +39,12 @@ m_autoBuilder{
     [this] { return (MathFunctions::joystickCurve(m_controllerMain.GetY(), controllerConstants::kControllerCurve)); },
     [this] { return (-m_controllerMain.GetRawAxis(4)); }));
 
-
-    m_startBehaviorChooser.SetDefaultOption("DoNothing", frc2::cmd::Wait(0_s));
-    m_startBehaviorChooser.AddOption("ScoreHighPreload", ScoreHighPreload(&m_robotArm).ToPtr());
-    m_startBehaviorChooser.AddOption("ScoreMidPreload", ScoreMidPreload(&m_robotArm).ToPtr());
+    frc2::WaitCommand DoNothing(0_s);
+    ScoreHighPreload ScorePreloadHigh(&m_robotArm);
+    ScoreMidPreload ScorePreloadMid(&m_robotArm);
+    m_startBehaviorChooser.SetDefaultOption("DoNothing", &DoNothing);
+    m_startBehaviorChooser.AddOption("ScoreHighPreload", &ScorePreloadHigh);
+    m_startBehaviorChooser.AddOption("ScoreMidPreload", &ScorePreloadMid);
 
     m_chooser.SetDefaultOption("DoNothing", "DoNothing");
     m_chooser.AddOption("LeaveCommunity", "LeaveCommunity");
@@ -111,8 +113,9 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
     std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(3_mps, 2_mps_sq)});
     frc2::CommandPtr fullAuto = m_autoBuilder.fullAuto(pathGroup);
     fullAuto.get()->AddRequirements(&m_drivetrain);
-    frc2::CommandPtr startBehavior = m_startBehaviorChooser.GetSelected();
-    return std::move(startBehavior).AndThen(std::move(fullAuto));
+    frc2::Command* startBehavior = m_startBehaviorChooser.GetSelected();
+    startBehavior->Schedule();
+    return fullAuto;
   //}
   
   /* if (path == "AutonTest")

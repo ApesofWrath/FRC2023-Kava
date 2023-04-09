@@ -55,7 +55,7 @@ class RobotContainer {
   robotArm m_robotArm;
 
   frc::SendableChooser<std::string> m_chooser;
-  frc::SendableChooser<frc2::CommandPtr> m_startBehaviorChooser;
+  frc::SendableChooser<frc2::Command*> m_startBehaviorChooser;
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap = 
   {{"AutoBalance", std::make_shared<AutoBalance>(&m_drivetrain)},
   {"ScoreHighPreload", std::make_shared<ScoreHighPreload>(&m_robotArm)},

@@ -30,14 +30,7 @@
 #include <frc2/Command/Button/CommandXboxController.h>
 #include <frc2/command/button/JoystickButton.h>
 
-<<<<<<< HEAD
-#include "commands/AutoBalance.h"
-||||||| parent of 344498f (move autobalance)
-#include "commands/AutoBalance.h"
-#include "commands/RequireDrive.h"
-=======
 #include "commands/Drivetrain/AutoBalance.h"
->>>>>>> 344498f (move autobalance)
 #include <pathplanner/lib/PathPlanner.h>
 #include <pathplanner/lib/auto/PIDConstants.h>
 #include <pathplanner/lib/auto/SwerveAutoBuilder.h>

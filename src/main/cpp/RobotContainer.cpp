@@ -40,20 +40,14 @@ m_autoBuilder{
     [this] { return (-m_controllerMain.GetRawAxis(4)); }));
 
     m_chooser.SetDefaultOption("DoNothing", "DoNothing");
-    m_chooser.AddOption("StraightLineTestX", "StraightLineTestX");
-    m_chooser.AddOption("StraightLineTestY", "StraightLineTestY");
-    m_chooser.AddOption("BumpCubeBackOffCommunityCableBump", "BumpCubeBackOffCommunityCableBump");
-    m_chooser.AddOption("BumpCubeBackOffCommunityNoCableBump", "BumpCubeBackOffCommunityNoCableBump");
-    m_chooser.AddOption("BumpCubeBalanceChargeStationNoBump", "BumpCubeBalanceChargeStationNoBump");
-    m_chooser.AddOption("ScoreConeHighBackOffCommunityCableBump", "ScoreConeHighBackOffCommunityCableBump");
-    m_chooser.AddOption("ScoreConeHighBackOffCommunityNoCableBump", "ScoreConeHighBackOffCommunityNoCableBump");
-    m_chooser.AddOption("ScoreConeHighBalanceChargeStationNoBump", "ScoreConeHighBalanceChargeStationNoBump");
-    m_chooser.AddOption("ScoreConeMidBackOffCommunityCableBump", "ScoreConeMidBackOffCommunityCableBump");
-    m_chooser.AddOption("ScoreConeMidBackOffCommunityNoCableBump", "ScoreConeMidBackOffCommunityNoCableBump");
-    m_chooser.AddOption("ScoreConeMidBalanceChargeStationNoBump", "ScoreConeMidBalanceChargeStationNoBump");
     m_chooser.AddOption("ScoreMidPreload", "ScoreMidPreload");
-    m_chooser.AddOption("OverChargeStation", "OverChargeStation");
-    m_chooser.AddOption("OverChargeStation", "OverChargeStation");
+    m_chooser.AddOption("ScoreHighPreload", "ScoreHighPreload");
+    m_chooser.AddOption("LeaveCommunity", "LeaveCommunity");
+    m_chooser.AddOption("ScoreHighLeaveCommunity", "ScoreHighLeaveCommunity");
+    m_chooser.AddOption("ScoreMidLeaveCommunity", "ScoreMidLeaveCommunity");
+    m_chooser.AddOption("ScoreHighLeaveCommunityAutoBalance", "ScoreHighLeaveCommunityAutoBalance");
+    m_chooser.AddOption("ScoreMidLeaveCommunityAutoBalance", "ScoreMidLeaveCommunityAutoBalance");
+    m_chooser.AddOption("AutoBalance", "AutoBalance");
 
     frc::SmartDashboard::PutData(&m_chooser);
 }
@@ -104,6 +98,10 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   else if (m_chooser.GetSelected() == "ScoreMidPreload")
   {
     return ScoreMidPreload(&m_robotArm).ToPtr();
+  }
+  else if (m_chooser.GetSelected() == "ScoreHighPreload")
+  {
+    return ScoreHighPreload(&m_robotArm).ToPtr();
   }
   else
   {

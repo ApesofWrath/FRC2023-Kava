@@ -7,15 +7,15 @@
 #include <frc2/command/InstantCommand.h>
 #include "subsystems/robotArm.h"
 
-class ScoreHighPreload : public frc2::CommandHelper<frc2::CommandBase, ScoreHighPreload> {
+class ScoreHighPreload : public frc2::CommandHelper<frc2::SequentialCommandGroup, ScoreHighPreload> {
     public:
     explicit ScoreHighPreload(robotArm* robotArm);
 
-    void Initialize() override;
+   // void Initialize() override;
 
-    void Execute() override;
+   // void Execute() override;
 
-    bool IsFinished() override;
+   // bool IsFinished() override;
 
     private:
     robotArm* m_robotArm;

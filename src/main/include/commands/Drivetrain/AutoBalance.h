@@ -30,4 +30,5 @@ class AutoBalance
  private:
   drivetrain* m_drivetrain;
   frc::Timer m_timer;
+  frc::Timer m_balancedTimer;
 };

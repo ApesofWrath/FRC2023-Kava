@@ -20,7 +20,7 @@ m_autoBuilder{
     [this]() { return m_drivetrain.GetOdometry(); }, // Function to supply current robot pose
     [this](auto initPose) { m_drivetrain.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
     pathplanner::PIDConstants(3.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-    pathplanner::PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+    pathplanner::PIDConstants(0.025, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
     [this](frc::ChassisSpeeds speeds) {m_drivetrain.SwerveDrive(speeds.vx, speeds.vy, speeds.omega, true);}, // Output function that accepts field relative ChassisSpeeds
     eventMap,
     { &m_drivetrain }, // Drive requirements, usually just a single drive subsystem
@@ -50,6 +50,8 @@ m_autoBuilder{
     m_chooser.AddOption("LeaveCommunity", "LeaveCommunity");
     m_chooser.AddOption("AutoBalance", "AutoBalance");
     m_chooser.AddOption("LeaveCommunityAutoBalance", "LeaveCommunityAutoBalance");
+    m_chooser.AddOption("2LowCubeNoBumpSide", "2LowCubeNoBumpSide");
+    m_chooser.AddOption("1mTurnTo90", "1mTurnTo90");
 
 
     frc::SmartDashboard::PutData(&m_startBehaviorChooser);

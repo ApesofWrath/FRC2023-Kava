@@ -116,9 +116,14 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
     frc2::CommandPtr fullAuto = m_autoBuilder.fullAuto(pathGroup);
     fullAuto.get()->AddRequirements(&m_drivetrain);
     frc2::CommandPtr startBehavior = frc2::cmd::Wait(0_s);
-    startBehavior = ((m_startBehaviorChooser.GetSelected() == "ScoreHighPreload") ? ScoreHighPreload(&m_robotArm).ToPtr()
-    : ((m_startBehaviorChooser.GetSelected() == "ScoreMidPreload") ? ScoreMidPreload(&m_robotArm).ToPtr()
-    : startBehavior));
+    if (m_startBehaviorChooser.GetSelected() == "ScoreHighPreload")
+    {
+      startBehavior = ScoreHighPreload(&m_robotArm).ToPtr();
+    }
+    else if (m_startBehaviorChooser.GetSelected() == "ScoreMidPreload")
+    {
+      startBehavior = ScoreMidPreload(&m_robotArm).ToPtr();
+    }
     return std::move(startBehavior).AndThen(std::move(fullAuto));
   //}
   

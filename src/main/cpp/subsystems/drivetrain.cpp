@@ -35,10 +35,10 @@ void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
                       : frc::ChassisSpeeds{xSpeed, ySpeed, zRot});
     m_kinematics.DesaturateWheelSpeeds(&moduleStates, drivetrainConstants::calculations::kModuleMaxSpeed);
 
-    frc::SmartDashboard::PutNumber("xSpeed", xSpeed.value());
-    frc::SmartDashboard::PutNumber("ySpeed", ySpeed.value());
-    frc::SmartDashboard::PutNumber("zRotation", zRot.value());
-    frc::SmartDashboard::PutNumber("Robot Position", m_navX.GetYaw());
+    // frc::SmartDashboard::PutNumber("xSpeed", xSpeed.value());
+    // frc::SmartDashboard::PutNumber("ySpeed", ySpeed.value());
+    // frc::SmartDashboard::PutNumber("zRotation", zRot.value());
+    // frc::SmartDashboard::PutNumber("Robot Position", m_navX.GetYaw());
     
     
     auto [frontRight, rearRight, frontLeft, rearLeft] = moduleStates;

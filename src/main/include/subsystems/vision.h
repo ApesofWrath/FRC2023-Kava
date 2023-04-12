@@ -4,6 +4,7 @@
 #define VISION_H
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
 #include "networktables/NetworkTableEntry.h"
@@ -21,6 +22,7 @@ class Vision : public frc2::SubsystemBase {
   void SelectPipeline(int id);
   std::vector<double> GetBotPose();
   std::vector<double> GetTargetPoseRobotSpace();
+  double GetPoleDistance();
 
  private:
   std::shared_ptr<nt::NetworkTable> m_networkTable;

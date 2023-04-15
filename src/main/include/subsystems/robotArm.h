@@ -99,4 +99,6 @@ class robotArm : public frc2::SubsystemBase {
 
     // Boolean variable for claw toggle command
     bool clawToggle = false;
+
+    bool changeVal = false;
 };

@@ -74,20 +74,20 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     // TELESCOPING MOTOR CONVERTION FACTORS, PID, SMARTMOTION
     // ***
     // ***
-    m_encoderMotorTelescoping.SetPositionConversionFactor((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37));
-    m_encoderMotorTelescoping.SetVelocityConversionFactor(((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37)) / 60);
+    m_encoderMotorTelescoping.SetPositionConversionFactor((1.0 / armConstants::kRotationsToInchTelescoping) * (1.0 / 39.37));
+    m_encoderMotorTelescoping.SetVelocityConversionFactor(((1.0 / armConstants::kRotationsToInchTelescoping) * (1.0 / 39.37)) / 60.0);
 
     // Velocity values for the telescoping motor
     m_motorTelescopingController.SetSmartMotionMaxVelocity(1); //8400
     m_motorTelescopingController.SetSmartMotionMaxAccel(0.5); //17200
     m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
-    m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
+    m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0.01); //0
 
     // PID constants for the telescoping motor
     m_motorTelescopingController.SetP(0.0001);
     m_motorTelescopingController.SetI(0);
     m_motorTelescopingController.SetD(0);
-    m_motorTelescopingController.SetFF(1.0/5767.0/(((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37)) / 60));
+    m_motorTelescopingController.SetFF(1.0/5767.0/(((1.0 / armConstants::kRotationsToInchTelescoping) * (1.0 / 39.37)) / 60.0));
     m_motorTelescopingController.SetOutputRange(-1.0F, 1.0F);
 
     // ANGLING MOTOR CONVERSION FACTORS, PID, SMARTMOTION
@@ -140,8 +140,8 @@ void robotArm::grabCone() {
 
 // Sets the arm to a low position to score cones in the lowest position
 void robotArm::scoreLow() {
-    m_motorTelescopingController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
-    m_motorAngleLeftController.SetReference(-1.03083, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorTelescopingController.SetReference((0.848*0.5), rev::CANSparkMax::ControlType::kSmartMotion);
+    // m_motorAngleLeftController.SetReference(-1.03083, rev::CANSparkMax::ControlType::kSmartMotion); // -1.03083
 }
 
 // Sets the first state of the score cone middle state machine so the robot arm is in position to score a cone in the middle positon

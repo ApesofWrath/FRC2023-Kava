@@ -16,13 +16,31 @@ void ArmToPole::Execute() {
     double poleHeight = 1.0;
     double collapsedArmLength = 1.0;
     double armExtend = sqrt(pow(poleDistance+pivotOffset, 2)+pow(poleHeight, 2))-collapsedArmLength;
-    double armAngle = atan(poleHeight/(pivotOffset+poleDistance));
-    m_robotArm->setArmAngle(-1.0);
-    frc::SmartDashboard::PutNumber("armExtend", armExtend);
+    double armAngle = ((atan(poleHeight/(pivotOffset+poleDistance))) - (3.141592653589/2));
 
-               
+    double armExtendOg = armExtend;
+    double armAngleOg = armAngle;
+
+    if (armExtend > 1) {
+        armExtend = 1;
+    } else if (armExtend < 0) {
+        armExtend = 0;
+    } else {
+
+    }
+
+    if (armAngle < -1.1) {
+        armAngle = -1.1;
+    } else if (armAngle > 0) {
+        armAngle = 0;
+    } else {
+        
+    }
+
+    m_robotArm->setArmPos(armAngle, armExtend, armAngleOg, armExtendOg);
+    frc::SmartDashboard::PutNumber("armExtend", armExtend);
 }
 
 void ArmToPole::End(bool interrupted) {interrupted ? printf("ArmToPole Inturrupted! \n") : printf("ArmToPole Finished!");}
 
-bool ArmToPole::IsFinished() { return false; }
+bool ArmToPole::IsFinished() { return true; }

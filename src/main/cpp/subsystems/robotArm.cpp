@@ -74,39 +74,39 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     // TELESCOPING MOTOR CONVERTION FACTORS, PID, SMARTMOTION
     // ***
     // ***
-    m_encoderMotorTelescoping.SetPositionConversionFactor((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37));
-    m_encoderMotorTelescoping.SetVelocityConversionFactor(((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37)) / 60);
+    m_encoderMotorTelescoping.SetPositionConversionFactor((1.0 / armConstants::kRotationsToInchTelescoping) * (1.0 / 39.37));
+    m_encoderMotorTelescoping.SetVelocityConversionFactor(((1.0 / armConstants::kRotationsToInchTelescoping) * (1.0 / 39.37)) / 60.0);
 
     // Velocity values for the telescoping motor
     m_motorTelescopingController.SetSmartMotionMaxVelocity(1); //8400
     m_motorTelescopingController.SetSmartMotionMaxAccel(0.5); //17200
     m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
-    m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
+    m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0.01); //0
 
     // PID constants for the telescoping motor
     m_motorTelescopingController.SetP(0.0001);
     m_motorTelescopingController.SetI(0);
     m_motorTelescopingController.SetD(0);
-    m_motorTelescopingController.SetFF(1.0/5767.0/(((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37)) / 60));
+    m_motorTelescopingController.SetFF(1.0/5767.0/(((1.0 / armConstants::kRotationsToInchTelescoping) * (1.0 / 39.37)) / 60.0));
     m_motorTelescopingController.SetOutputRange(-1.0F, 1.0F);
 
     // ANGLING MOTOR CONVERSION FACTORS, PID, SMARTMOTION
     // ***
     // ***
-    m_encoderMotorAngleLeft.SetPositionConversionFactor((1 / armConstants::kRotationsToRadianAngling));
-    m_encoderMotorAngleLeft.SetVelocityConversionFactor((1 / armConstants::kRotationsToRadianAngling) * 60);
+    m_encoderMotorAngleLeft.SetPositionConversionFactor((1.0 / armConstants::kRotationsToRadianAngling));
+    m_encoderMotorAngleLeft.SetVelocityConversionFactor((1.0 / armConstants::kRotationsToRadianAngling) / 60.0);
 
     // Velocity values for the arm angling motors (not telescoping)
-    m_motorAngleLeftController.SetSmartMotionMaxVelocity(5040); //7200
-    m_motorAngleLeftController.SetSmartMotionMaxAccel(6700); //24800
+    m_motorAngleLeftController.SetSmartMotionMaxVelocity(1); //7200; 5040.0 * (1.0 / armConstants::kRotationsToRadianAngling) / 60.0
+    m_motorAngleLeftController.SetSmartMotionMaxAccel(0.5); //24800; 6700.0 *(1.0 / armConstants::kRotationsToRadianAngling) / 60.0
     m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
 
     // PID constants for position control for the arm angling up and down (not telescoping)
-    m_motorAngleLeftController.SetP(0.00005);
+    m_motorAngleLeftController.SetP(0.00005 / armConstants::kRotationsToRadianAngling); // 0.00005
     m_motorAngleLeftController.SetI(0);
-    m_motorAngleLeftController.SetD(0);
-    m_motorAngleLeftController.SetFF(1.0/5767.0);
+    m_motorAngleLeftController.SetD((0.00005 / armConstants::kRotationsToRadianAngling) * 10);
+    m_motorAngleLeftController.SetFF((1.0/5767.0/((1.0 / armConstants::kRotationsToRadianAngling) / 60.0)) * 0.8);
     m_motorAngleLeftController.SetOutputRange(-1.0F, 1.0F);
 }
 
@@ -164,22 +164,36 @@ void robotArm::angleManualZero() {
     currentStateTele = TeleStates::MANUALZERO;
 }
 
-void robotArm::setArmAngle(double angle){
+/* void robotArm::setArmAngle(double angle){
     currScoreSecAngle = angle;
 }
 
 void robotArm::setArmLength(double length){
     currScoreLength = length;
+} */
+
+void robotArm::setArmPos(double angle, double length, double dAngle, double dLength) {
+    currScoreSecAngle = angle;
+    currScoreLength = length;
+
+    debugAngle = dAngle;
+    debugLength = dLength;
+
+    currentStateVision = ScoreVisionStates::FIRSTEXTEND;
 }
 
 // All code in this function runs continuosly as the robot is running in Periodic
 void robotArm::Periodic() {
     
     // Says whether clamp is open or closed in smartdashboard
-    frc::SmartDashboard::PutBoolean("Clamp Closed?", clawToggle);
+    // frc::SmartDashboard::PutBoolean("Clamp Closed?", clawToggle);
+    frc::SmartDashboard::PutNumber("St Machine Compl", stMachine);
 
     frc::SmartDashboard::PutNumber("Tele Pos", m_encoderMotorTelescoping.GetPosition());
     frc::SmartDashboard::PutNumber("Tele Vel", m_encoderMotorTelescoping.GetVelocity());
+
+    frc::SmartDashboard::PutNumber("Target Angle", debugAngle);
+    frc::SmartDashboard::PutNumber("Target Length", debugLength);
 
     // ZEROING state machine for the arm angle position
     switch (currentStateAngle) {
@@ -344,28 +358,33 @@ void robotArm::Periodic() {
             // First time arm angles down
             m_motorAngleLeftController.SetReference(-0.58905, rev::CANSparkMax::ControlType::kSmartMotion); // -24
             // Sets telescope position to telescope out for scoring
-            m_motorTelescopingController.SetReference(currScoreLength, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(0.848 * currScoreLength, rev::CANSparkMax::ControlType::kSmartMotion);
 
+            stMachine = 1;
             currentStateVision = ScoreVisionStates::NOTHING;
             break;
 
         case ScoreVisionStates::NOTHING:
 
             // Waits until telescope reaches its position (if statement value should be 3 less than actual position)
-            if (m_encoderMotorTelescoping.GetPosition() > (currScoreLength - 0.03)) {
+            if (m_encoderMotorTelescoping.GetPosition() > ((0.848 * currScoreLength) - 0.03)) {
                 currentStateVision = ScoreVisionStates::SECONDEXTEND;
             }
+
+            stMachine = 2;
             break;
 
         case ScoreVisionStates::SECONDEXTEND:
             // After telescope reaches its position, arm angles down more to its socring position
             m_motorAngleLeftController.SetReference(currScoreSecAngle, rev::CANSparkMax::ControlType::kSmartMotion); // -32
 
+            stMachine = 3;
             currentStateVision = ScoreVisionStates::INIT;
             break;
             
         default:
         case ScoreVisionStates::INIT:
+            stMachine = 0;
 
             break;
     }

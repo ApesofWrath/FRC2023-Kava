@@ -88,6 +88,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kX).OnTrue(ScoreMid(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kA).OnTrue(ScoreLow(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kB).OnTrue(GrabCode(&m_robotArm).ToPtr());
+
+  // Arm Pole Vision Align
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kLeftStick).OnTrue(ArmToPole(&m_robotArm, &m_vision).ToPtr());
 
   // Zeroing commands and retract arm commands

@@ -146,16 +146,12 @@ void robotArm::scoreLow() {
 
 // Sets the first state of the score cone middle state machine so the robot arm is in position to score a cone in the middle positon
 void robotArm::scoreMid() {
-    currScoreTeleThresh = 0.55829;
-
-    currentStateVision = ScoreVisionStates::FIRSTEXTEND;
+    currentStateMid = ScoreMidStates::FIRSTEXTEND;
 }
 
 // Sets the first state of the score cone high state machine so the robot arm is in position to score a cone in the high position
 void robotArm::scoreHigh() {
-    currScoreTeleThresh = 1.027259;
-
-    currentStateVision = ScoreVisionStates::FIRSTEXTEND;
+    currentStateHigh = ScoreHighStates::FIRSTEXTEND;
 }
 
 // Sets the first states of the zeroing state machines for zeroing the telescope and the arm angle position
@@ -172,12 +168,9 @@ void robotArm::setArmLength(double length){
     currScoreLength = length;
 } */
 
-void robotArm::setArmPos(double angle, double length, double dAngle, double dLength) {
+void robotArm::setArmPos(double angle, double length) {
     currScoreSecAngle = angle;
     currScoreLength = length;
-
-    debugAngle = dAngle;
-    debugLength = dLength;
 
     currentStateVision = ScoreVisionStates::FIRSTEXTEND;
 }
@@ -186,14 +179,10 @@ void robotArm::setArmPos(double angle, double length, double dAngle, double dLen
 void robotArm::Periodic() {
     
     // Says whether clamp is open or closed in smartdashboard
-    // frc::SmartDashboard::PutBoolean("Clamp Closed?", clawToggle);
-    frc::SmartDashboard::PutNumber("St Machine Compl", stMachine);
+    frc::SmartDashboard::PutBoolean("Clamp Closed?", clawToggle);
 
     frc::SmartDashboard::PutNumber("Tele Pos", m_encoderMotorTelescoping.GetPosition());
     frc::SmartDashboard::PutNumber("Tele Vel", m_encoderMotorTelescoping.GetVelocity());
-
-    frc::SmartDashboard::PutNumber("Target Angle", debugAngle);
-    frc::SmartDashboard::PutNumber("Target Length", debugLength);
 
     // ZEROING state machine for the arm angle position
     switch (currentStateAngle) {
@@ -259,7 +248,7 @@ void robotArm::Periodic() {
             break;
     }
 
-    /* // $ state machine for moving the arm to a position to score the cone in a HIGH POSITION
+    // $ state machine for moving the arm to a position to score the cone in a HIGH POSITION
     switch (currentStateHigh) {
         case ScoreHighStates::FIRSTEXTEND:
             // First time arm angles down
@@ -320,7 +309,7 @@ void robotArm::Periodic() {
         case ScoreMidStates::INIT:
 
             break;
-    } */
+    }
 
     // $ state machine to move the arm to a position to PICK UP the CONE from the HUMAN PLAYER
     switch (currentStatePickup) {
@@ -360,7 +349,6 @@ void robotArm::Periodic() {
             // Sets telescope position to telescope out for scoring
             m_motorTelescopingController.SetReference(0.848 * currScoreLength, rev::CANSparkMax::ControlType::kSmartMotion);
 
-            stMachine = 1;
             currentStateVision = ScoreVisionStates::NOTHING;
             break;
 
@@ -371,20 +359,17 @@ void robotArm::Periodic() {
                 currentStateVision = ScoreVisionStates::SECONDEXTEND;
             }
 
-            stMachine = 2;
             break;
 
         case ScoreVisionStates::SECONDEXTEND:
             // After telescope reaches its position, arm angles down more to its socring position
             m_motorAngleLeftController.SetReference(currScoreSecAngle, rev::CANSparkMax::ControlType::kSmartMotion); // -32
 
-            stMachine = 3;
             currentStateVision = ScoreVisionStates::INIT;
             break;
             
         default:
         case ScoreVisionStates::INIT:
-            stMachine = 0;
 
             break;
     }

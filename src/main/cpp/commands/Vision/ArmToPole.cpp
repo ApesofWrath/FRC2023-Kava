@@ -37,7 +37,7 @@ void ArmToPole::Execute() {
         
     }
 
-    m_robotArm->setArmPos(armAngle, armExtend, armAngleOg, armExtendOg);
+    m_robotArm->setArmPos(armAngle, armExtend);
     frc::SmartDashboard::PutNumber("armExtend", armExtend);
 }
 

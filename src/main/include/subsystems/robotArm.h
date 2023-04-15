@@ -31,7 +31,7 @@ enum class TeleStates {
     IDLE
 };
 
-/* enum class ScoreHighStates {
+enum class ScoreHighStates {
     INIT,
     NOTHING,
     FIRSTEXTEND,
@@ -43,7 +43,7 @@ enum class ScoreMidStates {
     NOTHING,
     FIRSTEXTEND,
     SECONDEXTEND
-}; */
+};
 
 enum class ConePickupStates {
     INIT,
@@ -74,7 +74,7 @@ class robotArm : public frc2::SubsystemBase {
     // void setArmAngle(double angle);
     // void setArmLength(double length);
 
-    void setArmPos(double angle, double length, double dAngle, double dLength);
+    void setArmPos(double angle, double length);
 
     // units::meter_t toMeters(int encRotations);
 
@@ -104,22 +104,16 @@ class robotArm : public frc2::SubsystemBase {
     // Sets initial states for each state machine
     AngleStates currentStateAngle = AngleStates::INIT;
     TeleStates currentStateTele = TeleStates::INIT;
-    // ScoreHighStates currentStateHigh = ScoreHighStates::INIT;
-    // ScoreMidStates currentStateMid = ScoreMidStates::INIT;
+    ScoreHighStates currentStateHigh = ScoreHighStates::INIT;
+    ScoreMidStates currentStateMid = ScoreMidStates::INIT;
     ConePickupStates currentStatePickup = ConePickupStates::INIT;
 
     // vision arm integration
     ScoreVisionStates currentStateVision = ScoreVisionStates::INIT;
 
-    double currScoreTeleThresh = 0;
-
     double currScoreSecAngle = 0;
     double currScoreLength = 0;
 
-    double debugAngle = 0;
-    double debugLength = 0;
-
     // Boolean variable for claw toggle command
     bool clawToggle = false;
-    int stMachine = 0;
 };

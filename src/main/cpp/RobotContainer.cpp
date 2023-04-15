@@ -14,6 +14,7 @@
 #include "commands/Drivetrain/ZeroGyro.h"
 #include "commands/Drivetrain/NormalSpeed.h"
 #include "commands/Drivetrain/SlowDown.h"
+#include "commands/Vision/ArmToPole.h"
 
 RobotContainer::RobotContainer() :
 m_autoBuilder{
@@ -87,6 +88,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kX).OnTrue(ScoreMid(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kA).OnTrue(ScoreLow(&m_robotArm).ToPtr());
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kB).OnTrue(GrabCode(&m_robotArm).ToPtr());
+  frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kLeftStick).OnTrue(ArmToPole(&m_robotArm, &m_vision).ToPtr());
 
   // Zeroing commands and retract arm commands
   frc2::JoystickButton(&m_controllerOperator, frc::XboxController::Button::kStart).OnTrue(ZeroAngle(&m_robotArm).ToPtr());

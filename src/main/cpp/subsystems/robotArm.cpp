@@ -146,18 +146,30 @@ void robotArm::scoreLow() {
 
 // Sets the first state of the score cone middle state machine so the robot arm is in position to score a cone in the middle positon
 void robotArm::scoreMid() {
-    currentStateMid = ScoreMidStates::FIRSTEXTEND;
+    currScoreTeleThresh = 0.55829;
+
+    currentStateVision = ScoreVisionStates::FIRSTEXTEND;
 }
 
 // Sets the first state of the score cone high state machine so the robot arm is in position to score a cone in the high position
 void robotArm::scoreHigh() {
-    currentStateHigh = ScoreHighStates::FIRSTEXTEND;
+    currScoreTeleThresh = 1.027259;
+
+    currentStateVision = ScoreVisionStates::FIRSTEXTEND;
 }
 
 // Sets the first states of the zeroing state machines for zeroing the telescope and the arm angle position
 void robotArm::angleManualZero() {
     currentStateAngle = AngleStates::MANUALZERO;
     currentStateTele = TeleStates::MANUALZERO;
+}
+
+void robotArm::setArmAngle(double angle){
+    currScoreSecAngle = angle;
+}
+
+void robotArm::setArmLength(double length){
+    currScoreLength = length;
 }
 
 // All code in this function runs continuosly as the robot is running in Periodic
@@ -233,7 +245,7 @@ void robotArm::Periodic() {
             break;
     }
 
-    // $ state machine for moving the arm to a position to score the cone in a HIGH POSITION
+    /* // $ state machine for moving the arm to a position to score the cone in a HIGH POSITION
     switch (currentStateHigh) {
         case ScoreHighStates::FIRSTEXTEND:
             // First time arm angles down
@@ -294,7 +306,7 @@ void robotArm::Periodic() {
         case ScoreMidStates::INIT:
 
             break;
-    }
+    } */
 
     // $ state machine to move the arm to a position to PICK UP the CONE from the HUMAN PLAYER
     switch (currentStatePickup) {
@@ -323,6 +335,37 @@ void robotArm::Periodic() {
 
         default:
         case ConePickupStates::INIT:
+
+            break;
+    }
+
+    switch (currentStateVision) {
+        case ScoreVisionStates::FIRSTEXTEND:
+            // First time arm angles down
+            m_motorAngleLeftController.SetReference(-0.58905, rev::CANSparkMax::ControlType::kSmartMotion); // -24
+            // Sets telescope position to telescope out for scoring
+            m_motorTelescopingController.SetReference(currScoreLength, rev::CANSparkMax::ControlType::kSmartMotion);
+
+            currentStateVision = ScoreVisionStates::NOTHING;
+            break;
+
+        case ScoreVisionStates::NOTHING:
+
+            // Waits until telescope reaches its position (if statement value should be 3 less than actual position)
+            if (m_encoderMotorTelescoping.GetPosition() > (currScoreLength - 0.03)) {
+                currentStateVision = ScoreVisionStates::SECONDEXTEND;
+            }
+            break;
+
+        case ScoreVisionStates::SECONDEXTEND:
+            // After telescope reaches its position, arm angles down more to its socring position
+            m_motorAngleLeftController.SetReference(currScoreSecAngle, rev::CANSparkMax::ControlType::kSmartMotion); // -32
+
+            currentStateVision = ScoreVisionStates::INIT;
+            break;
+            
+        default:
+        case ScoreVisionStates::INIT:
 
             break;
     }

@@ -35,36 +35,10 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_motorAngleLeftController.SetFeedbackDevice(m_encoderMotorAngleLeft);
     m_motorTelescopingController.SetFeedbackDevice(m_encoderMotorTelescoping);
 
-    // PID constants for position control for the arm angling up and down (not telescoping)
-    m_motorAngleLeftController.SetP(0.00005);
-    m_motorAngleLeftController.SetI(0);
-    m_motorAngleLeftController.SetD(0);
-    m_motorAngleLeftController.SetFF(1.0/5767.0);
-    m_motorAngleLeftController.SetOutputRange(-1.0F, 1.0F);
-
     // Set limits for position on the arm angling motors (not telescoping)
     m_motorAngleLeft.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 4.0);
     m_motorAngleLeft.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, -38.0);
-
-    // Velocity values for the arm angling motors (not telescoping)
-    m_motorAngleLeftController.SetSmartMotionMaxVelocity(5040); //7200
-    m_motorAngleLeftController.SetSmartMotionMaxAccel(6700); //24800
-    m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
-    m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
-
-    // PID constants for the telescoping motor
-    m_motorTelescopingController.SetP(0);
-    m_motorTelescopingController.SetI(0);
-    m_motorTelescopingController.SetD(0);
-    m_motorTelescopingController.SetFF(1.0/5767.0);
-    m_motorTelescopingController.SetOutputRange(-1.0F, 1.0F);
-
-    // Velocity values for the telescoping motor
-    m_motorTelescopingController.SetSmartMotionMaxVelocity(8400); //2400
-    m_motorTelescopingController.SetSmartMotionMaxAccel(17200); //9600
-    m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
-    m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
-
+    
     // Sets current limit for the clamp motor on the arm, sets the motors direction inverted, and sets position limits for the motor
 
     // $ CURRENT LIMIT OF CLAMP
@@ -96,7 +70,49 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
 
     // Sets position of the clamp motor when the robot boots to 0
     m_encoderMotorClamp.SetPosition(0);
+
+    // TELESCOPING MOTOR CONVERTION FACTORS, PID, SMARTMOTION
+    // ***
+    // ***
+    m_encoderMotorTelescoping.SetPositionConversionFactor((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37));
+    m_encoderMotorTelescoping.SetVelocityConversionFactor(((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37)) / 60);
+
+    // Velocity values for the telescoping motor
+    m_motorTelescopingController.SetSmartMotionMaxVelocity(1); //8400
+    m_motorTelescopingController.SetSmartMotionMaxAccel(0.5); //17200
+    m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
+    m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0); //0
+
+    // PID constants for the telescoping motor
+    m_motorTelescopingController.SetP(0.0001);
+    m_motorTelescopingController.SetI(0);
+    m_motorTelescopingController.SetD(0);
+    m_motorTelescopingController.SetFF(1.0/5767.0/(((1 / armConstants::kRotationsToInchTelescoping) * (1 / 39.37)) / 60));
+    m_motorTelescopingController.SetOutputRange(-1.0F, 1.0F);
+
+    // ANGLING MOTOR CONVERSION FACTORS, PID, SMARTMOTION
+    // ***
+    // ***
+    m_encoderMotorAngleLeft.SetPositionConversionFactor((1 / armConstants::kRotationsToRadianAngling));
+    m_encoderMotorAngleLeft.SetVelocityConversionFactor((1 / armConstants::kRotationsToRadianAngling) * 60);
+
+    // Velocity values for the arm angling motors (not telescoping)
+    m_motorAngleLeftController.SetSmartMotionMaxVelocity(5040); //7200
+    m_motorAngleLeftController.SetSmartMotionMaxAccel(6700); //24800
+    m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
+    m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
+
+    // PID constants for position control for the arm angling up and down (not telescoping)
+    m_motorAngleLeftController.SetP(0.00005);
+    m_motorAngleLeftController.SetI(0);
+    m_motorAngleLeftController.SetD(0);
+    m_motorAngleLeftController.SetFF(1.0/5767.0);
+    m_motorAngleLeftController.SetOutputRange(-1.0F, 1.0F);
 }
+
+/* units::meter_t toMeters(int encRotations) {
+    return {units::meter_t{(encRotations / armConstants::kRotationsToInchTelescoping) / 39.37}};
+} */
 
 // Sets the position of the arm and telescoping motors to 0 to put the arm in a retracted up state
 void robotArm::armUp() {
@@ -125,7 +141,7 @@ void robotArm::grabCone() {
 // Sets the arm to a low position to score cones in the lowest position
 void robotArm::scoreLow() {
     m_motorTelescopingController.SetReference(0, rev::CANSparkMax::ControlType::kSmartMotion);
-    m_motorAngleLeftController.SetReference(-42, rev::CANSparkMax::ControlType::kSmartMotion);
+    m_motorAngleLeftController.SetReference(-1.03083, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
 // Sets the first state of the score cone middle state machine so the robot arm is in position to score a cone in the middle positon
@@ -149,6 +165,9 @@ void robotArm::Periodic() {
     
     // Says whether clamp is open or closed in smartdashboard
     frc::SmartDashboard::PutBoolean("Clamp Closed?", clawToggle);
+
+    frc::SmartDashboard::PutNumber("Tele Pos", m_encoderMotorTelescoping.GetPosition());
+    frc::SmartDashboard::PutNumber("Tele Vel", m_encoderMotorTelescoping.GetVelocity());
 
     // ZEROING state machine for the arm angle position
     switch (currentStateAngle) {
@@ -218,9 +237,9 @@ void robotArm::Periodic() {
     switch (currentStateHigh) {
         case ScoreHighStates::FIRSTEXTEND:
             // First time arm angles down
-            m_motorAngleLeftController.SetReference(-24, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-0.58905, rev::CANSparkMax::ControlType::kSmartMotion); // -24
             // Sets telescope position to telescope out for scoring
-            m_motorTelescopingController.SetReference(141, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(1.04959, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateHigh = ScoreHighStates::NOTHING;
             break;
@@ -228,14 +247,14 @@ void robotArm::Periodic() {
         case ScoreHighStates::NOTHING:
 
             // Waits until telescope reaches its position (if statement value should be 3 less than actual position)
-            if (m_encoderMotorTelescoping.GetPosition() > 138) {
+            if (m_encoderMotorTelescoping.GetPosition() > 1.027259) {
                 currentStateHigh = ScoreHighStates::SECONDEXTEND;
             }
             break;
 
         case ScoreHighStates::SECONDEXTEND:
             // After telescope reaches its position, arm angles down more to its socring position
-            m_motorAngleLeftController.SetReference(-32, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-0.78540, rev::CANSparkMax::ControlType::kSmartMotion); // -32
 
             currentStateHigh = ScoreHighStates::INIT;
             break;
@@ -250,23 +269,23 @@ void robotArm::Periodic() {
     switch (currentStateMid) {
         case ScoreMidStates::FIRSTEXTEND:
             // First time arm angles down
-            m_motorAngleLeftController.SetReference(-22, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-0.58905, rev::CANSparkMax::ControlType::kSmartMotion); // -24
             // Sets telescope position to telescope out for scoring
-            m_motorTelescopingController.SetReference(78, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(0.58063, rev::CANSparkMax::ControlType::kSmartMotion);
 
             currentStateMid = ScoreMidStates::NOTHING;
             break;
 
         case ScoreMidStates::NOTHING:
             // Waits until telescope reaches its position (if statement value should be 3 less than actual position)
-            if (m_encoderMotorTelescoping.GetPosition() > 75) {
+            if (m_encoderMotorTelescoping.GetPosition() > 0.55829) {
                 currentStateMid = ScoreMidStates::SECONDEXTEND;
             }
             break;
 
         case ScoreMidStates::SECONDEXTEND:
             // After telescope reaches its position, arm angles down more for scoring position
-            m_motorAngleLeftController.SetReference(-32, rev::CANSparkMax::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-0.78540, rev::CANSparkMax::ControlType::kSmartMotion); // -32
 
             currentStateMid = ScoreMidStates::INIT;
             break;
@@ -281,23 +300,23 @@ void robotArm::Periodic() {
     switch (currentStatePickup) {
         case ConePickupStates::FIRSTEXTEND:
             // First time arm angles down
-            m_motorAngleLeftController.SetReference(-10, rev::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-0.24544, rev::ControlType::kSmartMotion); // -10
             // Sets telescope position to telescope out for scoring
-            m_motorTelescopingController.SetReference(45, rev::ControlType::kSmartMotion);
+            m_motorTelescopingController.SetReference(0.33498, rev::ControlType::kSmartMotion);
 
             currentStatePickup = ConePickupStates::NOTHING;
             break;
             
         case ConePickupStates::NOTHING:
             // Waits until telescope reaches its position (if statement value should be 1 less than actual value)
-            if (m_encoderMotorTelescoping.GetPosition() > 44) {
+            if (m_encoderMotorTelescoping.GetPosition() > 0.32753) {
                 currentStatePickup = ConePickupStates::SECONDEXTEND;
             }
             break;
 
         case ConePickupStates::SECONDEXTEND:
             // After telescope reaches its position, arm angles down more to its scoring position
-            m_motorAngleLeftController.SetReference(-25, rev::ControlType::kSmartMotion);
+            m_motorAngleLeftController.SetReference(-0.61360, rev::ControlType::kSmartMotion); // -25
 
             currentStatePickup = ConePickupStates::INIT;
             break;

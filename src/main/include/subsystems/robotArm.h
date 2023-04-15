@@ -2,6 +2,7 @@
 
 #include <ctre/phoenix/sensors/WPI_CANCoder.h>
 #include <numbers>
+#include <units/length.h>
 #include <rev/SparkMaxRelativeEncoder.h>
 #include <rev/CANSparkMax.h>
 
@@ -63,6 +64,8 @@ class robotArm : public frc2::SubsystemBase {
     void scoreHigh();
     void angleManualZero();
     void grabCone();
+
+    // units::meter_t toMeters(int encRotations);
 
     void Periodic() override;
 

@@ -112,7 +112,7 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   }
   else
   { */
-    std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(2.0_mps, 1.5_mps_sq)});
+    std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(3.0_mps, 2.5_mps_sq)});
     frc2::CommandPtr fullAuto = m_autoBuilder.fullAuto(pathGroup);
     fullAuto.get()->AddRequirements(&m_drivetrain);
     frc2::CommandPtr startBehavior = frc2::cmd::Wait(0_s);

@@ -42,14 +42,10 @@ void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
     drivetrainConstants::calculations::kModuleMaxAngularVelocity
     );
 
-    frc::SmartDashboard::PutNumber("xSpeed", xSpeed.value());
-    frc::SmartDashboard::PutNumber("ySpeed", ySpeed.value());
-    frc::SmartDashboard::PutNumber("zRotation", zRot.value());
-    frc::SmartDashboard::PutNumber("Robot Position", m_navX.GetYaw());
-    frc::SmartDashboard::PutNumber("Yaw rate difference", zRot.value() - (m_navX.GetRate() * (std::numbers::pi/180)));
-    frc::SmartDashboard::PutNumber("X rate difference", std::abs(xSpeed.value()) - std::abs(units::unit_cast<double>(chassisSpeeds.vx)));
-    frc::SmartDashboard::PutNumber("zRotation actual", m_navX.GetRate());
-
+    // frc::SmartDashboard::PutNumber("xSpeed", xSpeed.value());
+    // frc::SmartDashboard::PutNumber("ySpeed", ySpeed.value());
+    // frc::SmartDashboard::PutNumber("zRotation", zRot.value());
+    // frc::SmartDashboard::PutNumber("Robot Position", m_navX.GetYaw());
     
     
     auto [frontRight, rearRight, frontLeft, rearLeft] = moduleStates;
@@ -118,9 +114,9 @@ void drivetrain::Periodic() {
     
     :SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle)); */
     // frc::SmartDashboard::PutNumber("Rear Left TARGET", m_rearLeft.DashboardInfo(swerveModule::DataType::kTargetAngle));
-    frc::SmartDashboard::PutNumber("Odometry X", units::unit_cast<double>(m_odometry.GetPose().Translation().X()));
-    frc::SmartDashboard::PutNumber("Odometry Y", units::unit_cast<double>(m_odometry.GetPose().Translation().Y()));
-    frc::SmartDashboard::PutNumber("Odometry Rot", units::unit_cast<double>(m_odometry.GetPose().Rotation().Degrees()));
+    // frc::SmartDashboard::PutNumber("Odometry X", units::unit_cast<double>(m_odometry.GetPose().Translation().X()));
+    // frc::SmartDashboard::PutNumber("Odometry Y", units::unit_cast<double>(m_odometry.GetPose().Translation().Y()));
+    // frc::SmartDashboard::PutNumber("Odometry Rot", units::unit_cast<double>(m_odometry.GetPose().Rotation().Degrees()));
 
     
 }

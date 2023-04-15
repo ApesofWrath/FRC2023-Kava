@@ -22,3 +22,12 @@ std::vector<double> Vision::GetTargetPoseRobotSpace() {
   double defaultbotpose[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
   return m_networkTable->GetNumberArray("targetpose_robotspace", std::span<double>(defaultbotpose, 6));
 }
+
+double Vision::GetPoleDistance(){
+  std::vector<double> targetPose = this->GetTargetPoseRobotSpace();
+  double tx = targetPose[0];
+  double tz = targetPose[2];
+  double distance = tz + sqrt(0.347+tx);
+  frc::SmartDashboard::PutNumber("Distance to pole", distance);
+  return distance;
+}

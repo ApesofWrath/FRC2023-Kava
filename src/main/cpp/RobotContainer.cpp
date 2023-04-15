@@ -19,14 +19,15 @@ RobotContainer::RobotContainer() :
 m_autoBuilder{
     [this]() { return m_drivetrain.GetOdometry(); }, // Function to supply current robot pose
     [this](auto initPose) { m_drivetrain.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-    pathplanner::PIDConstants(3.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-    pathplanner::PIDConstants(0.025, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-    [this](frc::ChassisSpeeds speeds) {m_drivetrain.SwerveDrive(speeds.vx, speeds.vy, speeds.omega, true);}, // Output function that accepts field relative ChassisSpeeds
+    pathplanner::PIDConstants(3.5, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+    pathplanner::PIDConstants(5.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+    [this](frc::ChassisSpeeds speeds) {m_drivetrain.SwerveDrive(speeds.vx, speeds.vy, -speeds.omega, false);}, // Output function that accepts field relative ChassisSpeeds
     eventMap,
     { &m_drivetrain }, // Drive requirements, usually just a single drive subsystem
     true // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
 }
 {
+
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
@@ -39,9 +40,9 @@ m_autoBuilder{
     [this] { return (MathFunctions::joystickCurve(m_controllerMain.GetY(), controllerConstants::kControllerCurve)); },
     [this] { return (-m_controllerMain.GetRawAxis(4)); }));
 
-    frc2::WaitCommand DoNothing(0_s);
+    /* frc2::WaitCommand DoNothing(0_s);
     ScoreHighPreload ScorePreloadHigh(&m_robotArm);
-    ScoreMidPreload ScorePreloadMid(&m_robotArm);
+    ScoreMidPreload ScorePreloadMid(&m_robotArm); */
     m_startBehaviorChooser.SetDefaultOption("DoNothing", "DoNothing");
     m_startBehaviorChooser.AddOption("ScoreHighPreload", "ScoreHighPreload");
     m_startBehaviorChooser.AddOption("ScoreMidPreload", "ScoreMidPreload");
@@ -50,8 +51,7 @@ m_autoBuilder{
     m_chooser.AddOption("LeaveCommunity", "LeaveCommunity");
     m_chooser.AddOption("AutoBalance", "AutoBalance");
     m_chooser.AddOption("LeaveCommunityAutoBalance", "LeaveCommunityAutoBalance");
-    m_chooser.AddOption("2LowCubeNoBumpSide", "2LowCubeNoBumpSide");
-    m_chooser.AddOption("1mTurnTo90", "1mTurnTo90");
+    m_chooser.AddOption("1ConeAutoNoBump", "1ConeAutoNoBump");
 
 
     frc::SmartDashboard::PutData(&m_startBehaviorChooser);
@@ -112,16 +112,14 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   }
   else
   { */
-    std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(3_mps, 2_mps_sq)});
+    std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(m_chooser.GetSelected(), {pathplanner::PathConstraints(2.0_mps, 1.5_mps_sq)});
     frc2::CommandPtr fullAuto = m_autoBuilder.fullAuto(pathGroup);
     fullAuto.get()->AddRequirements(&m_drivetrain);
     frc2::CommandPtr startBehavior = frc2::cmd::Wait(0_s);
-    if (m_startBehaviorChooser.GetSelected() == "ScoreHighPreload")
-    {
+    if (m_startBehaviorChooser.GetSelected() == "ScoreHighPreload"){
       startBehavior = ScoreHighPreload(&m_robotArm).ToPtr();
     }
-    else if (m_startBehaviorChooser.GetSelected() == "ScoreMidPreload")
-    {
+    else if (m_startBehaviorChooser.GetSelected() == "ScoreMidPreload"){
       startBehavior = ScoreMidPreload(&m_robotArm).ToPtr();
     }
     return std::move(startBehavior).AndThen(std::move(fullAuto));

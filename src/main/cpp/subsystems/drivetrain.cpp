@@ -29,16 +29,27 @@ void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
                              units::meters_per_second_t ySpeed,
                              units::radians_per_second_t zRot,
                              bool fieldRelative) {
-    auto moduleStates = m_kinematics.ToSwerveModuleStates(
-        fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+    frc::ChassisSpeeds chassisSpeeds = fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                             xSpeed, ySpeed, zRot, m_navX.GetRotation2d())
-                      : frc::ChassisSpeeds{xSpeed, ySpeed, zRot});
-    m_kinematics.DesaturateWheelSpeeds(&moduleStates, drivetrainConstants::calculations::kModuleMaxSpeed);
+                      : frc::ChassisSpeeds{xSpeed, ySpeed, zRot};
+    auto moduleStates = m_kinematics.ToSwerveModuleStates(chassisSpeeds);
+                      
+    m_kinematics.DesaturateWheelSpeeds(
+    &moduleStates,
+    chassisSpeeds,
+    drivetrainConstants::calculations::kModuleMaxSpeed,
+    drivetrainConstants::calculations::kModuleMaxSpeed,
+    drivetrainConstants::calculations::kModuleMaxAngularVelocity
+    );
 
     frc::SmartDashboard::PutNumber("xSpeed", xSpeed.value());
     frc::SmartDashboard::PutNumber("ySpeed", ySpeed.value());
     frc::SmartDashboard::PutNumber("zRotation", zRot.value());
     frc::SmartDashboard::PutNumber("Robot Position", m_navX.GetYaw());
+    frc::SmartDashboard::PutNumber("Yaw rate difference", zRot.value() - (m_navX.GetRate() * (std::numbers::pi/180)));
+    frc::SmartDashboard::PutNumber("X rate difference", std::abs(xSpeed.value()) - std::abs(units::unit_cast<double>(chassisSpeeds.vx)));
+    frc::SmartDashboard::PutNumber("zRotation actual", m_navX.GetRate());
+
     
     
     auto [frontRight, rearRight, frontLeft, rearLeft] = moduleStates;

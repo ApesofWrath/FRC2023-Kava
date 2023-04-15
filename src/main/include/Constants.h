@@ -14,7 +14,7 @@
  */
 namespace visionConstants {
     //How fast the robot attempts to correct its self
-    constexpr double errorMultiplier = 0.05;
+    constexpr double errorMultiplier = -0.05;
     //The minumum error for the robot to move
     constexpr double errorMinimum = 0.0;
 

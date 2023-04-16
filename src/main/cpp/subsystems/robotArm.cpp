@@ -78,8 +78,8 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_encoderMotorTelescoping.SetVelocityConversionFactor(((1.0 / armConstants::kRotationsToInchTelescoping) * (1.0 / 39.37)) / 60.0);
 
     // Velocity values for the telescoping motor
-    m_motorTelescopingController.SetSmartMotionMaxVelocity(1); //8400
-    m_motorTelescopingController.SetSmartMotionMaxAccel(0.5); //17200
+    m_motorTelescopingController.SetSmartMotionMaxVelocity(1.5); //8400
+    m_motorTelescopingController.SetSmartMotionMaxAccel(0.75); //17200
     m_motorTelescopingController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorTelescopingController.SetSmartMotionAllowedClosedLoopError(0.01); //0
 
@@ -97,16 +97,16 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_encoderMotorAngleLeft.SetVelocityConversionFactor((1.0 / armConstants::kRotationsToRadianAngling) / 60.0);
 
     // Velocity values for the arm angling motors (not telescoping)
-    m_motorAngleLeftController.SetSmartMotionMaxVelocity(1); //7200; 5040.0 * (1.0 / armConstants::kRotationsToRadianAngling) / 60.0
-    m_motorAngleLeftController.SetSmartMotionMaxAccel(0.5); //24800; 6700.0 *(1.0 / armConstants::kRotationsToRadianAngling) / 60.0
+    m_motorAngleLeftController.SetSmartMotionMaxVelocity(5); //7200; 5040.0 * (1.0 / armConstants::kRotationsToRadianAngling) / 60.0
+    m_motorAngleLeftController.SetSmartMotionMaxAccel(2.5); //24800; 6700.0 *(1.0 / armConstants::kRotationsToRadianAngling) / 60.0
     m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
 
     // PID constants for position control for the arm angling up and down (not telescoping)
-    m_motorAngleLeftController.SetP(0.00005 / armConstants::kRotationsToRadianAngling); // 0.00005
+    m_motorAngleLeftController.SetP(0.05); // 0.00005; 0.5 / armConstants::kRotationsToRadianAngling
     m_motorAngleLeftController.SetI(0);
-    m_motorAngleLeftController.SetD((0.00005 / armConstants::kRotationsToRadianAngling) * 10);
-    m_motorAngleLeftController.SetFF((1.0/5767.0/((1.0 / armConstants::kRotationsToRadianAngling) / 60.0)) * 0.8);
+    m_motorAngleLeftController.SetD(0); // (0.005 / armConstants::kRotationsToRadianAngling) * 10
+    m_motorAngleLeftController.SetFF((1.0 / 2.359) * 0.1);
     m_motorAngleLeftController.SetOutputRange(-1.0F, 1.0F);
 }
 

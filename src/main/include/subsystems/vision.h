@@ -5,6 +5,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
 #include <frc/geometry/Pose2d.h>
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
@@ -25,6 +26,7 @@ class Vision : public frc2::SubsystemBase {
   std::vector<double> GetTargetPoseRobotSpace();
   double GetPoleDistance();
   frc::Pose2d ToPose2d();
+  bool TargetFound();
   double GetLatency();
 
  private:

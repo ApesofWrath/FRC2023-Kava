@@ -63,6 +63,11 @@ void drivetrain::UpdateOdometry() {
                       m_rearLeft.GetPosition()});
 }
 
+void drivetrain::AddDataFromVision()
+{
+    m_odometry.AddVisionMeasurement(m_vision.ToPose2d(), frc::Timer::GetFPGATimestamp() - units::second_t(m_vision.GetLatency() / 1000), {1.0, 1.0, 1.0});
+}
+
 // Perodically (Constantly runs during periodic), updates the odometry of the swervedrive
 frc::Pose2d drivetrain::GetOdometry() {
     return m_odometry.GetEstimatedPosition();
@@ -101,6 +106,10 @@ std::string drivetrain::AutoBalance()
 
 void drivetrain::Periodic() {
     UpdateOdometry();
+    if (m_vision.TargetFound())
+    {
+        AddDataFromVision();
+    }
     // Test posting angle to Dashboard.
     /* frc::SmartDashboard::PutNumber("Front Right Angle", m_frontRight.DashboardInfo(swerveModule::DataType::kCurrentAngle));
     frc::SmartDashboard::PutNumber("Rear Right Angle", m_rearRight.DashboardInfo(swerveModule::DataType::kCurrentAngle));

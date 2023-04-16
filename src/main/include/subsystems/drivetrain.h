@@ -7,7 +7,7 @@
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc2/command/SubsystemBase.h>
 #include <units/length.h>
-
+#include <subsystems/vision.h>
 #include "swerveModule.h"
 #include "Constants.h"
 
@@ -21,7 +21,7 @@ class drivetrain : public frc2::SubsystemBase {
                    bool fieldRelative);
 
   void UpdateOdometry();
-
+  void AddDataFromVision();
   void resetGyro();
 
   frc::Pose2d GetOdometry();
@@ -44,7 +44,8 @@ class drivetrain : public frc2::SubsystemBase {
   double kslowConst = -1.0;
 
 private:
-
+  
+  Vision m_vision;
   // navX
   AHRS m_navX{frc::SerialPort::kMXP};
   

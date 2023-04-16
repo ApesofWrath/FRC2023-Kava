@@ -172,12 +172,9 @@ void robotArm::setArmLength(double length){
     currScoreLength = length;
 } */
 
-void robotArm::setArmPos(double angle, double length, double dAngle, double dLength) {
+void robotArm::setArmPos(double angle, double length) {
     currScoreSecAngle = angle;
     currScoreLength = length;
-
-    debugAngle = dAngle;
-    debugLength = dLength;
 
     currentStateVision = ScoreVisionStates::FIRSTEXTEND;
 }
@@ -190,10 +187,10 @@ void robotArm::Periodic() {
     frc::SmartDashboard::PutNumber("St Machine Compl", stMachine);
 
     frc::SmartDashboard::PutNumber("Tele Pos", m_encoderMotorTelescoping.GetPosition());
-    frc::SmartDashboard::PutNumber("Tele Vel", m_encoderMotorTelescoping.GetVelocity());
+    frc::SmartDashboard::PutNumber("Angle Pos", m_encoderMotorAngleLeft.GetPosition());
 
-    frc::SmartDashboard::PutNumber("Target Angle", debugAngle);
-    frc::SmartDashboard::PutNumber("Target Length", debugLength);
+    frc::SmartDashboard::PutNumber("Target Angle", currScoreSecAngle);
+    frc::SmartDashboard::PutNumber("Target Length", currScoreLength);
 
     // ZEROING state machine for the arm angle position
     switch (currentStateAngle) {

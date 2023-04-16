@@ -74,7 +74,7 @@ class robotArm : public frc2::SubsystemBase {
     // void setArmAngle(double angle);
     // void setArmLength(double length);
 
-    void setArmPos(double angle, double length, double dAngle, double dLength);
+    void setArmPos(double angle, double length);
 
     // units::meter_t toMeters(int encRotations);
 
@@ -115,9 +115,6 @@ class robotArm : public frc2::SubsystemBase {
 
     double currScoreSecAngle = 0;
     double currScoreLength = 0;
-
-    double debugAngle = 0;
-    double debugLength = 0;
 
     // Boolean variable for claw toggle command
     bool clawToggle = false;

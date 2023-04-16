@@ -31,3 +31,14 @@ double Vision::GetPoleDistance(){
   frc::SmartDashboard::PutNumber("Distance to pole", distance);
   return distance;
 }
+
+frc::Pose2d Vision::ToPose2d() {
+  std::vector<double> botpose = GetBotPose();
+  return frc::Pose2d(frc::Translation2d(units::meter_t (botpose[0]), units::meter_t (botpose[1])), frc::Rotation2d(units::degree_t (botpose[5])));
+}
+
+double Vision::GetLatency() {
+  double defaultbotpose[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  std::vector<double> botpose = m_networkTable->GetNumberArray("botpose", std::span<double>(defaultbotpose, 7));
+  return botpose[6];
+}

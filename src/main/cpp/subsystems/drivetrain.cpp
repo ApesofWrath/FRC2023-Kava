@@ -65,7 +65,7 @@ void drivetrain::UpdateOdometry() {
 
 // Perodically (Constantly runs during periodic), updates the odometry of the swervedrive
 frc::Pose2d drivetrain::GetOdometry() {
-    return m_odometry.GetPose();
+    return m_odometry.GetEstimatedPosition();
 }
 
 void drivetrain::ResetOdometry(frc::Pose2d initPose) {

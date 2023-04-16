@@ -4,6 +4,7 @@
 #include <frc/geometry/Translation2d.h>
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
+#include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc2/command/SubsystemBase.h>
 #include <units/length.h>
 
@@ -66,5 +67,5 @@ private:
                                              m_locationRearLeft};
 
   // Creates SwerveDrive Odometry object
-  frc::SwerveDriveOdometry<4> m_odometry{m_kinematics, m_navX.GetRotation2d(), {m_frontRight.GetPosition(), m_frontLeft.GetPosition(), m_rearRight.GetPosition(), m_rearLeft.GetPosition()}};
+  frc::SwerveDrivePoseEstimator<4> m_odometry{m_kinematics, m_navX.GetRotation2d(), {m_frontRight.GetPosition(), m_frontLeft.GetPosition(), m_rearRight.GetPosition(), m_rearLeft.GetPosition()}, frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg))};
 };

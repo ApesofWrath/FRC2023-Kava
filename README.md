@@ -11,17 +11,17 @@ Kava Features:
   - 2 REV Spark Maxes with Neos for angling the arm up and down
   - 1 REV Spark Max with a Neo for telescoping the arm
 
-Operator controlls:
+Operator controls:
   - [TBD]: Extend and angle down arm
   - [TBD]: Retract and angle up arm
-Driver controlls:
+Driver controls:
   - Left analogue stick: Swerve movement
   - Right analogue stick: Rotate in place
 
-Auton Selection Guide:
+Auto Selection Guide:
   - All paths start with the arm facing the grid
-  - For any path name that begins with 'BumpCube' preload the cube somewhere on the bumpers so that it falls into the hybrid node as soon as the robot backs up
-  - For any path name that begins with 'ScoreConeHigh' or 'ScoreConeMid' preload the cone into the claw using the method of turning the robot on so the motor goes into brake mode and then turning it back off as required and spinning the claw motor closed until it firmly clamps the cone and then letting it slowly back off
-  - All paths that contain 'BalanceChargeStation' have an autobalance command at the end. All these paths should be started in front of the grid where there is only carpet in front of the robot, do not start them in areas where the cable bump or charge station is in front of the robot or the path will mess stuff up probably. Make sure to test autobalance before using.
-  - 'NoBump' or 'CableBump' at the end indicates whether the robot should be started with the cable bump in front of it or not.
-  - 'StraightLineTestX/Y' were test paths for testing at home that move 1 meter in their specific directions.
+  - Select the start behavior from its respective chooser. It should only have something like 3 options, if there is more it is likely the path chooser
+  - Select the path from its respective chooser. It should have more options than the start behavior chooser(NOTE: The paths are only named for what actually happens during them. For example, a path that starts with "1ConeAuto" will only pick up and score 1 cone in the path, however 2 cones may be scored in that auto if the start behavior scores a cone in addition to the path)
+  - "Bump" or "NoBump" refers to whether the auto should be run on the side of the field with the cable bump or not.
+  - Path names that end with "Balance" or "AutoBalance" attempt to balance on the charge station at the end of auto
+  - If a path name is confusing, open up the actual pathplanner program and take a look at that path to see what it looks like and should do.

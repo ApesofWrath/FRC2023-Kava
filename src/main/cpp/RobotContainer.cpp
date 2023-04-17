@@ -52,6 +52,8 @@ m_autoBuilder{
     m_chooser.AddOption("AutoBalance", "AutoBalance");
     m_chooser.AddOption("LeaveCommunityAutoBalance", "LeaveCommunityAutoBalance");
     m_chooser.AddOption("1ConeAutoNoBump", "1ConeAutoNoBump");
+    m_chooser.AddOption("1ConeAutoNoBumpBalance", "1ConeAutoNoBumpBalance");
+    m_chooser.AddOption("1ConeAutoCableBump", "1ConeAutoCableBump");
 
 
     frc::SmartDashboard::PutData(&m_startBehaviorChooser);

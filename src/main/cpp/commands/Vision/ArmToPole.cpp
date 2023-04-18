@@ -21,8 +21,8 @@ void ArmToPole::Execute() {
     double armExtendOg = armExtend;
     double armAngleOg = armAngle;
 
-    if (armExtend > 1) {
-        armExtend = 1;
+    if (armExtend > 1.07) {
+        armExtend = 1.07;
     } else if (armExtend < 0) {
         armExtend = 0;
     } else {

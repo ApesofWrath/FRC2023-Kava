@@ -15,7 +15,7 @@ Kava Features:
 - A Vision Subsystem that can:
   - Automatically align the robot to face in front in the scoring position
   - Automatically adjust and extend the robot arm to the scoring position
-- A Autonomus Subsystem that contains:
+- An Autonomus Subsystem that contains:
   - Multiple Paths using PathPlanner to guide the robot accross the field
   - And paths to help the robot score while on the path
 
@@ -26,3 +26,5 @@ Auto Selection Guide:
   - "Bump" or "NoBump" refers to whether the auto should be run on the side of the field with the cable bump or not.
   - Path names that end with "Balance" or "AutoBalance" attempt to balance on the charge station at the end of auto
   - If a path name is confusing, open up the actual pathplanner program and take a look at that path to see what it looks like and should do.
+
+Credits to the Programmers: Kian S, Parker L, Shahar G, Saul S, Louis G, and the rest of the Team!

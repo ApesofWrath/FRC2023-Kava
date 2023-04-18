@@ -12,11 +12,11 @@ void ArmToPole::Initialize() { printf("ArmToPole Initialized \n"); }
 
 void ArmToPole::Execute() {
     double poleDistance = m_vision->GetPoleDistance();
-    double pivotOffset = 0.3;
-    double poleHeight = 1.0;
-    double collapsedArmLength = 1.0;
+    double pivotOffset = 0.215;
+    double poleHeight = 0.864;
+    double collapsedArmLength = 0.887;
     double armExtend = sqrt(pow(poleDistance+pivotOffset, 2)+pow(poleHeight, 2))-collapsedArmLength;
-    double armAngle = ((atan(poleHeight/(pivotOffset+poleDistance))) - (3.141592653589/2));
+    double armAngle = ((atan(poleHeight/(pivotOffset+poleDistance))) - (3.141592653589/2))+0.087266;
 
     double armExtendOg = armExtend;
     double armAngleOg = armAngle;

@@ -23,41 +23,57 @@ std::vector<double> Vision::GetTargetPoseRobotSpace() {
   return m_networkTable->GetNumberArray("targetpose_robotspace", std::span<double>(defaultbotpose, 6));
 }
 
+std::vector<double> Vision::GetRobotPoseTargetSpace() {
+  double defaultbotpose[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  return m_networkTable->GetNumberArray("botpose_targetspace", std::span<double>(defaultbotpose, 6));
+}
+
 double Vision::GetPoleDistance(){
-  std::vector<double> targetPose = this->GetTargetPoseRobotSpace();
-  double tx = targetPose[0];
-  double tz = targetPose[2];
-  double distance = tz + sqrt(0.347+tx);
+
+  std::vector<double> robotPose = this->GetRobotPoseTargetSpace();
+  double px;
+  double pz;
+  switch (targetPoleHeight)
+  {
+  case PoleHeight::LOW:
+    px = -0.2;
+    break;
+  case PoleHeight::HIGH:
+    px = -0.65;
+      break;
+  default:
+    break;
+  }
+
+  switch (targetPoleColumn)
+  {
+    case PoleColumn::LEFT:
+      px = -0.572;
+      break;
+
+    case PoleColumn::RIGHT:
+      px = 0.572;
+      break;
+
+    default:
+
+      break;
+  }
+  double rx = robotPose[0];
+  double rz = robotPose[2];
+  frc::SmartDashboard::PutNumber("rx", rx);
+  frc::SmartDashboard::PutNumber("rz", rz);
+
+  px = -0.572;
+  pz = 0.2;
+  double distance = sqrt(pow(rx-px, 2)+pow(rz-pz, 2));
   frc::SmartDashboard::PutNumber("Distance to pole", distance);
   return distance;
 }
 
-frc::Pose2d Vision::ToPose2d() {
-  std::vector<double> defaultbotpose;
-  if (m_networkTable->GetNumber("tv", 0) != 1.0) {
-    return frc::Pose2d(0_m, 0_m, 0_deg);
-  }
-
-  if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
-      defaultbotpose = m_networkTable->GetNumberArray("botpose_wpiblue", std::span<const double>());
-  } 
-  else {
-      defaultbotpose = m_networkTable->GetNumberArray("botpose_wpired", std::span<const double>());
-  }
-
-  if (defaultbotpose.size() < 6) {
-      return frc::Pose2d(0_m, 0_m, 0_deg);
-  }
-        
+// std::vector<double> Vision::getNearestPole(){
+//   std::vector<double> botpose = GetBotPose();
   
-  return frc::Pose2d(frc::Translation2d(units::meter_t (defaultbotpose[0]), units::meter_t (defaultbotpose[1])), frc::Rotation2d(units::degree_t (defaultbotpose[5])));
-}
 
-bool Vision::TargetFound() {
-  return m_networkTable->GetNumber("tv", 0) == 1.0;
-}
-double Vision::GetLatency() {
-  double defaultbotpose[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-  std::vector<double> botpose = m_networkTable->GetNumberArray("botpose", std::span<double>(defaultbotpose, 7));
-  return botpose[6];
-}
+
+// }

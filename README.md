@@ -2,21 +2,22 @@
 
 Code for the FRC 2023 Season robot from Team 668, The Apes of Wrath, Kava!
 
+Congradulations making it to Champs Team 668!
+
 Kava Features:
 - A 4 Module Swerve Drivetrain with each module containing:
-  - 1 REV Spark Max with a Neo Motor for turning and 1 for driving
-  - A CanCoder Absolute Encoder for the turning motor
+  - 1 REV Spark Max with a Neo Motor for turning and 1 for driving for each module
+  - A CanCoder Absolute Encoder for the turning motor for each module
 - A Robotic Arm with:
   - 1 REV Spark Max with a Neo for Opening and Closing the Clamp on top
   - 2 REV Spark Maxes with Neos for angling the arm up and down
-  - 1 REV Spark Max with a Neo for telescoping the arm
-
-Operator controls:
-  - [TBD]: Extend and angle down arm
-  - [TBD]: Retract and angle up arm
-Driver controls:
-  - Left analogue stick: Swerve movement
-  - Right analogue stick: Rotate in place
+  - 1 REV Spark Max with a Neo for telescoping the arm in and out
+- A Vision Subsystem that can:
+  - Automatically align the robot to face in front in the scoring position
+  - Automatically adjust and extend the robot arm to the scoring position
+- A Autonomus Subsystem that contains:
+  - Multiple Paths using PathPlanner to guide the robot accross the field
+  - And paths to help the robot score while on the path
 
 Auto Selection Guide:
   - All paths start with the arm facing the grid

@@ -29,11 +29,18 @@ void drivetrain::SwerveDrive(units::meters_per_second_t xSpeed,
                              units::meters_per_second_t ySpeed,
                              units::radians_per_second_t zRot,
                              bool fieldRelative) {
-    auto moduleStates = m_kinematics.ToSwerveModuleStates(
-        fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+    frc::ChassisSpeeds chassisSpeeds = fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                             xSpeed, ySpeed, zRot, m_navX.GetRotation2d())
-                      : frc::ChassisSpeeds{xSpeed, ySpeed, zRot});
-    m_kinematics.DesaturateWheelSpeeds(&moduleStates, drivetrainConstants::calculations::kModuleMaxSpeed);
+                      : frc::ChassisSpeeds{xSpeed, ySpeed, zRot};
+    auto moduleStates = m_kinematics.ToSwerveModuleStates(chassisSpeeds);
+                      
+    m_kinematics.DesaturateWheelSpeeds(
+    &moduleStates,
+    chassisSpeeds,
+    drivetrainConstants::calculations::kModuleMaxSpeed,
+    drivetrainConstants::calculations::kModuleMaxSpeed,
+    drivetrainConstants::calculations::kModuleMaxAngularVelocity
+    );
 
     // frc::SmartDashboard::PutNumber("xSpeed", xSpeed.value());
     // frc::SmartDashboard::PutNumber("ySpeed", ySpeed.value());
@@ -56,9 +63,14 @@ void drivetrain::UpdateOdometry() {
                       m_rearLeft.GetPosition()});
 }
 
+void drivetrain::AddDataFromVision()
+{
+    m_odometry.AddVisionMeasurement(m_vision.ToPose2d(), frc::Timer::GetFPGATimestamp() - units::second_t(m_vision.GetLatency() / 1000), {1.0, 1.0, 1.0});
+}
+
 // Perodically (Constantly runs during periodic), updates the odometry of the swervedrive
 frc::Pose2d drivetrain::GetOdometry() {
-    return m_odometry.GetPose();
+    return m_odometry.GetEstimatedPosition();
 }
 
 void drivetrain::ResetOdometry(frc::Pose2d initPose) {
@@ -94,6 +106,10 @@ std::string drivetrain::AutoBalance()
 
 void drivetrain::Periodic() {
     UpdateOdometry();
+    if (m_vision.TargetFound())
+    {
+        AddDataFromVision();
+    }
     // Test posting angle to Dashboard.
     /* frc::SmartDashboard::PutNumber("Front Right Angle", m_frontRight.DashboardInfo(swerveModule::DataType::kCurrentAngle));
     frc::SmartDashboard::PutNumber("Rear Right Angle", m_rearRight.DashboardInfo(swerveModule::DataType::kCurrentAngle));

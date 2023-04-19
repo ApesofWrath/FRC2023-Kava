@@ -21,21 +21,23 @@ void ArmToPole::Execute() {
     double armExtendOg = armExtend;
     double armAngleOg = armAngle;
 
-    if (armExtend > 1.07) {
-        armExtend = 1.07;
-    } else if (armExtend < 0) {
-        armExtend = 0;
-    } else {
+    // if (armExtend > 1.07) {
+    //     armExtend = 1.07;
+    // } else if (armExtend < 0) {
+    //     armExtend = 0;
+    // } else {
 
-    }
+    // }
+    armExtend = std::clamp(armExtend, 0.0, 1.07);
 
-    if (armAngle < -1.1) {
-        armAngle = -1.1;
-    } else if (armAngle > 0) {
-        armAngle = 0;
-    } else {
+    // if (armAngle < -1.1) {
+    //     armAngle = -1.1;
+    // } else if (armAngle > 0) {
+    //     armAngle = 0;
+    // } else {
         
-    }
+    // }
+    armAngle = std::clamp(armAngle, -1.1, 0.0);
 
     m_robotArm->setArmPos(armAngle, armExtend);
     frc::SmartDashboard::PutNumber("armExtend", armExtend);

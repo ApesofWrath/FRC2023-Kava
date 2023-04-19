@@ -1,14 +1,14 @@
 #include "commands/Arm/GrabCone.h" // relevent header file
 
-GrabCode::GrabCode(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
-    SetName("GrabCode"); // set the ?? name
+GrabCone::GrabCone(robotArm* robotArm) : m_robotArm{robotArm} { // constructor for command class
+    SetName("GrabCone"); // set the ?? name
     AddRequirements({m_robotArm}); // require the m_robotArm pointer
 }
 
-void GrabCode::Initialize() { printf("GrabCode Initialized \n"); } // print debug message on initialization
+void GrabCone::Initialize() { printf("GrabCone Initialized \n"); } // print debug message on initialization
 
-void GrabCode::Execute() { // on command call (button press)
+void GrabCone::Execute() { // on command call (button press)
     m_robotArm->grabCone(); // make m_robotArm point to the scoreLow() command
 }
 
-bool GrabCode::IsFinished() { return true; } // return when ??
+bool GrabCone::IsFinished() { return true; } // return when ??

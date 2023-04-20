@@ -97,8 +97,8 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_encoderMotorAngleLeft.SetVelocityConversionFactor((1.0 / armConstants::kRotationsToRadianAngling) / 60.0);
 
     // Velocity values for the arm angling motors (not telescoping)
-    m_motorAngleLeftController.SetSmartMotionMaxVelocity(5); //7200; 5040.0 * (1.0 / armConstants::kRotationsToRadianAngling) / 60.0
-    m_motorAngleLeftController.SetSmartMotionMaxAccel(2.5); //24800; 6700.0 *(1.0 / armConstants::kRotationsToRadianAngling) / 60.0
+    m_motorAngleLeftController.SetSmartMotionMaxVelocity(7); //7200; 5040.0 * (1.0 / armConstants::kRotationsToRadianAngling) / 60.0
+    m_motorAngleLeftController.SetSmartMotionMaxAccel(4); //24800; 6700.0 *(1.0 / armConstants::kRotationsToRadianAngling) / 60.0
     m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
 

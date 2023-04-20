@@ -3,6 +3,61 @@
 Vision::Vision()
     : m_networkTable(nt::NetworkTableInstance::GetDefault().GetTable("limelight")) {}
 
+void Vision::Periodic() {
+  switch (targetPoleHeight){
+    case PoleHeight::HIGH:
+    switch (targetPoleColumn){
+      case PoleColumn::LEFT:
+        this->SelectPipeline(0);
+        break;
+      case PoleColumn::RIGHT:
+        this->SelectPipeline(1);
+        break;
+
+    }
+      frc::SmartDashboard::PutString("Target Pole Height", "High");
+      break;
+
+    case PoleHeight::LOW:
+      frc::SmartDashboard::PutString("Target Pole Height", "Low");
+      switch (targetPoleColumn){
+        case PoleColumn::LEFT:
+          this->SelectPipeline(2);
+          break;
+        case PoleColumn::RIGHT:
+          this->SelectPipeline(3);
+          break;
+      break;
+
+    default:
+      frc::SmartDashboard::PutString("Target Pole Height", "None");
+      break;
+      }
+    
+  }
+
+  switch (targetPoleColumn) {
+  case PoleColumn::LEFT:
+    frc::SmartDashboard::PutString("Target Pole Column", "Left");
+    break;
+
+  case PoleColumn::RIGHT:
+    frc::SmartDashboard::PutString("Target Pole Column", "Right");
+    break;
+
+  default:
+    frc::SmartDashboard::PutString("Target Pole Column", "None");
+    break;
+
+  }
+  
+
+  if (this->GetTargetPoseRobotSpace()[0] > 0.0) {
+    targetPoleColumn = PoleColumn::LEFT;
+  } else {
+    targetPoleColumn = PoleColumn::RIGHT;
+  }
+}
 //Get X coordinate of target
 double Vision::GetTargetX() {
   return m_networkTable->GetNumber("tx", 0.0);
@@ -28,6 +83,19 @@ std::vector<double> Vision::GetRobotPoseTargetSpace() {
   return m_networkTable->GetNumberArray("botpose_targetspace", std::span<double>(defaultbotpose, 6));
 }
 
+void Vision::setPole(PoleHeight height){
+  targetPoleHeight = height;
+}
+
+void Vision::setPole(PoleColumn column){
+  targetPoleColumn = column;
+}
+
+void Vision::setPole(PoleHeight height, PoleColumn column){
+  targetPoleHeight = height;
+  targetPoleColumn = column;
+}
+
 double Vision::GetPoleDistance(){
 
   std::vector<double> robotPose = this->GetRobotPoseTargetSpace();
@@ -36,10 +104,10 @@ double Vision::GetPoleDistance(){
   switch (targetPoleHeight)
   {
   case PoleHeight::LOW:
-    px = -0.2;
+    pz = -0.2;
     break;
   case PoleHeight::HIGH:
-    px = -0.65;
+    pz = -0.65;
       break;
   default:
     break;
@@ -64,8 +132,8 @@ double Vision::GetPoleDistance(){
   frc::SmartDashboard::PutNumber("rx", rx);
   frc::SmartDashboard::PutNumber("rz", rz);
 
-  px = -0.572;
-  pz = 0.2;
+  // px = -0.572;
+  // pz = 0.2;
   double distance = sqrt(pow(rx-px, 2)+pow(rz-pz, 2));
   frc::SmartDashboard::PutNumber("Distance to pole", distance);
   return distance;

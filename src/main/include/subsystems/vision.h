@@ -22,8 +22,12 @@ class Vision : public frc2::SubsystemBase {
  public:
   Vision();
 
-  PoleHeight targetPoleHeight;
-  PoleColumn targetPoleColumn;
+  PoleHeight targetPoleHeight = PoleHeight::LOW;
+  PoleColumn targetPoleColumn = PoleColumn::LEFT;
+  void Periodic() override;
+  void setPole(PoleHeight);
+  void setPole(PoleColumn);
+  void setPole(PoleHeight, PoleColumn);
   double GetTargetX();
   void SelectPipeline(int id);
   std::vector<double> GetBotPose();

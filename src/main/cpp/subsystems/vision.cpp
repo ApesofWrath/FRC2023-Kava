@@ -104,10 +104,10 @@ double Vision::GetPoleDistance(){
   switch (targetPoleHeight)
   {
   case PoleHeight::LOW:
-    pz = -0.2;
+    pz = 0.2;
     break;
   case PoleHeight::HIGH:
-    pz = -0.65;
+    pz = 0.65;
       break;
   default:
     break;

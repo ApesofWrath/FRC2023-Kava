@@ -97,8 +97,8 @@ m_encoderOffset(armConstants::arm::kRobotArm[5]) {
     m_encoderMotorAngleLeft.SetVelocityConversionFactor((1.0 / armConstants::kRotationsToRadianAngling) / 60.0);
 
     // Velocity values for the arm angling motors (not telescoping)
-    m_motorAngleLeftController.SetSmartMotionMaxVelocity(7); //7200; 5040.0 * (1.0 / armConstants::kRotationsToRadianAngling) / 60.0
-    m_motorAngleLeftController.SetSmartMotionMaxAccel(4); //24800; 6700.0 *(1.0 / armConstants::kRotationsToRadianAngling) / 60.0
+    m_motorAngleLeftController.SetSmartMotionMaxVelocity(13); //7200; 5040.0 * (1.0 / armConstants::kRotationsToRadianAngling) / 60.0
+    m_motorAngleLeftController.SetSmartMotionMaxAccel(9); //24800; 6700.0 *(1.0 / armConstants::kRotationsToRadianAngling) / 60.0
     m_motorAngleLeftController.SetSmartMotionMinOutputVelocity(0); //0
     m_motorAngleLeftController.SetSmartMotionAllowedClosedLoopError(0); //0
 
@@ -272,7 +272,7 @@ void robotArm::Periodic() {
 
         case ScoreHighStates::SECONDEXTEND:
             // After telescope reaches its position, arm angles down more to its socring position
-            m_motorAngleLeftController.SetReference(-0.78540, rev::CANSparkMax::ControlType::kSmartMotion); // -32
+            m_motorAngleLeftController.SetReference(-0.8854, rev::CANSparkMax::ControlType::kSmartMotion); // -32; -0.83540
 
             currentStateHigh = ScoreHighStates::INIT;
             break;
@@ -303,7 +303,7 @@ void robotArm::Periodic() {
 
         case ScoreMidStates::SECONDEXTEND:
             // After telescope reaches its position, arm angles down more for scoring position
-            m_motorAngleLeftController.SetReference(-0.78540, rev::CANSparkMax::ControlType::kSmartMotion); // -32
+            m_motorAngleLeftController.SetReference(-0.83540, rev::CANSparkMax::ControlType::kSmartMotion); // -32
 
             currentStateMid = ScoreMidStates::INIT;
             break;
@@ -318,7 +318,7 @@ void robotArm::Periodic() {
     switch (currentStatePickup) {
         case ConePickupStates::FIRSTEXTEND:
             // First time arm angles down
-            m_motorAngleLeftController.SetReference(-0.24544, rev::ControlType::kSmartMotion); // -10
+            m_motorAngleLeftController.SetReference(-0.61360, rev::ControlType::kSmartMotion); // -10; -0.24544
             // Sets telescope position to telescope out for scoring
             m_motorTelescopingController.SetReference(0.33498, rev::ControlType::kSmartMotion);
 
@@ -327,14 +327,15 @@ void robotArm::Periodic() {
             
         case ConePickupStates::NOTHING:
             // Waits until telescope reaches its position (if statement value should be 1 less than actual value)
-            if (m_encoderMotorTelescoping.GetPosition() > 0.32753) {
+            /* if (m_encoderMotorTelescoping.GetPosition() > 0.32753) {
                 currentStatePickup = ConePickupStates::SECONDEXTEND;
-            }
+            } */
+            currentStatePickup = ConePickupStates::SECONDEXTEND;
             break;
 
         case ConePickupStates::SECONDEXTEND:
             // After telescope reaches its position, arm angles down more to its scoring position
-            m_motorAngleLeftController.SetReference(-0.61360, rev::ControlType::kSmartMotion); // -25
+            // m_motorAngleLeftController.SetReference(-0.61360, rev::ControlType::kSmartMotion); // -25
 
             currentStatePickup = ConePickupStates::INIT;
             break;

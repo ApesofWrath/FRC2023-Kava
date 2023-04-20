@@ -23,6 +23,7 @@ class drivetrain : public frc2::SubsystemBase {
   void UpdateOdometry();
   void AddDataFromVision();
   void resetGyro();
+  void ResetOdometryNot180(frc::Pose2d initPose);
 
   frc::Pose2d GetOdometry();
   void ResetOdometry(frc::Pose2d initPose);

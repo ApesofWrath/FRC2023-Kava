@@ -37,7 +37,7 @@ void ArmToPole::Execute() {
     // } else {
 
     // }
-    armExtend = std::clamp(armExtend, 0.0, 1.07);
+    armExtend = std::clamp(armExtend, 0.0, 1.2);
 
     // if (armAngle < -1.1) {
     //     armAngle = -1.1;

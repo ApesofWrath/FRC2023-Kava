@@ -25,7 +25,7 @@ void AutoBalance::Execute() {
 
   if (m_drivetrain->AutoBalance() != "Forward" && m_drivetrain->AutoBalance() != "ForwardSlow" && m_drivetrain->AutoBalance() != "Backward" && m_drivetrain->AutoBalance() != "BackwardSlow") {
     m_drivetrain->SwerveDrive(0.0_mps, 0.0_mps, 0.0_rad_per_s, true);
-    printf("stop \n");
+    printf("Stop (Balanced) \n");
     m_balancedTimer.Start();
   }
   else

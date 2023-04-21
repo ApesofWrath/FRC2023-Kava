@@ -17,12 +17,14 @@ void drivetrain::resetGyro() {
 
 // $ Slow constant value
 void drivetrain::slowDown() {
-    kslowConst = 0.5;
+    kslowConst = -0.5;
+    printf("Slow Func");
 }
 
 // Normal speed value (should always be 1.0)
 void drivetrain::normalSpeed() {
-    kslowConst = 1.0;
+    kslowConst = -1.0;
+    printf("Normal Func");
 }
 
 // Sets Desired States of the swerve modules for swervedrive
@@ -95,7 +97,7 @@ std::string drivetrain::AutoBalance()
     {
         return "Forward";
     }
-    else if (m_navX.GetPitch() > 5.5)
+    else if (m_navX.GetPitch() > 8.5)
     {
         return "ForwardSlow";
     }
@@ -103,7 +105,7 @@ std::string drivetrain::AutoBalance()
     {
         return "Backward";
     }
-    else if(m_navX.GetPitch() < -5.5)
+    else if(m_navX.GetPitch() < -8.5)
     {
         return "BackwardSlow";
     }

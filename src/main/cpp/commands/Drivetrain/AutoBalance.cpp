@@ -18,14 +18,15 @@ void AutoBalance::Initialize()
 }
 
 void AutoBalance::Execute() {
-  m_drivetrain->SwerveDrive(((m_drivetrain->AutoBalance() == "Forward") ? 0.3_mps : 
-  ((m_drivetrain->AutoBalance() == "ForwardSlow") ? 0.15_mps : 
-  ((m_drivetrain->AutoBalance() == "Backward") ? -0.3_mps : 
-  ((m_drivetrain->AutoBalance() == "BackwardSlow") ? -0.15_mps : 0.0_mps)))), 0.0_mps, 0.0_rad_per_s, true);
+  frc::SmartDashboard::PutString("Auto Bal", m_drivetrain->AutoBalance());
+  m_drivetrain->SwerveDrive(((m_drivetrain->AutoBalance() == "Forward") ? 0.28_mps : 
+  ((m_drivetrain->AutoBalance() == "ForwardSlow") ? 0.2_mps : 
+  ((m_drivetrain->AutoBalance() == "Backward") ? -0.28_mps : 
+  ((m_drivetrain->AutoBalance() == "BackwardSlow") ? -0.2_mps : 0.0_mps)))), 0.0_mps, 0.0_rad_per_s, true);
 
   if (m_drivetrain->AutoBalance() != "Forward" && m_drivetrain->AutoBalance() != "ForwardSlow" && m_drivetrain->AutoBalance() != "Backward" && m_drivetrain->AutoBalance() != "BackwardSlow") {
     m_drivetrain->SwerveDrive(0.0_mps, 0.0_mps, 0.0_rad_per_s, true);
-    printf("stop \n");
+    printf("Stop (Balanced) \n");
     m_balancedTimer.Start();
   }
   else
@@ -42,5 +43,5 @@ void AutoBalance::End(bool interrupted) {
 }
 
 bool AutoBalance::IsFinished() {
-    return (m_drivetrain->AutoBalance() == "Stop" && m_balancedTimer.Get() > 1_s) || m_timer.Get() > 5_s;
+    return (m_drivetrain->AutoBalance() == "Stop" && m_balancedTimer.Get() > 3.5_s) || m_timer.Get() > 5_s;
 }

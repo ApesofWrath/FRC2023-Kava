@@ -7,12 +7,13 @@ ScoreHighPreload::ScoreHighPreload(robotArm* robotArm) : m_robotArm{robotArm} { 
     AddRequirements({m_robotArm}); // require the m_robotArm pointer
     AddCommands(
         ClampToggle(m_robotArm),
-        frc2::WaitCommand(3.0_s),
+        frc2::WaitCommand(1.0_s),
         ScoreHigh(m_robotArm),
         frc2::WaitCommand(2.5_s),
         ClampToggle(m_robotArm),
         frc2::WaitCommand(0.5_s),
-        ArmUp(m_robotArm)
+        ArmUp(m_robotArm),
+        frc2::WaitCommand(2.0_s)
         //frc2::InstantCommand([this](){ new ; }),
         // frc2::WaitCommand(2.0_s),
         // frc2::InstantCommand([this] {m_robotArm->clampToggle();}),

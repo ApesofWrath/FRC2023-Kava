@@ -22,7 +22,7 @@ m_autoBuilder{
     [this](auto initPose) { m_drivetrain.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
     pathplanner::PIDConstants(3.5, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
     pathplanner::PIDConstants(5.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-    [this](frc::ChassisSpeeds speeds) {m_drivetrain.SwerveDrive(speeds.vx, speeds.vy, -speeds.omega, false);}, // Output function that accepts field relative ChassisSpeeds
+    [this](frc::ChassisSpeeds speeds) {m_drivetrain.SwerveDrive(speeds.vx, speeds.vy, speeds.omega, false);}, // Output function that accepts field relative ChassisSpeeds
     eventMap,
     { &m_drivetrain }, // Drive requirements, usually just a single drive subsystem
     true // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -37,8 +37,8 @@ m_autoBuilder{
   // $ CONTROLLER INPUTS FOR SWERVE DRIVE BELOW
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return (MathFunctions::joystickCurve(m_controllerMain.GetX(), controllerConstants::kControllerCurve)); },
-    [this] { return (MathFunctions::joystickCurve(m_controllerMain.GetY(), controllerConstants::kControllerCurve)); },
+    [this] { return (MathFunctions::joystickCurve((m_controllerMain.GetX()), controllerConstants::kControllerCurve)); },
+    [this] { return (MathFunctions::joystickCurve((m_controllerMain.GetY()), controllerConstants::kControllerCurve)); },
     [this] { return (-m_controllerMain.GetRawAxis(4)); }));
 
     /* frc2::WaitCommand DoNothing(0_s);
@@ -69,10 +69,12 @@ void RobotContainer::ConfigureButtonBindings() {
   //** ArmUp.h
 
   //Bind Limelight Pipeline 0 (Apriltags) and Pipeline 1 (Retroreflective) to ButtonA and ButtonB events respectively
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhileTrue(frc2::InstantCommand([this] { m_vision.SelectPipeline(0); }).ToPtr());
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kB).WhileTrue(frc2::InstantCommand([this] { m_vision.SelectPipeline(1); }).ToPtr());
+    // frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhileTrue(frc2::InstantCommand([this] { m_vision.SelectPipeline(0); }).ToPtr());
+  // frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kB).WhileTrue(frc2::InstantCommand([this] { m_vision.SelectPipeline(1); }).ToPtr());
   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhileTrue(PointAtTarget(&m_drivetrain, &m_vision).ToPtr());
   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kX).WhileTrue(Align(&m_drivetrain, &m_vision).ToPtr());
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhileTrue(frc2::InstantCommand([this] { m_vision.setPole(PoleHeight::LOW); }).ToPtr());
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kB).WhileTrue(frc2::InstantCommand([this] { m_vision.setPole(PoleHeight::HIGH); }).ToPtr());
 
   // Zeroing for swervedrive command
   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kStart).OnTrue(ZeroGyro(&m_drivetrain).ToPtr());

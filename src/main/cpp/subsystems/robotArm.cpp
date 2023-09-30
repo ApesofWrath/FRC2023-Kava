@@ -228,7 +228,7 @@ void robotArm::Periodic() {
 
         case TeleStates::INIT:
             m_motorTelescoping.Set(-0.1);
-            if (m_motorTelescoping.GetOutputCurrent() > 30) {
+            if (m_motorTelescoping.GetOutputCurrent() > 20) {
                 m_encoderMotorTelescoping.SetPosition(0);
                 currentStateTele = TeleStates::ZEROED;
             }
